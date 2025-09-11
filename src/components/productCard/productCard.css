@@ -1,0 +1,18 @@
+.productCardContainer {
+	max-width: 320px;
+	width: 100%;
+}
+
+.productCardImage {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	margin-bottom: 12px;
+}
+
+.productCardText {
+	color: #000;
+	font-size: 16px;
+	margin-bottom: 20px;
+	text-align: center;
+}

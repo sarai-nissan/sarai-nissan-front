@@ -1,0 +1,14 @@
+.productFilterContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 40px;
+	gap: 40px;
+}
+
+.productFilterItem {
+	padding: 10px 20px;
+	cursor: pointer;
+	color: #000;
+	font-size: 16px;
+}

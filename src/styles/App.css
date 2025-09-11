@@ -1,0 +1,40 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: sans-serif;
+	line-height: 1;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+button,
+input,
+textarea {
+	border: none;
+	outline: none;
+	background: none;
+}
+
+.App {
+	background-color: #cbcbcb;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

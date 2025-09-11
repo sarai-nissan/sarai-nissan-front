@@ -1,0 +1,20 @@
+.storeContainer {
+	max-width: 1200px;
+	width: 100%;
+	margin: 45px auto 0;
+}
+
+.productList {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(320px, 1fr));
+	gap: clamp(60px, calc((100% - 960px) / 2), 120px);
+	justify-items: center;
+}
+
+@media (max-width: 1200px) {
+	.productList {
+		margin: 0 20px;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: clamp(10px, 5vw, 60px);
+	}
+}
