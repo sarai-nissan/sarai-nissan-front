@@ -4,15 +4,19 @@ import { categories } from "../../data";
 import "./productFilter.css";
 
 const ProductFilter: React.FC = () => {
-	const { setSelectedCategory } = useFilter();
+	const { selectedCategory, setSelectedCategory } = useFilter();
 
 	return (
 		<div className="productFilterContainer">
 			{categories.map((category) => (
 				<p
-					className="productFilterItem"
+					className={`${
+						selectedCategory === category.toLowerCase()
+							? "productFilterItem active"
+							: "productFilterItem"
+					}`}
 					key={category}
-					onClick={() => setSelectedCategory(category)}
+					onClick={() => setSelectedCategory(category.toLowerCase())}
 				>
 					{category}
 				</p>

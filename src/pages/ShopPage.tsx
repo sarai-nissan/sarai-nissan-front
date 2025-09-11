@@ -3,9 +3,9 @@ import { useFilter } from "../contexts/FilterContext";
 import ProductFilter from "../components/productFilter/ProductFilter";
 import ProductCard from "../components/productCard/ProductCard";
 import { products } from "../data";
-import "../styles/storePage.css";
+import "../styles/shopPage.css";
 
-const StorePage: React.FC = () => {
+const ShopPage: React.FC = () => {
 	const { selectedCategory } = useFilter();
 
 	const filteredProducts =
@@ -16,9 +16,9 @@ const StorePage: React.FC = () => {
 			  );
 
 	return (
-		<div className="storeContainer">
+		<div className="shopContainer">
 			<ProductFilter />
-			<div className="productList">
+			<div className="shopProductList">
 				{filteredProducts.map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}
@@ -27,4 +27,4 @@ const StorePage: React.FC = () => {
 	);
 };
 
-export default StorePage;
+export default ShopPage;
