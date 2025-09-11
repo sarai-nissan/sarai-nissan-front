@@ -1,7 +1,50 @@
 .headerContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	max-width: 1200px;
 	width: 100%;
-	background-color: lightblue;
-	height: 50px;
 	margin-top: 30px;
+}
+
+.headerLogo {
+	height: clamp(30px, 7vw, 50px);
+}
+
+.headerNavLinksContainer {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.navLink {
+	text-decoration: none;
+	color: #000;
+	font-weight: 500;
+	transition: color 0.3s;
+	padding: 5px;
+}
+
+.navLink:hover {
+	color: #777;
+}
+
+.navLink.active {
+	text-decoration: underline;
+}
+
+.headerSocialLinksContainer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.headerSocialLinksContainer a {
+	color: #000;
+	transition: color 0.3s;
+	padding: 5px;
+}
+
+.headerSocialLinksContainer a:hover {
+	color: #777;
 }

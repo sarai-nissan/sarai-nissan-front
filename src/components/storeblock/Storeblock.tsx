@@ -5,7 +5,7 @@ import "./storeblock.css";
 const StoreBlock: React.FC = () => {
 	return (
 		<div className="storeBlockContainer">
-			<Link to="/store">
+			<Link to="/shop">
 				<p className="storeBlockText">{"go to store ->"}</p>
 			</Link>
 		</div>

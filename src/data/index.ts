@@ -1,4 +1,4 @@
-export const categories = ["all", "prints", "tarot & oracle decks"];
+export const categories = ["All", "Prints", "Tarot & Oracle Decks"];
 
 export const products = [
 	{
