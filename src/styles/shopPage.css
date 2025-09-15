@@ -2,18 +2,11 @@
 	max-width: 1200px;
 	width: 100%;
 	margin-top: 45px;
+	margin-bottom: 80px;
 }
 
 .shopProductList {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(320px, 1fr));
-	gap: clamp(60px, calc((100% - 960px) / 2), 120px);
-	justify-items: center;
-}
-
-@media (max-width: 1200px) {
-	.shopProductList {
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: clamp(10px, 5vw, 60px);
-	}
+	grid-template-columns: repeat(auto-fit, minmax(250px, 400px));
+	justify-content: center;
 }

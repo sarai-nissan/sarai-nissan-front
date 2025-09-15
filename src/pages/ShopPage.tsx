@@ -2,7 +2,7 @@ import React from "react";
 import { useFilter } from "../contexts/FilterContext";
 import ProductFilter from "../components/productFilter/ProductFilter";
 import ProductCard from "../components/productCard/ProductCard";
-import { products } from "../data";
+import { test } from "../data";
 import "../styles/shopPage.css";
 
 const ShopPage: React.FC = () => {
@@ -10,10 +10,8 @@ const ShopPage: React.FC = () => {
 
 	const filteredProducts =
 		selectedCategory === "all"
-			? products
-			: products.filter((product) =>
-					product.category.includes(selectedCategory)
-			  );
+			? test
+			: test.filter((product) => product.category.includes(selectedCategory));
 
 	return (
 		<div className="shopContainer">

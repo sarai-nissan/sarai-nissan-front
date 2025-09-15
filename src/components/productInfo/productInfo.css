@@ -1,0 +1,135 @@
+.productInfoContainer {
+	max-width: 433px;
+	width: 100%;
+}
+
+.productInfoName {
+	font-size: 24px;
+	color: #000;
+	font-weight: 500;
+	margin-bottom: 20px;
+}
+
+.productInfoPrice {
+	font-size: 20px;
+	color: #000;
+	font-weight: 400;
+	margin-bottom: 30px;
+}
+
+.productInfoQuantityContainer {
+	display: flex;
+	align-items: center;
+	margin-bottom: 60px;
+}
+
+.productInfoQuantity {
+	font-size: 18px;
+	color: #000;
+	font-weight: 400;
+	margin-right: 10px;
+}
+
+.productInfoQuantityButton {
+	font-weight: 400;
+	font-size: 18px;
+	width: 47px;
+	height: 47px;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	border: none;
+	color: #000;
+}
+
+.productInfoQuantityNumber {
+	font-size: 18px;
+	color: #000;
+	font-weight: 400;
+	padding: 13px;
+	width: 66px;
+	text-align: center;
+	border: 1px solid #c9c9c9;
+}
+
+.productInfoAddToCartButton {
+	font-size: 18px;
+	color: #fff;
+	font-weight: 400;
+	background-color: #000;
+	border: none;
+	padding: 15px 24px;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-bottom: 50px;
+}
+
+.productInfoAddToCartButton:hover {
+	background-color: #333333;
+}
+
+.productInfoDescription {
+	font-size: 18px;
+	color: #000;
+	font-weight: 400;
+	margin-bottom: 60px;
+}
+
+.productInfoTextReg {
+	font-size: 16px;
+	color: #000;
+	font-weight: 400;
+	margin-bottom: 60px;
+}
+
+.productInfoFact {
+	list-style: inside;
+	margin-bottom: 2px;
+	margin-left: 10px;
+}
+
+.productInfoTextMed {
+	font-size: 16px;
+	color: #000;
+	font-weight: 500;
+}
+
+@media (max-width: 830px) {
+	.productInfoName {
+		font-size: 22px;
+	}
+	.productInfoQuantityContainer {
+		margin-bottom: 40px;
+	}
+	.productInfoQuantity {
+		font-size: 16px;
+	}
+	.productInfoQuantityButton {
+		font-size: 16px;
+		width: 45px;
+		height: 45px;
+	}
+	.productInfoQuantityNumber {
+		font-size: 16px;
+	}
+	.productInfoAddToCartButton {
+		font-size: 16px;
+		color: #fff;
+		background-color: #000;
+		padding: 15px 24px;
+
+		margin-bottom: 40px;
+	}
+	.productInfoDescription {
+		font-size: 16px;
+		color: #000;
+	}
+	.productInfoTextReg {
+		font-size: 14px;
+		margin-bottom: 50px;
+	}
+	.productInfoTextMed {
+		font-size: 14px;
+	}
+}
