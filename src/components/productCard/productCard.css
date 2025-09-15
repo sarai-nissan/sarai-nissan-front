@@ -4,6 +4,7 @@
 	border-top: 1px solid #c9c9c9;
 	border-left: 1px solid #c9c9c9;
 	padding: clamp(10px, 2vw, 20px);
+	cursor: pointer;
 }
 
 .productCardContainer:nth-child(3n) {

@@ -1,0 +1,16 @@
+.productPageContainer {
+	max-width: 1200px;
+	width: 100%;
+	margin-top: 60px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 80px;
+	gap: 20px;
+}
+
+.productPageNotFound {
+	font-size: 24px;
+	color: #000;
+	font-weight: 400;
+	margin-top: 60px;
+}

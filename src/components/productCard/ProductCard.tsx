@@ -1,24 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import type { ProductCardProps } from "../../types/Product";
 import "./productCard.css";
 
-interface ProductCardProps {
-	product: {
-		id: number;
-		name: string;
-		price: number;
-		imageUrl: string;
-	};
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<{ product: ProductCardProps }> = ({ product }) => {
 	return (
-		<div className="productCardContainer">
-			<img className="productCardImage" src={product.imageUrl} alt="Product" />
+		<Link
+			to={`/product/${product.id}`}
+			className="productCardContainer"
+			state={{ product }}
+		>
+			<img
+				className="productCardImage"
+				src={product.imageUrl[0]}
+				alt="Product"
+			/>
 			<div className="productCardInfoContainer">
 				<p className="productCardText">{product.name}</p>
 				<p className="productCardText">${product.price}</p>
 			</div>
-		</div>
+		</Link>
 	);
 };
 
