@@ -14,8 +14,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	return (
 		<div className="productCardContainer">
 			<img className="productCardImage" src={product.imageUrl} alt="Product" />
-			<p className="productCardText">{product.name}</p>
-			<p className="productCardText">${product.price}</p>
+			<div className="productCardInfoContainer">
+				<p className="productCardText">{product.name}</p>
+				<p className="productCardText">${product.price}</p>
+			</div>
 		</div>
 	);
 };

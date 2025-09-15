@@ -3,7 +3,7 @@ export const categories = ["All", "Prints", "Tarot & Oracle Decks"];
 export const products = [
 	{
 		id: 1,
-		name: "Starry Night Print",
+		name: "Coloured-Edge Void Tarot Deck (2nd Edition) ",
 		category: "all - prints",
 		price: 20,
 		imageUrl:

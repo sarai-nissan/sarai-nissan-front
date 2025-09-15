@@ -7,7 +7,7 @@
 }
 
 .productFilterItem {
-	padding: 10px;
+	padding: clamp(8px, 1vw, 10px);
 	cursor: pointer;
 	color: #000;
 	font-size: 16px;
