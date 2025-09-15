@@ -36,9 +36,11 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
 			{props.product.description && (
 				<p className="productInfoDescription">{props.product.description}</p>
 			)}
-			{props.product.size && <p className="test">{props.product.size}</p>}
+			{props.product.size && (
+				<p className="productInfoTextReg">{props.product.size}</p>
+			)}
 			{props.product.facts && (
-				<ul className="test">
+				<ul className="productInfoTextReg">
 					{props.product.facts.map((fact, index) => (
 						<li className="productInfoFact" key={index}>
 							{fact}
@@ -46,9 +48,15 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
 					))}
 				</ul>
 			)}
-			{props.product.note && <p className="test">{props.product.note}</p>}
-			{props.product.note2 && <p className="test">{props.product.note2}</p>}
-			{props.product.info && <p className="test2">{props.product.info}</p>}
+			{props.product.note && (
+				<p className="productInfoTextReg">{props.product.note}</p>
+			)}
+			{props.product.note2 && (
+				<p className="productInfoTextReg">{props.product.note2}</p>
+			)}
+			{props.product.info && (
+				<p className="productInfoTextMed">{props.product.info}</p>
+			)}
 		</div>
 	);
 };

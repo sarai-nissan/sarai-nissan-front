@@ -6,7 +6,7 @@ type Props = {
 };
 
 const ProductImages: React.FC<Props> = ({ images }) => {
-	const [selected, setSelected] = useState(images[1]);
+	const [selected, setSelected] = useState(images[0]);
 
 	return (
 		<div className="productImagesContainer">
