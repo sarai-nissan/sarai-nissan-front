@@ -48,3 +48,9 @@
 .headerSocialLinksContainer a:hover {
 	color: #777;
 }
+
+@media (max-width: 400px) {
+	.headerNavLinksContainer {
+		gap: 10px;
+	}
+}
