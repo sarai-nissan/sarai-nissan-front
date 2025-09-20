@@ -1,13 +1,48 @@
 import React from "react";
-import Mailing from "../components/mailing/Mailing";
-import StoreBlock from "../components/storeblock/Storeblock";
+import { Link } from "react-router-dom";
+import image from "../assets/images/homeImg.png";
 import "../styles/homePage.css";
+
+const LINKS = ["About", "Portfolio", "FAQ", "Stockists", "Events", "Contact"];
 
 const HomePage: React.FC = () => {
 	return (
 		<div className="homeContainer">
-			<Mailing />
-			<StoreBlock />
+			<img src={image} alt="Home" className="homeImage" />
+			<div className="homeOverlay">
+				<div className="homeNameContainer">
+					<p className="homeName">Sarai</p>
+					<p className="homeName">Nissan</p>
+				</div>
+
+				<div className="homeSubscribeContainer">
+					<p className="homeSubscribeText">
+						Subscribe to our email newsletter to stay up to date with the latest
+						news.
+					</p>
+					<div className="homeSubscribeFormContainer">
+						<input
+							type="text"
+							placeholder="Enter your email"
+							className="homeSubscribeInput"
+						/>
+						<button className="homeSubscribeButton">Subscribe</button>
+					</div>
+				</div>
+				<Link to="/shop" className="homeShopLinkContainer">
+					<p className="homeShopLink">Go to shop</p>
+				</Link>
+			</div>
+
+			<div className="homeLinksContainer">
+				<div className="homeLinksInnerContainer">
+					{LINKS.map((link) => (
+						<p className="homeLink" key={link}>
+							{link}
+						</p>
+					))}
+				</div>
+			</div>
 		</div>
 	);
 };
