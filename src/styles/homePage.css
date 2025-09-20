@@ -1,5 +1,155 @@
 .homeContainer {
-	max-width: 1200px;
+	width: calc(100% + 20px);
+	margin: 0 -10px;
+	align-self: stretch;
+	position: relative;
+	overflow: hidden;
+}
+
+.homeImage {
+	width: clamp(300px, 60vw, 760px);
+	margin-left: clamp(0px, 1vw, 60px);
+	margin-top: clamp(0rem, 5vw, 2rem);
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.homeOverlay {
+	margin-top: clamp(60px, 10vw, 70px);
+	right: 0;
+	z-index: 10;
+}
+
+.homeNameContainer {
+	align-items: center;
+	justify-content: center;
+	max-width: min-content;
+	margin-left: auto;
+	margin-right: clamp(-10px, 3vw, -20px);
+	color: #000;
+}
+
+.homeName {
+	font-size: clamp(32px, 18vw, 300px);
+	font-family: "Luxurious Roman", serif;
+	font-weight: 500;
+	font-style: italic;
+	line-height: clamp(0px, 13vw, 220px);
+	letter-spacing: clamp(0px, 2vw, 20px);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.homeSubscribeContainer {
+	justify-content: center;
+	align-items: center;
+	background-color: #000;
+	padding: clamp(20px, 4vw, 50px) clamp(16px, 3vw, 70px);
+	margin-top: clamp(240px, 9vw, 90px);
+	margin-left: auto;
+	margin-right: clamp(0px, 3vw, 70px);
+	max-width: clamp(320px, 60vw, 840px);
 	width: 100%;
-	margin-top: 45px;
+}
+
+.homeSubscribeText {
+	text-align: center;
+	max-width: 720px;
+	font-size: clamp(16px, 2vw, 40px);
+	margin-bottom: clamp(16px, 2vw, 50px);
+	color: #fff;
+}
+
+.homeSubscribeFormContainer {
+	display: flex;
+	gap: clamp(16px, 3vw, 50px);
+	align-items: center;
+}
+
+.homeSubscribeInput {
+	font-size: clamp(14px, 2vw, 20px);
+	padding: clamp(10px, 2vw, 14px);
+	width: 100%;
+	background-color: #fff;
+}
+
+.homeSubscribeButton {
+	font-size: clamp(14px, 2vw, 20px);
+	padding: clamp(12px, 2vw, 14px) clamp(12px, 3vw, 20px);
+	background-color: #fff;
+	color: #000;
+	outline: 1px solid #fff;
+	border: none;
+	cursor: pointer;
+	transition: background-color 5.3s, color 5.3s;
+}
+
+.homeSubscribeButton:hover {
+	background-color: #000;
+	color: #fff;
+	outline: 1px solid #fff;
+}
+
+.homeShopLink {
+	font-family: "Luxurious Roman", serif;
+	text-transform: uppercase;
+	font-style: italic;
+	font-size: clamp(32px, 8vw, 120px);
+	margin-top: clamp(60px, 9vw, 150px);
+	text-align: center;
+	cursor: pointer;
+	color: #000;
+	max-width: max-content;
+	align-self: center;
+	margin-left: auto;
+	margin-right: clamp(95px, 14vw, 100px);
+	transition: color 0.3s;
+}
+
+.homeShopLink:hover {
+	color: #555;
+	cursor: pointer;
+}
+
+.homeLinksContainer {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	margin-top: clamp(100px, 20vw, 400px);
+}
+
+.homeLinksInnerContainer {
+	max-width: 1000px;
+	flex-wrap: wrap;
+	gap: clamp(40px, 12vw, 120px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 200px;
+}
+
+.homeLink {
+	font-family: "Luxurious Roman", serif;
+	text-transform: uppercase;
+	font-style: italic;
+	font-size: clamp(28px, 8vw, 96px);
+	color: #000;
+	transition: color 0.3s;
+}
+
+.homeLink:hover {
+	color: #555;
+	cursor: pointer;
+}
+
+@media (max-width: 900px) {
+	.homeSubscribeFormContainer {
+		flex-direction: column;
+		gap: 20px;
+	}
 }
