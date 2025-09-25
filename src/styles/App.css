@@ -24,6 +24,16 @@ img {
 	display: block;
 }
 
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	outline: none;
+	box-shadow: none;
+	background-color: #fff;
+	border-radius: 0;
+}
+
 button,
 input,
 textarea {

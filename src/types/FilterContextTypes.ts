@@ -1,4 +1,6 @@
+export type CategoryType = "All" | "Prints" | "Tarot & Oracle Decks";
+
 export interface FilterContextType {
-	selectedCategory: string;
-	setSelectedCategory: (category: string) => void;
+	selectedCategory: CategoryType;
+	setSelectedCategory: (category: CategoryType) => void;
 }

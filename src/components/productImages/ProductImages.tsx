@@ -1,41 +1,64 @@
 import React, { useState } from "react";
+import type { Photo } from "../../types/Product";
 import "./productImages.css";
 
 type Props = {
-	images: string[];
+	images: Photo[];
 };
 
 const ProductImages: React.FC<Props> = ({ images }) => {
-	const [selected, setSelected] = useState(images[0]);
+	const API_URL = import.meta.env.VITE_STRAPI_API_URL;
+	const [selected, setSelected] = useState(`${API_URL}${images[0].url}`);
 
 	return (
-		<div className="productImagesContainer">
+		<div
+			className={`productImagesContainer ${
+				images.length === 1 ? "single" : ""
+			}`}
+		>
 			<div className="productImagesTopContainer">
 				<img src={selected} alt="Selected" className="productImagesImg" />
-				<div className="productImagesTopArrContainer">
-					{images.slice(0, 4).map((img, idx) => (
-						<img
-							key={idx}
-							src={img}
-							alt={`Thumbnail ${idx}`}
-							className="productImagesSmall"
-							onClick={() => setSelected(img)}
-						/>
-					))}
-				</div>
+
+				{images.length > 1 && (
+					<div className="productImagesTopArrContainer">
+						{images.slice(0, 4).map((img, idx) => (
+							<div
+								key={idx}
+								className={`productImagesSmallWrapper ${
+									selected === `${API_URL}${img.url}` ? "active" : ""
+								}`}
+								onClick={() => setSelected(`${API_URL}${img.url}`)}
+							>
+								<img
+									src={`${API_URL}${img.url}`}
+									alt={`Thumbnail ${idx}`}
+									className="productImagesSmall"
+								/>
+							</div>
+						))}
+					</div>
+				)}
 			</div>
 
-			<div className="productImagesBottArrContainer">
-				{images.slice(4).map((img, idx) => (
-					<img
-						key={idx}
-						src={img}
-						alt={`Thumbnail ${idx}`}
-						className="productImagesSmall"
-						onClick={() => setSelected(img)}
-					/>
-				))}
-			</div>
+			{images.length > 4 && (
+				<div className="productImagesBottArrContainer">
+					{images.slice(4).map((img, idx) => (
+						<div
+							key={idx}
+							className={`productImagesSmallWrapper ${
+								selected === `${API_URL}${img.url}` ? "active" : ""
+							}`}
+							onClick={() => setSelected(`${API_URL}${img.url}`)}
+						>
+							<img
+								src={`${API_URL}${img.url}`}
+								alt={`Thumbnail ${idx}`}
+								className="productImagesSmall"
+							/>
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
