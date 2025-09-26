@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import type { ProductType } from "../../types/Product";
 import "./productInfo.css";
 
-type Props = { product: ProductType };
+type Props = {
+	product: ProductType;
+	selectedOption: string;
+	setSelectedOption: (option: string) => void;
+};
 
-const ProductInfo: React.FC<Props> = ({ product }) => {
+const ProductInfo: React.FC<Props> = ({
+	product,
+	selectedOption,
+	setSelectedOption,
+}) => {
 	const {
 		name,
 		price,
@@ -18,9 +26,8 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
 		warning,
 		sold,
 	} = product;
-	const [quantity, setQuantity] = useState(1);
-	const [selectedOption, setSelectedOption] = useState("");
 
+	const [quantity, setQuantity] = useState(1);
 	const disabledButton = sold || (dropdown && selectedOption === "");
 
 	const incrementHandler = () => setQuantity(quantity + 1);
@@ -32,14 +39,17 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
 		<div className="productInfoContainer">
 			<p className="productInfoName">{name}</p>
 
-			<p className="productInfoPrice">${price}</p>
+			<div className="productInfoPriceContainer">
+				<p className="productInfoPrice">${price}</p>
+				{sold && <p className="productInfoSoldOut">Sold Out</p>}
+			</div>
 
 			{dropdown && (
 				<div className="productInfoDropdownContainer">
 					<p className="productInfoQuantity">{dropdownTitle}:</p>
 					<select
 						className="productInfoDropdown"
-						defaultValue=""
+						value={selectedOption}
 						onChange={(e) => setSelectedOption(e.target.value)}
 					>
 						<option value="" disabled>

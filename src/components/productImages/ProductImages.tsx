@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Photo } from "../../types/Product";
 import "./productImages.css";
 
 type Props = {
 	images: Photo[];
+	selectedOption: string;
 };
 
-const ProductImages: React.FC<Props> = ({ images }) => {
+const ProductImages: React.FC<Props> = ({ images, selectedOption }) => {
 	const API_URL = import.meta.env.VITE_STRAPI_API_URL;
 	const [selected, setSelected] = useState(`${API_URL}${images[0].url}`);
+
+	useEffect(() => {
+		if (selectedOption) {
+			const found = images.find((img) =>
+				img.url.toLowerCase().includes(selectedOption.toLowerCase())
+			);
+			if (found) {
+				setSelected(`${API_URL}${found.url}`);
+			}
+		}
+	}, [selectedOption, images]);
 
 	return (
 		<div

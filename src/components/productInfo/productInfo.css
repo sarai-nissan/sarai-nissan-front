@@ -10,11 +10,23 @@
 	margin-bottom: 20px;
 }
 
+.productInfoPriceContainer {
+	display: flex;
+	align-items: center;
+	margin-bottom: 30px;
+	gap: 30px;
+}
+
 .productInfoPrice {
 	font-size: 20px;
 	color: #000;
 	font-weight: 400;
-	margin-bottom: 30px;
+}
+
+.productInfoSoldOut {
+	font-size: 20px;
+	color: red;
+	font-weight: 600;
 }
 
 .productInfoDropdownContainer {
