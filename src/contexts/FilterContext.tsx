@@ -1,15 +1,21 @@
 import React, { createContext, useContext, useState } from "react";
 import type { FilterContextType } from "../types/FilterContextTypes";
+import type { CategoryType } from "../types/FilterContextTypes";
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const [selectedCategory, setSelectedCategory] = useState("all");
+	const [selectedCategory, setSelectedCategory] = useState<CategoryType>("All");
 
 	return (
-		<FilterContext.Provider value={{ selectedCategory, setSelectedCategory }}>
+		<FilterContext.Provider
+			value={{
+				selectedCategory: selectedCategory.toLowerCase() as CategoryType,
+				setSelectedCategory,
+			}}
+		>
 			{children}
 		</FilterContext.Provider>
 	);

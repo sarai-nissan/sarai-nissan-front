@@ -1,17 +1,25 @@
 import React from "react";
+import { useProductStore } from "../store/productStore";
 import { useFilter } from "../contexts/FilterContext";
 import ProductFilter from "../components/productFilter/ProductFilter";
 import ProductCard from "../components/productCard/ProductCard";
-import { test } from "../data";
 import "../styles/shopPage.css";
 
 const ShopPage: React.FC = () => {
 	const { selectedCategory } = useFilter();
+	const { products, isLoading, error } = useProductStore();
 
 	const filteredProducts =
-		selectedCategory === "all"
-			? test
-			: test.filter((product) => product.category.includes(selectedCategory));
+		selectedCategory.toLowerCase() === "all"
+			? products
+			: products.filter((product) =>
+					product.category.some(
+						(cat) => cat.toLowerCase() === selectedCategory.toLowerCase()
+					)
+			  );
+
+	if (isLoading) return <div className="shopTitle">Loading...</div>;
+	if (error) return <div className="shopTitle">Error: {error}</div>;
 
 	return (
 		<div className="shopContainer">

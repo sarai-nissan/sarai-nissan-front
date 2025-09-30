@@ -1,22 +1,69 @@
 import React, { useState } from "react";
-import type { ProductCardProps } from "../../types/Product";
+import type { ProductType } from "../../types/Product";
 import "./productInfo.css";
 
-type Props = { product: ProductCardProps };
+type Props = {
+	product: ProductType;
+	selectedOption: string;
+	setSelectedOption: (option: string) => void;
+};
 
-const ProductInfo: React.FC<Props> = (props: Props) => {
+const ProductInfo: React.FC<Props> = ({
+	product,
+	selectedOption,
+	setSelectedOption,
+}) => {
+	const {
+		name,
+		price,
+		description,
+		dropdownTitle,
+		dropdown,
+		size,
+		enumeration,
+		note1,
+		note2,
+		warning,
+		sold,
+	} = product;
+
 	const [quantity, setQuantity] = useState(1);
+	const disabledButton = sold || (dropdown && selectedOption === "");
 
 	const incrementHandler = () => setQuantity(quantity + 1);
-
 	const decrementHandler = () => {
 		if (quantity > 1) setQuantity(quantity - 1);
 	};
 
 	return (
 		<div className="productInfoContainer">
-			<p className="productInfoName">{props.product.name}</p>
-			<p className="productInfoPrice">${props.product.price}</p>
+			<p className="productInfoName">{name}</p>
+
+			<div className="productInfoPriceContainer">
+				<p className="productInfoPrice">${price}</p>
+				{sold && <p className="productInfoSoldOut">Sold Out</p>}
+			</div>
+
+			{dropdown && (
+				<div className="productInfoDropdownContainer">
+					<p className="productInfoQuantity">{dropdownTitle}:</p>
+					<select
+						className="productInfoDropdown"
+						value={selectedOption}
+						onChange={(e) => setSelectedOption(e.target.value)}
+					>
+						<option value="" disabled>
+							Select an option
+						</option>
+						{dropdown.map((option, index) => (
+							<option value={option} key={index}>
+								{option}
+							</option>
+						))}
+					</select>
+				</div>
+			)}
+
 			<div className="productInfoQuantityContainer">
 				<p className="productInfoQuantity">Quantity:</p>
 				<p className="productInfoQuantityButton" onClick={decrementHandler}>
@@ -32,31 +79,30 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
 					+
 				</p>
 			</div>
-			<button className="productInfoAddToCartButton">Add to Cart</button>
-			{props.product.description && (
-				<p className="productInfoDescription">{props.product.description}</p>
-			)}
-			{props.product.size && (
-				<p className="productInfoTextReg">{props.product.size}</p>
-			)}
-			{props.product.facts && (
+
+			<button className="productInfoAddToCartButton" disabled={disabledButton}>
+				Add to Cart
+			</button>
+
+			{description && <p className="productInfoDescription">{description}</p>}
+
+			{size && <p className="productInfoTextReg">{size}</p>}
+
+			{enumeration && (
 				<ul className="productInfoTextReg">
-					{props.product.facts.map((fact, index) => (
+					{enumeration.map((fact, index) => (
 						<li className="productInfoFact" key={index}>
 							{fact}
 						</li>
 					))}
 				</ul>
 			)}
-			{props.product.note && (
-				<p className="productInfoTextReg">{props.product.note}</p>
-			)}
-			{props.product.note2 && (
-				<p className="productInfoTextReg">{props.product.note2}</p>
-			)}
-			{props.product.info && (
-				<p className="productInfoTextMed">{props.product.info}</p>
-			)}
+
+			{note1 && <p className="productInfoTextReg">{note1}</p>}
+
+			{note2 && <p className="productInfoTextReg">{note2}</p>}
+
+			{warning && <p className="productInfoTextMed">{warning}</p>}
 		</div>
 	);
 };

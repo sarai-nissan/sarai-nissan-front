@@ -5,6 +5,12 @@
 	margin-bottom: 80px;
 }
 
+.shopTitle {
+	text-align: center;
+	margin-top: 45px;
+	margin-bottom: 80px;
+}
+
 .shopProductList {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 400px));

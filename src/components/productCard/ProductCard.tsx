@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import type { ProductCardProps } from "../../types/Product";
+import type { ProductType } from "../../types/Product";
 import "./productCard.css";
 
-const ProductCard: React.FC<{ product: ProductCardProps }> = ({ product }) => {
+const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 	return (
 		<Link
 			to={`/product/${product.id}`}
@@ -12,8 +12,8 @@ const ProductCard: React.FC<{ product: ProductCardProps }> = ({ product }) => {
 		>
 			<img
 				className="productCardImage"
-				src={product.imageUrl[0]}
-				alt="Product"
+				src={`${product.photo[0]?.url}`}
+				alt={product.name}
 			/>
 			<div className="productCardInfoContainer">
 				<p className="productCardText">{product.name}</p>

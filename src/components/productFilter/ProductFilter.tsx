@@ -1,6 +1,7 @@
 import React from "react";
 import { useFilter } from "../../contexts/FilterContext";
-import { categories } from "../../data";
+import { categories } from "../../constants";
+import type { CategoryType } from "../../types/FilterContextTypes";
 import "./productFilter.css";
 
 const ProductFilter: React.FC = () => {
@@ -16,7 +17,9 @@ const ProductFilter: React.FC = () => {
 							: "productFilterItem"
 					}`}
 					key={category}
-					onClick={() => setSelectedCategory(category.toLowerCase())}
+					onClick={() =>
+						setSelectedCategory(category.toLowerCase() as CategoryType)
+					}
 				>
 					{category}
 				</p>
