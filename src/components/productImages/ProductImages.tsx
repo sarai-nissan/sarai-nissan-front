@@ -9,7 +9,7 @@ type Props = {
 
 const ProductImages: React.FC<Props> = ({ images, selectedOption }) => {
 	const API_URL = import.meta.env.VITE_STRAPI_API_URL;
-	const [selected, setSelected] = useState(`${API_URL}${images[0].url}`);
+	const [selected, setSelected] = useState(`${images[0].url}`);
 
 	useEffect(() => {
 		if (selectedOption) {
@@ -17,7 +17,7 @@ const ProductImages: React.FC<Props> = ({ images, selectedOption }) => {
 				img.url.toLowerCase().includes(selectedOption.toLowerCase())
 			);
 			if (found) {
-				setSelected(`${API_URL}${found.url}`);
+				setSelected(`${found.url}`);
 			}
 		}
 	}, [selectedOption, images]);
@@ -37,12 +37,12 @@ const ProductImages: React.FC<Props> = ({ images, selectedOption }) => {
 							<div
 								key={idx}
 								className={`productImagesSmallWrapper ${
-									selected === `${API_URL}${img.url}` ? "active" : ""
+									selected === `${img.url}` ? "active" : ""
 								}`}
-								onClick={() => setSelected(`${API_URL}${img.url}`)}
+								onClick={() => setSelected(`${img.url}`)}
 							>
 								<img
-									src={`${API_URL}${img.url}`}
+									src={`${img.url}`}
 									alt={`Thumbnail ${idx}`}
 									className="productImagesSmall"
 								/>

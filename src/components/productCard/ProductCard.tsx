@@ -4,8 +4,6 @@ import type { ProductType } from "../../types/Product";
 import "./productCard.css";
 
 const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
-	const API_URL = import.meta.env.VITE_STRAPI_API_URL;
-
 	return (
 		<Link
 			to={`/product/${product.id}`}
@@ -14,7 +12,7 @@ const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 		>
 			<img
 				className="productCardImage"
-				src={`${API_URL}${product.photo[0]?.url}`}
+				src={`${product.photo[0]?.url}`}
 				alt={product.name}
 			/>
 			<div className="productCardInfoContainer">
