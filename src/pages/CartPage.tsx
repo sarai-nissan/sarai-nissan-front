@@ -12,6 +12,14 @@ const CartPage: React.FC = () => {
 		return acc + itemPrice * item.quantity;
 	}, 0);
 
+	if (basket.length === 0) {
+		return (
+			<div className="cartPageContainer">
+				<p className="cartPageEmptyText">Your cart is empty</p>
+			</div>
+		);
+	}
+
 	return (
 		<div className="cartPageContainer">
 			{basket.map((item) => (
