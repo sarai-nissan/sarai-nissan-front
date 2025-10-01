@@ -41,6 +41,11 @@ export interface Photo {
 	};
 }
 
+export type ProductDropdown = {
+	label: string;
+	price?: string;
+};
+
 export type ProductType = {
 	id: number;
 	documentId: string;
@@ -48,7 +53,7 @@ export type ProductType = {
 	description?: string;
 	category: CategoryType[];
 	dropdownTitle?: string;
-	dropdown?: string[];
+	dropdown?: ProductDropdown[];
 	enumeration?: string[];
 	size?: string;
 	price: string;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { ProductType } from "../../types/Product";
+import type { ProductDropdown, ProductType } from "../../types/Product";
 import "./productInfo.css";
 
 type Props = {
@@ -28,11 +28,24 @@ const ProductInfo: React.FC<Props> = ({
 	} = product;
 
 	const [quantity, setQuantity] = useState(1);
+	const priceLabel = price.includes("from") ? price : `$${price}`;
+	const [selectedPrice, setSelectedPrice] = useState(priceLabel);
 	const disabledButton = sold || (dropdown && selectedOption === "");
 
 	const incrementHandler = () => setQuantity(quantity + 1);
 	const decrementHandler = () => {
 		if (quantity > 1) setQuantity(quantity - 1);
+	};
+	const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const value = e.target.value;
+		setSelectedOption(value);
+		const selectedObj =
+			dropdown && dropdown.find((opt: ProductDropdown) => opt.label === value);
+		if (selectedObj?.price) {
+			setSelectedPrice(`$${selectedObj.price}`);
+		} else {
+			setSelectedPrice(priceLabel);
+		}
 	};
 
 	return (
@@ -40,7 +53,7 @@ const ProductInfo: React.FC<Props> = ({
 			<p className="productInfoName">{name}</p>
 
 			<div className="productInfoPriceContainer">
-				<p className="productInfoPrice">${price}</p>
+				<p className="productInfoPrice">{selectedPrice}</p>
 				{sold && <p className="productInfoSoldOut">Sold Out</p>}
 			</div>
 
@@ -50,14 +63,14 @@ const ProductInfo: React.FC<Props> = ({
 					<select
 						className="productInfoDropdown"
 						value={selectedOption}
-						onChange={(e) => setSelectedOption(e.target.value)}
+						onChange={(e) => selectHandler(e)}
 					>
 						<option value="" disabled>
 							Select an option
 						</option>
-						{dropdown.map((option, index) => (
-							<option value={option} key={index}>
-								{option}
+						{dropdown.map((option: ProductDropdown, index: number) => (
+							<option value={option.label} key={index}>
+								{option.label}
 							</option>
 						))}
 					</select>
