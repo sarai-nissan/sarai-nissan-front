@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useBasket } from "../../contexts/BasketContext";
 import type { ProductDropdown, ProductType } from "../../types/Product";
 import "./productInfo.css";
 
@@ -27,6 +28,7 @@ const ProductInfo: React.FC<Props> = ({
 		sold,
 	} = product;
 
+	const { addToBasket } = useBasket();
 	const [quantity, setQuantity] = useState(1);
 	const priceLabel = price.includes("from") ? price : `$${price}`;
 	const [selectedPrice, setSelectedPrice] = useState(priceLabel);
@@ -47,6 +49,8 @@ const ProductInfo: React.FC<Props> = ({
 			setSelectedPrice(priceLabel);
 		}
 	};
+	const handleAddToBasket = () =>
+		addToBasket(product, quantity, selectedPrice, selectedOption);
 
 	return (
 		<div className="productInfoContainer">
@@ -93,7 +97,11 @@ const ProductInfo: React.FC<Props> = ({
 				</p>
 			</div>
 
-			<button className="productInfoAddToCartButton" disabled={disabledButton}>
+			<button
+				className="productInfoAddToCartButton"
+				disabled={disabledButton}
+				onClick={handleAddToBasket}
+			>
 				Add to Cart
 			</button>
 

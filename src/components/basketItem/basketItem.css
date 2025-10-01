@@ -1,0 +1,94 @@
+.basketItemContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 40px;
+}
+.basketItemImage {
+	width: 130px;
+	height: 130px;
+	min-width: 130px;
+	object-fit: cover;
+}
+.basketItemContentContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	margin-left: clamp(14px, 2.5vw, 20px);
+}
+
+.basketItemNameContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	max-width: 600px;
+	width: 100%;
+	margin-right: 20px;
+}
+
+.basketItemText {
+	font-size: clamp(16px, 1.5vw, 18px);
+	color: #000;
+	font-weight: 400;
+}
+
+.basketItemControlsContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 45%;
+	gap: 20px;
+}
+
+.basketItemQuantityContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+	gap: 0;
+}
+
+.basketItemQuantityButton {
+	font-weight: 400;
+	font-size: clamp(16px, 1.5vw, 18px);
+	width: clamp(30px, 3vw, 40px);
+	height: clamp(30px, 3vw, 40px);
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	border: none;
+	color: #000;
+}
+
+.basketItemPriceContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: clamp(20px, 2.5vw, 40px);
+}
+
+.basketItemRemoveButton {
+	width: clamp(14px, 1.5vw, 20px);
+	height: clamp(14px, 1.5vw, 20px);
+}
+
+@media (max-width: 770px) {
+	.basketItemContentContainer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.basketItemControlsContainer {
+		margin-top: 20px;
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 570px) {
+	.basketItemImage {
+		width: 100px;
+		height: 100px;
+		min-width: 100px;
+	}
+}
