@@ -4,6 +4,10 @@ import type { ProductType } from "../../types/Product";
 import "./productCard.css";
 
 const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
+	const priceLabel = product.price.includes("from")
+		? product.price
+		: `$${product.price}`;
+
 	return (
 		<Link
 			to={`/product/${product.id}`}
@@ -17,7 +21,7 @@ const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 			/>
 			<div className="productCardInfoContainer">
 				<p className="productCardText">{product.name}</p>
-				<p className="productCardText">${product.price}</p>
+				<p className="productCardText">{priceLabel}</p>
 			</div>
 		</Link>
 	);

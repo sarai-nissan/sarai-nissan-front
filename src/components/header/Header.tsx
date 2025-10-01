@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import logoImg from "../../assets/images/logo.png";
 import Inst from "../../assets/icons/Inst";
 import Tiktok from "../../assets/icons/Tiktok";
-
 import "./header.css";
 
 const Header: React.FC = () => {

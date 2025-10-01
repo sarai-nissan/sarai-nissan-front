@@ -24,7 +24,6 @@ export const useProductStore = create<ProductStoreType>()(
 					if (!res.ok) throw new Error("Error fetching products");
 
 					const data = await res.json();
-					console.log(data.data);
 
 					set({ products: data.data ?? [], isLoading: false });
 				} catch (err) {

@@ -1,0 +1,37 @@
+.inputContainer {
+	width: 100%;
+	box-sizing: border-box;
+}
+.inputLabel {
+	margin-bottom: 0.5rem;
+	font-size: 1rem;
+	color: #000;
+}
+
+.inputField {
+	width: 100%;
+	padding: 0.6rem;
+	font-size: 1rem;
+	border: 1px solid #000;
+	color: #000;
+	background-color: #fff;
+	font-weight: 300;
+	border-radius: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+}
+
+.inputField:focus {
+	outline: none;
+}
+
+.inputField:-webkit-autofill,
+.inputField:-webkit-autofill:hover,
+.inputField:-webkit-autofill:focus,
+.inputField:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px white inset !important;
+	box-shadow: 0 0 0 30px white inset !important;
+	background-color: rgb(255, 255, 255) !important;
+}
