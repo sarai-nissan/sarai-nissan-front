@@ -1,0 +1,41 @@
+.inputDdContainer {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.inputDdLabel {
+	margin-bottom: 0.5rem;
+	font-size: 1rem;
+	color: #000;
+}
+
+.inputDdInput {
+	width: 100%;
+	padding: 0.6rem;
+	font-size: 1rem;
+	border: 1px solid #000;
+	color: #000;
+	background-color: #fff;
+	border-radius: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path stroke='%23000000' stroke-width='1.5' fill='none' d='M1.5 1.5L6 6L10.5 1.5'/></svg>");
+	background-repeat: no-repeat;
+	background-position: right 0.6rem center;
+	background-size: 12px 8px;
+}
+
+.inputDdInput:focus {
+	outline: none;
+}
+
+.inputDdInput:-webkit-autofill,
+.inputDdInput:-webkit-autofill:hover,
+.inputDdInput:-webkit-autofill:focus,
+.inputDdInput:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px white inset !important;
+	box-shadow: 0 0 0 30px white inset !important;
+	background-color: #fff !important;
+}

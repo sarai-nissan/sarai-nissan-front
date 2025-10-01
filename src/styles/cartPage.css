@@ -9,8 +9,10 @@
 	border-top: 1px solid #ccc;
 	padding-top: 40px;
 	padding-right: 40px;
-	justify-content: flex-end;
 	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	align-items: flex-end;
 }
 
 .cartPageTotalInnerContainer {
@@ -25,11 +27,34 @@
 	font-weight: 400;
 }
 
+.cartPageCheckoutButton {
+	max-width: 400px;
+	width: 100%;
+	font-size: clamp(16px, 2vw, 18px);
+	color: #fff;
+	font-weight: 400;
+	background-color: #000;
+	border: none;
+	padding: 15px 24px;
+	text-transform: uppercase;
+	justify-content: center;
+	display: flex;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.cartPageCheckoutButton:hover {
+	background-color: #333333;
+}
+
 @media (max-width: 600px) {
 	.cartPageTotalContainer {
 		padding: 40px clamp(0px, 2vw, 20px) 0;
 	}
 	.cartPageTotalInnerContainer {
+		max-width: 100%;
+	}
+	.cartPageCheckoutButton {
 		max-width: 100%;
 	}
 }

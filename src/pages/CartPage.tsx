@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useBasket } from "../contexts/BasketContext";
 import BasketItem from "../components/basketItem/BasketItem";
 import "../styles/cartPage.css";
@@ -6,7 +7,7 @@ import "../styles/cartPage.css";
 const CartPage: React.FC = () => {
 	const { basket } = useBasket();
 
-	const totalAmount = basket.reduce((acc, item) => {
+	const subtotalAmount = basket.reduce((acc, item) => {
 		const itemPrice = Number(item.selectedPrice.replace("$", ""));
 		return acc + itemPrice * item.quantity;
 	}, 0);
@@ -19,8 +20,11 @@ const CartPage: React.FC = () => {
 			<div className="cartPageTotalContainer">
 				<div className="cartPageTotalInnerContainer">
 					<p className="cartPageTotalText">Subtotal: </p>
-					<p className="cartPageTotalText"> $ {totalAmount.toFixed(2)}</p>
+					<p className="cartPageTotalText"> $ {subtotalAmount.toFixed(2)}</p>
 				</div>
+				<Link to="/checkout" className="cartPageCheckoutButton">
+					Checkout
+				</Link>
 			</div>
 		</div>
 	);

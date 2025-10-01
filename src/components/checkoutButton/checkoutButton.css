@@ -1,0 +1,19 @@
+.checkoutButton {
+	max-width: 200px;
+	width: 100%;
+	font-size: clamp(16px, 2vw, 18px);
+	color: #fff;
+	font-weight: 400;
+	background-color: #000;
+	border: none;
+	margin-top: 1rem;
+	padding: 15px 24px;
+	text-transform: uppercase;
+	align-self: center;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.checkoutButton:hover {
+	background-color: #333333;
+}
