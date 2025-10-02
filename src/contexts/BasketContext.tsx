@@ -22,14 +22,14 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 		selectedPrice: string,
 		selectedOption: string = ""
 	) => {
-		const itemId = product.id;
+		const itemKey = `${product.id}-${selectedOption}`;
 
 		setBasket((prev) => {
-			const existingItem = prev.find((item) => item.id === itemId);
+			const existingItem = prev.find((item) => item.id === itemKey);
 
 			if (existingItem) {
 				return prev.map((item) =>
-					item.id === itemId
+					item.id === itemKey
 						? { ...item, quantity: item.quantity + quantity }
 						: item
 				);
@@ -37,7 +37,13 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 
 			return [
 				...prev,
-				{ id: itemId, quantity, selectedPrice, product, selectedOption },
+				{
+					id: itemKey,
+					quantity,
+					selectedPrice,
+					product,
+					selectedOption,
+				},
 			];
 		});
 	};

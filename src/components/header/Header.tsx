@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useBasket } from "../../contexts/BasketContext";
 import logoImg from "../../assets/images/logo.png";
 import Inst from "../../assets/icons/Inst";
 import Tiktok from "../../assets/icons/Tiktok";
@@ -7,6 +8,9 @@ import "./header.css";
 
 const Header: React.FC = () => {
 	const location = useLocation();
+	const { basket } = useBasket();
+
+	const totalItems = basket.reduce((acc, item) => acc + item.quantity, 0);
 
 	const getLinkClassName = (path: string) => {
 		return location.pathname === path ? "navLink active" : "navLink";
@@ -23,7 +27,7 @@ const Header: React.FC = () => {
 					Shop
 				</Link>
 				<Link to="/cart" className={getLinkClassName("/cart")}>
-					Cart
+					Cart {totalItems > 0 && `(${totalItems})`}
 				</Link>
 				<div className="headerSocialLinksContainer">
 					<Link
