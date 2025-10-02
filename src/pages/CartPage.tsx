@@ -28,7 +28,7 @@ const CartPage: React.FC = () => {
 			<div className="cartPageTotalContainer">
 				<div className="cartPageTotalInnerContainer">
 					<p className="cartPageTotalText">Subtotal: </p>
-					<p className="cartPageTotalText"> $ {subtotalAmount.toFixed(2)}</p>
+					<p className="cartPageTotalText"> ${subtotalAmount.toFixed(2)}</p>
 				</div>
 				<Link to="/checkout" className="cartPageCheckoutButton">
 					Checkout

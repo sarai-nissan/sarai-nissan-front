@@ -1,7 +1,7 @@
 import type { ProductType } from "./Product";
 
 export interface BasketElement {
-	id: number;
+	id: string;
 	quantity: number;
 	product: ProductType;
 	selectedPrice: string;
@@ -16,7 +16,7 @@ export interface BasketContextType {
 		selectedPrice: string,
 		selectedOption?: string
 	) => void;
-	removeFromBasket: (id: number) => void;
-	updateQuantity: (id: number, quantity: number) => void;
+	removeFromBasket: (id: string) => void;
+	updateQuantity: (id: string, quantity: number) => void;
 	clearBasket: () => void;
 }

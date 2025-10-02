@@ -149,7 +149,7 @@ const CheckoutPage: React.FC = () => {
 							className="checkoutPageRadioInput"
 						/>
 						<label htmlFor={option.id} className="checkoutPageDeliveryLabel">
-							{option.label} – {option.price}
+							{option.label} – ${option.price}
 						</label>
 					</div>
 				))}
