@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import { useProductStore } from "../store/productStore";
 import ProductImages from "../components/productImages/ProductImages";
 import ProductInfo from "../components/productInfo/ProductInfo";
+import { slugify } from "../utils";
 import "../styles/productPage.css";
 
 const ProductPage: React.FC = () => {
-	const { id } = useParams();
+	const { slug } = useParams();
 	const { products } = useProductStore();
-	const product = products.find((p) => String(p.id) === id);
+	const product = products.find((p) => slugify(p.name) === slug);
 
 	const [selectedOption, setSelectedOption] = useState<string>("");
 

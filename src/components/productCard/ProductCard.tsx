@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { slugify } from "../../utils";
 import type { ProductType } from "../../types/Product";
 import "./productCard.css";
 
@@ -10,7 +11,7 @@ const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 
 	return (
 		<Link
-			to={`/product/${product.id}`}
+			to={`/product/${slugify(product.name)}`}
 			className="productCardContainer"
 			state={{ product }}
 		>
