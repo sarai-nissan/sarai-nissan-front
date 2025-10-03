@@ -55,7 +55,7 @@ const ConfirmationPage: React.FC = () => {
 						if (!res.ok) throw new Error(`Error: ${res.status}`);
 						return res.json();
 					})
-					.then((data) => console.log("Order submitted"))
+					.then(() => console.log("Order submitted"))
 					.catch((err) => console.error("Failed:", err));
 				localStorage.removeItem("order");
 				clearBasket();
