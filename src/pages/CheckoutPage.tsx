@@ -55,11 +55,14 @@ const CheckoutPage: React.FC = () => {
 			: internationalDeliveryType;
 
 	useEffect(() => {
-		const newDelivery: DeliveryId =
-			form.country === "US" || form.country === "" ? "ground" : "basic";
+		const availableDelivery =
+			form.country === "US" || form.country === ""
+				? usDeliveryType
+				: internationalDeliveryType;
 
-		if (form.delivery !== newDelivery) {
-			const updatedForm: OrderForm = { ...form, delivery: newDelivery };
+		if (!availableDelivery.some((opt) => opt.id === form.delivery)) {
+			const fallbackDelivery: DeliveryId = availableDelivery[0].id;
+			const updatedForm: OrderForm = { ...form, delivery: fallbackDelivery };
 			setForm(updatedForm);
 
 			const newOrder: OrderData = { form: updatedForm, basketItems: basket };
