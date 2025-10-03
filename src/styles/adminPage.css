@@ -1,0 +1,112 @@
+.adminContainer {
+	background-color: #191919;
+	min-height: 100vh;
+	min-width: 100vw;
+	padding: 3rem 0;
+	display: flex;
+	justify-content: center;
+	margin-left: calc(-50vw + 50%);
+	font-family: "Montserrat", sans-serif;
+}
+
+.adminContainerInner {
+	width: 100%;
+	max-width: 1200px;
+}
+
+.adminOrder {
+	box-sizing: border-box;
+	border: 1px solid #fff;
+	padding: 1rem;
+	margin-bottom: 3rem;
+	width: 100%;
+	justify-content: space-between;
+	display: flex;
+}
+
+.adminOrderContainer {
+	margin-bottom: auto;
+	padding-bottom: 1rem;
+}
+
+.adminColumnContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	width: 100%;
+}
+
+.adminLightText {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 300;
+	margin-bottom: 0.5rem;
+}
+
+.adminMediumText {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.adminQuantityText {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 200;
+	padding: 0 0.5rem;
+}
+
+.adminTextarea {
+	padding: 0.5rem;
+	flex: auto;
+	min-height: 140px;
+	border: 1px solid #fff;
+	background-color: #252525;
+	color: #fff;
+	font-family: "Montserrat", sans-serif;
+	font-size: 0.9rem;
+}
+
+.adminTextarea:active,
+.adminTextarea:focus {
+	outline: none;
+	background-color: #323232;
+}
+
+.adminRowContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@media (max-width: 1250px) {
+	.adminContainerInner {
+		padding: 0 1rem;
+	}
+}
+
+@media (max-width: 940px) {
+	.adminColumnContainer {
+		margin-right: 1rem;
+	}
+	.adminColumnContainer:nth-child(3) {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 866px) {
+	.adminOrder {
+		flex-direction: column;
+		gap: 2rem;
+		align-items: center;
+	}
+	.adminColumnContainer {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 340px) {
+	.adminContainerInner {
+		padding: 0;
+	}
+}
