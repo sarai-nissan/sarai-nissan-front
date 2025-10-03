@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useProductStore } from "./store/productStore";
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
@@ -10,7 +10,29 @@ import ShopPage from "./pages/ShopPage";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import AdminPage from "./pages/AdminPage";
 import "./styles/App.css";
+
+const AppRoutes: React.FC = () => {
+	const location = useLocation();
+	const hideHeader = location.pathname === "/admin";
+
+	return (
+		<div className="App">
+			{!hideHeader && <Header />}
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/shop" element={<ShopPage />} />
+				<Route path="/product/:slug" element={<ProductPage />} />
+				<Route path="/cart" element={<CartPage />} />
+				<Route path="/checkout" element={<CheckoutPage />} />
+				<Route path="/confirmation" element={<ConfirmationPage />} />
+				<Route path="/admin" element={<AdminPage />} />
+			</Routes>
+		</div>
+	);
+};
 
 function App() {
 	const { fetchProducts } = useProductStore();
@@ -24,16 +46,7 @@ function App() {
 			<BasketProvider>
 				<OrderProvider>
 					<FilterProvider>
-						<div className="App">
-							<Header />
-							<Routes>
-								<Route path="/" element={<HomePage />} />
-								<Route path="/shop" element={<ShopPage />} />
-								<Route path="/product/:slug" element={<ProductPage />} />
-								<Route path="/cart" element={<CartPage />} />
-								<Route path="/checkout" element={<CheckoutPage />} />
-							</Routes>
-						</div>
+						<AppRoutes />
 					</FilterProvider>
 				</OrderProvider>
 			</BasketProvider>

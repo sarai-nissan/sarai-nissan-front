@@ -1,0 +1,16 @@
+.adminLinesTextContainer {
+	display: flex;
+	gap: 1rem;
+}
+
+.adminLinesTextExtraLightText {
+	color: white;
+	font-size: 1rem;
+	font-weight: 200;
+}
+
+.adminLinesTextMediumText {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 500;
+}

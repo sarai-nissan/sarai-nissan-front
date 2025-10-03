@@ -1,0 +1,22 @@
+.buttonContainer {
+	padding: 0.7rem 1rem;
+	cursor: pointer;
+	border: 1px solid #000;
+	background-color: transparent;
+	transition: opacity 0.3s ease;
+}
+
+.buttonContainer:hover {
+	opacity: 0.7;
+}
+
+.buttonContainer:disabled {
+	opacity: 0.2;
+	cursor: not-allowed;
+}
+
+.buttonText {
+	font-size: 1rem;
+	color: #000;
+	font-family: "KyivTypeSerif", serif;
+}
