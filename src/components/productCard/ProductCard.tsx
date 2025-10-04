@@ -20,6 +20,12 @@ const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 				src={`${product.photo[0]?.url}`}
 				alt={product.name}
 			/>
+			{product.sold && (
+				<div className="productCardSoldContainer">
+					<p className="productCardSoldText">Sold</p>
+					<p className="productCardSoldText">Out</p>
+				</div>
+			)}
 			<div className="productCardInfoContainer">
 				<p className="productCardText">{product.name}</p>
 				<p className="productCardText">{priceLabel}</p>
