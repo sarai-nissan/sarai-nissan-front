@@ -12,7 +12,7 @@ export const usDeliveryType = [
 	{
 		id: "ground",
 		label: "USPS Ground Advantage",
-		price: 12,
+		price: 0.5,
 	},
 	{
 		id: "express",
