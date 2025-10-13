@@ -12,7 +12,7 @@ export const usDeliveryType = [
 	{
 		id: "ground",
 		label: "USPS Ground Advantage",
-		price: 0.5,
+		price: 12,
 	},
 	{
 		id: "express",
@@ -25,7 +25,7 @@ export const internationalDeliveryType = [
 	{
 		id: "basic",
 		label: "USPS International Basic",
-		price: 39,
+		price: 0.5,
 	},
 	{
 		id: "sipping",
