@@ -25,7 +25,7 @@ export const internationalDeliveryType = [
 	{
 		id: "basic",
 		label: "USPS International Basic",
-		price: 0.5,
+		price: 39,
 	},
 	{
 		id: "sipping",
