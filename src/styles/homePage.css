@@ -7,7 +7,7 @@
 }
 
 .homeImage {
-	width: clamp(300px, 60vw, 760px);
+	width: clamp(300px, 40vw, 760px);
 	margin-left: clamp(0px, 1vw, 60px);
 	margin-top: clamp(0rem, 5vw, 2rem);
 	object-fit: cover;

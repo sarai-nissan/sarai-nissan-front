@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import image from "../assets/images/homeImg.png";
+import image from "../assets/images/test.png";
 import "../styles/homePage.css";
 
-const LINKS = ["About", "Portfolio", "FAQ", "Stockists", "Events", "Contact"];
+const LINKS = ["About", "Contact", "Events"];
 
 const HomePage: React.FC = () => {
 	return (
