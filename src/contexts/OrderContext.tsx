@@ -6,7 +6,7 @@ import type {
 } from "../types/OrderContext";
 import type { BasketElement } from "../types/BasketContext";
 
-const STORAGE_KEY = "order";
+export const ORDER_STORAGE_KEY = "sarai_order";
 
 const OrderContext = createContext<OrderContextProps | undefined>(undefined);
 
@@ -17,7 +17,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	useEffect(() => {
 		try {
-			const raw = localStorage.getItem(STORAGE_KEY);
+			const raw = localStorage.getItem(ORDER_STORAGE_KEY);
 			if (raw) {
 				const parsed = JSON.parse(raw) as OrderData;
 				setOrderState(parsed);
@@ -30,9 +30,9 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
 	useEffect(() => {
 		try {
 			if (order) {
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(order));
+				localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(order));
 			} else {
-				localStorage.removeItem(STORAGE_KEY);
+				localStorage.removeItem(ORDER_STORAGE_KEY);
 			}
 		} catch (err) {
 			console.warn("Error saving order to localStorage", err);

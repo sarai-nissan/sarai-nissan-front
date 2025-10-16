@@ -1,24 +1,25 @@
 .homeContainer {
-	width: calc(100% + 20px);
-	margin: 0 -10px;
-	align-self: stretch;
-	position: relative;
-	overflow: hidden;
+	max-width: 1200px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.homeBackgroundContainer {
+	display: flex;
+	justify-content: center;
+	padding-top: 1rem;
 }
 
 .homeImage {
-	width: clamp(300px, 40vw, 760px);
-	margin-left: clamp(0px, 1vw, 60px);
-	margin-top: clamp(0rem, 5vw, 2rem);
+	max-width: 1200px;
+	width: 100%;
+	height: auto;
 	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -1;
 }
 
 .homeOverlay {
-	margin-top: clamp(60px, 10vw, 70px);
+	margin-top: clamp(20px, 4vw, 50px);
 	right: 0;
 	z-index: 10;
 }
@@ -48,9 +49,8 @@
 	align-items: center;
 	background-color: #000;
 	padding: clamp(20px, 4vw, 50px) clamp(16px, 3vw, 70px);
-	margin-top: clamp(240px, 9vw, 90px);
-	margin-left: auto;
-	margin-right: clamp(0px, 3vw, 70px);
+	margin-right: auto;
+	margin-left: clamp(0px, 3vw, 70px);
 	max-width: clamp(320px, 60vw, 840px);
 	width: 100%;
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useBasket } from "../contexts/BasketContext";
-import { useOrder } from "../contexts/OrderContext";
+import { ORDER_STORAGE_KEY, useOrder } from "../contexts/OrderContext";
 import type { Order } from "../types/AdminPage";
 import type { BasketElement } from "../types/BasketContext";
 import "../styles/confirmationPage.css";
@@ -15,7 +15,9 @@ const ConfirmationPage: React.FC = () => {
 		const urlParams = new URLSearchParams(window.location.search);
 
 		if (urlParams.get("success") === "true") {
-			const savedOrder = JSON.parse(localStorage.getItem("order") || "{}");
+			const savedOrder = JSON.parse(
+				localStorage.getItem(ORDER_STORAGE_KEY) || "{}"
+			);
 
 			if (savedOrder && savedOrder.basketItems?.length) {
 				const basketItemsJson = savedOrder.basketItems.map(
@@ -57,7 +59,7 @@ const ConfirmationPage: React.FC = () => {
 					})
 					.then(() => console.log("Order submitted"))
 					.catch((err) => console.error("Failed:", err));
-				localStorage.removeItem("order");
+				localStorage.removeItem(ORDER_STORAGE_KEY);
 				clearBasket();
 				clearOrder();
 			}

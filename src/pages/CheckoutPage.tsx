@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useOrder } from "../contexts/OrderContext";
+import { ORDER_STORAGE_KEY, useOrder } from "../contexts/OrderContext";
 import { useBasket } from "../contexts/BasketContext";
 import Input from "../components/input/Input";
 import InputDropDown from "../components/inputDropDown/InputDropDown";
@@ -34,7 +34,7 @@ const CheckoutPage: React.FC = () => {
 	const [form, setForm] = useState<OrderForm>(() => {
 		let savedForm: Partial<OrderForm> | null = null;
 		try {
-			const saved = localStorage.getItem("order");
+			const saved = localStorage.getItem(ORDER_STORAGE_KEY);
 			if (saved) savedForm = JSON.parse(saved)?.form ?? null;
 		} catch {}
 
@@ -69,7 +69,7 @@ const CheckoutPage: React.FC = () => {
 			setOrder(newOrder);
 
 			try {
-				localStorage.setItem("order", JSON.stringify(newOrder));
+				localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(newOrder));
 			} catch {}
 		}
 	}, [form.country]);
@@ -100,7 +100,7 @@ const CheckoutPage: React.FC = () => {
 		setOrder(newOrder);
 
 		try {
-			localStorage.setItem("order", JSON.stringify(newOrder));
+			localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(newOrder));
 		} catch {}
 	};
 
@@ -118,7 +118,7 @@ const CheckoutPage: React.FC = () => {
 	const clearForm = () => {
 		setForm(defaultForm);
 		setOrder({ form: defaultForm, basketItems: [] });
-		localStorage.removeItem("order");
+		localStorage.removeItem(ORDER_STORAGE_KEY);
 	};
 
 	return (

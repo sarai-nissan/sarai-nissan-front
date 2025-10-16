@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import image from "../assets/images/test.png";
+import image from "../assets/images/homeImg.png";
 import "../styles/homePage.css";
 
 const LINKS = ["About", "Contact", "Events"];
@@ -8,13 +8,11 @@ const LINKS = ["About", "Contact", "Events"];
 const HomePage: React.FC = () => {
 	return (
 		<div className="homeContainer">
-			<img src={image} alt="Home" className="homeImage" />
-			<div className="homeOverlay">
-				<div className="homeNameContainer">
-					<p className="homeName">Sarai</p>
-					<p className="homeName">Nissan</p>
-				</div>
+			<div className="homeBackgroundContainer">
+				<img src={image} alt="Home" className="homeImage" />
+			</div>
 
+			<div className="homeOverlay">
 				<div className="homeSubscribeContainer">
 					<p className="homeSubscribeText">
 						Subscribe to our email newsletter to stay up to date with the latest

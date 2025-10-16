@@ -1,7 +1,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { usDeliveryType, taxesPercent } from "../../constants";
-import { useOrder } from "../../contexts/OrderContext";
+import { ORDER_STORAGE_KEY, useOrder } from "../../contexts/OrderContext";
 import { useBasket } from "../../contexts/BasketContext";
 import "./checkoutButton.css";
 
@@ -33,7 +33,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 			setOrder(orderToSave);
 
 			try {
-				localStorage.setItem("order", JSON.stringify(orderToSave));
+				localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderToSave));
 			} catch (e) {
 				console.warn("Failed to local-save order before redirect", e);
 			}

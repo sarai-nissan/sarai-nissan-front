@@ -3,17 +3,18 @@ import type { ProductType } from "../types/Product";
 import type { BasketContextType, BasketElement } from "../types/BasketContext";
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
+const BASKET_STORAGE_KEY = "sarai_basket";
 
 export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [basket, setBasket] = useState<BasketElement[]>(() => {
-		const savedBasket = localStorage.getItem("basket");
+		const savedBasket = localStorage.getItem(BASKET_STORAGE_KEY);
 		return savedBasket ? JSON.parse(savedBasket) : [];
 	});
 
 	useEffect(() => {
-		localStorage.setItem("basket", JSON.stringify(basket));
+		localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket));
 	}, [basket]);
 
 	const addToBasket = (
