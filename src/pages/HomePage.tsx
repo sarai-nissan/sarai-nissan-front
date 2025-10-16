@@ -35,9 +35,11 @@ const HomePage: React.FC = () => {
 			<div className="homeLinksContainer">
 				<div className="homeLinksInnerContainer">
 					{LINKS.map((link) => (
-						<p className="homeLink" key={link}>
-							{link}
-						</p>
+						<Link to={`/${link.toLowerCase()}`} key={link}>
+							<p className="homeLink" key={link}>
+								{link}
+							</p>
+						</Link>
 					))}
 				</div>
 			</div>

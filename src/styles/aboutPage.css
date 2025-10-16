@@ -1,0 +1,20 @@
+.aboutPageContainer {
+	max-width: 1200px;
+	width: 100%;
+	margin-top: 60px;
+	margin-bottom: 80px;
+}
+
+.aboutPageMainText {
+	font-size: clamp(28px, 8vw, 68px);
+	color: #000;
+	margin-bottom: 4rem;
+	text-transform: uppercase;
+}
+
+.aboutPageRegularText {
+	font-size: clamp(14px, 2vw, 15px);
+	color: #000;
+	text-transform: uppercase;
+	margin-bottom: 2rem;
+}

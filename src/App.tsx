@@ -11,6 +11,8 @@ import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 import AdminPage from "./pages/AdminPage";
 import "./styles/App.css";
 
@@ -28,6 +30,8 @@ const AppRoutes: React.FC = () => {
 				<Route path="/cart" element={<CartPage />} />
 				<Route path="/checkout" element={<CheckoutPage />} />
 				<Route path="/confirmation" element={<ConfirmationPage />} />
+				<Route path="/about" element={<AboutPage />} />
+				<Route path="/contact" element={<ContactPage />} />
 				<Route path="/admin" element={<AdminPage />} />
 			</Routes>
 		</div>
