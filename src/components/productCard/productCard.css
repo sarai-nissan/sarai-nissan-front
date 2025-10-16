@@ -4,6 +4,29 @@
 	padding: clamp(10px, 2vw, 20px);
 	margin-bottom: 3rem;
 	cursor: pointer;
+	position: relative;
+}
+
+.productCardSoldContainer {
+	position: absolute;
+	width: 85px;
+	height: 85px;
+	border-radius: 50%;
+	top: 30px;
+	right: 30px;
+	background: rgb(35, 35, 35);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	z-index: 10;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.283);
+}
+
+.productCardSoldText {
+	color: white;
+	font-size: clamp(14px, 4vw, 16px);
+	font-weight: 400;
 }
 
 .productCardImage {

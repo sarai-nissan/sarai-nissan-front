@@ -15,6 +15,13 @@ const ProductCard: React.FC<{ product: ProductType }> = ({ product }) => {
 			className="productCardContainer"
 			state={{ product }}
 		>
+			{product.sold && (
+				<div className="productCardSoldContainer">
+					<p className="productCardSoldText">SOLD</p>
+					<p className="productCardSoldText">OUT</p>
+				</div>
+			)}
+
 			<img
 				className="productCardImage"
 				src={`${product.photo[0]?.url}`}
