@@ -9,14 +9,14 @@
 .productFilterItem {
 	padding: clamp(8px, 1vw, 10px);
 	cursor: pointer;
-	color: #000;
+	color: var(--color-black);
 	font-size: 16px;
 	text-decoration: none;
 	transition: color 0.3s;
 }
 
 .productFilterItem:hover {
-	color: #777;
+	color: var(--color-midGray);
 }
 
 .productFilterItem.active {

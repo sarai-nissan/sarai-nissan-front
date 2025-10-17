@@ -8,11 +8,11 @@
 .cartPageEmptyText {
 	font-size: clamp(16px, 2vw, 18px);
 	text-align: center;
-	color: #000;
+	color: var(--color-black);
 }
 
 .cartPageTotalContainer {
-	border-top: 1px solid #ccc;
+	border-top: 1px solid var(--color-lightGray);
 	padding-top: 40px;
 	padding-right: 40px;
 	display: flex;
@@ -29,6 +29,7 @@
 }
 
 .cartPageTotalText {
+	color: var(--color-black);
 	font-size: clamp(18px, 1.5vw, 20px);
 	font-weight: 400;
 }
@@ -37,9 +38,9 @@
 	max-width: 400px;
 	width: 100%;
 	font-size: clamp(16px, 2vw, 18px);
-	color: #fff;
+	color: var(--color-white);
 	font-weight: 400;
-	background-color: #000;
+	background-color: var(--color-black);
 	border: none;
 	padding: 15px 24px;
 	text-transform: uppercase;
@@ -50,7 +51,7 @@
 }
 
 .cartPageCheckoutButton:hover {
-	background-color: #333333;
+	background-color: var(--color-darkGray);
 }
 
 @media (max-width: 600px) {

@@ -9,7 +9,7 @@
 
 .productPageNotFound {
 	font-size: 24px;
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	margin-top: 60px;
 }

@@ -1,7 +1,7 @@
 .buttonContainer {
 	padding: 0.7rem 1rem;
 	cursor: pointer;
-	border: 1px solid #000;
+	border: 1px solid var(--color-black);
 	background-color: transparent;
 	transition: opacity 0.3s ease;
 }
@@ -17,6 +17,6 @@
 
 .buttonText {
 	font-size: 1rem;
-	color: #000;
+	color: var(--color-black);
 	font-family: "KyivTypeSerif", serif;
 }

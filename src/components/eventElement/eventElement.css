@@ -9,7 +9,7 @@
 	max-width: 70px;
 	min-width: 70px;
 	height: 70px;
-	background-color: #e7e7e7;
+	background-color: var(--color-lightGray);
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -18,23 +18,27 @@
 }
 
 .eventElementDate {
+	color: var(--color-black);
 	font-size: 16px;
 	text-transform: uppercase;
 }
 
 .eventElementEventName {
+	color: var(--color-black);
 	font-size: 28px;
 	text-transform: uppercase;
 	margin-bottom: 36px;
 }
 
 .eventElementText {
+	color: var(--color-black);
 	font-size: 16px;
 	text-transform: capitalize;
 	margin-bottom: 12px;
 }
 
 .eventElementAdditionalInfo {
+	color: var(--color-black);
 	font-size: 16px;
 	text-transform: none;
 	margin-bottom: 20px;
@@ -48,19 +52,19 @@
 }
 
 .eventElementCalendarButton {
-	color: #888;
+	color: var(--color-midGray);
 	cursor: pointer;
 	font-size: 16px;
 	transition: color 0.3s ease;
 }
 
 .eventElementCalendarButton:hover {
-	color: #000;
+	color: var(--color-black);
 }
 
 .eventElementButton {
-	background-color: #000;
-	color: #fff;
+	background-color: var(--color-black);
+	color: var(--color-white);
 	padding: 12px 24px;
 	border: none;
 	cursor: pointer;

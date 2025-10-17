@@ -5,7 +5,7 @@
 
 .productInfoName {
 	font-size: clamp(22px, 2vw, 24px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 500;
 	margin-bottom: 20px;
 }
@@ -19,13 +19,13 @@
 
 .productInfoPrice {
 	font-size: 20px;
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 }
 
 .productInfoSoldOut {
 	font-size: 20px;
-	color: red;
+	color: var(--color-red);
 	font-weight: 600;
 }
 
@@ -39,9 +39,9 @@
 .productInfoDropdown {
 	width: 100%;
 	padding: 12px;
-	border: 1px solid #c9c9c9;
+	border: 1px solid var(--color-lightGray);
 	font-size: 16px;
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	margin-left: 10px;
 	cursor: pointer;
@@ -55,7 +55,7 @@
 
 .productInfoQuantity {
 	font-size: clamp(16px, 2vw, 18px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	margin-right: 10px;
 	min-width: max-content;
@@ -70,24 +70,24 @@
 	justify-content: center;
 	display: flex;
 	border: none;
-	color: #000;
+	color: var(--color-black);
 }
 
 .productInfoQuantityNumber {
 	font-size: clamp(16px, 2vw, 18px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	padding: 13px;
 	width: 66px;
 	text-align: center;
-	border: 1px solid #c9c9c9;
+	border: 1px solid var(--color-lightGray);
 }
 
 .productInfoAddToCartButton {
 	font-size: clamp(16px, 2vw, 18px);
-	color: #fff;
+	color: var(--color-white);
 	font-weight: 400;
-	background-color: #000;
+	background-color: var(--color-black);
 	border: none;
 	padding: 15px 24px;
 	text-transform: uppercase;
@@ -97,24 +97,24 @@
 }
 
 .productInfoAddToCartButton:hover {
-	background-color: #333333;
+	background-color: var(--color-darkGray);
 }
 
 .productInfoAddToCartButton:disabled {
-	background-color: #c9c9c9;
+	background-color: var(--color-lightGray);
 	cursor: not-allowed;
 }
 
 .productInfoDescription {
 	font-size: clamp(16px, 2vw, 18px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	margin-bottom: 60px;
 }
 
 .productInfoTextReg {
 	font-size: clamp(14px, 2vw, 16px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 	margin-bottom: clamp(50px, 2vw, 60px);
 }
@@ -127,6 +127,6 @@
 
 .productInfoTextMed {
 	font-size: clamp(14px, 2vw, 16px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 700;
 }

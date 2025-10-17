@@ -7,7 +7,7 @@
 
 .contactPageMainText {
 	font-size: clamp(28px, 8vw, 68px);
-	color: #000;
+	color: var(--color-black);
 	margin-bottom: 4rem;
 	text-transform: uppercase;
 }
@@ -15,7 +15,7 @@
 .contactPageRegularText {
 	display: block;
 	font-size: clamp(14px, 2vw, 15px);
-	color: #000;
+	color: var(--color-black);
 	text-transform: uppercase;
 	margin-bottom: 1rem;
 	line-height: 1.6;
@@ -29,9 +29,9 @@
 .contactPageLinkText {
 	font-size: clamp(14px, 2vw, 15px);
 	cursor: pointer;
-	color: #6e6e6e;
+	color: var(--color-midGray);
 	transition: color 0.3s ease;
 }
 .contactPageLinkText:hover {
-	color: #000;
+	color: var(--color-black);
 }

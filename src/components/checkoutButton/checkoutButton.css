@@ -2,9 +2,9 @@
 	max-width: 200px;
 	width: 100%;
 	font-size: clamp(16px, 2vw, 18px);
-	color: #fff;
+	color: var(--color-white);
 	font-weight: 400;
-	background-color: #000;
+	background-color: var(--color-black);
 	border: none;
 	margin-top: 1rem;
 	padding: 15px 24px;
@@ -15,5 +15,5 @@
 }
 
 .checkoutButton:hover {
-	background-color: #333333;
+	background-color: var(--color-darkGray);
 }

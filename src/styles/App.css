@@ -30,7 +30,7 @@ select {
 	-moz-appearance: none;
 	outline: none;
 	box-shadow: none;
-	background-color: #fff;
+	background-color: var(--color-white);
 	border-radius: 0;
 }
 
@@ -40,6 +40,18 @@ textarea {
 	border: none;
 	outline: none;
 	background: none;
+}
+
+:root {
+	--color-black: #000;
+	--color-superDarkGray: #1e1e1e;
+	--color-darkGray: #333;
+	--color-midGray: #888;
+	--color-lightGray: #ccc;
+	--color-white: #fff;
+	--color-halfTransparentWhite: #ffffff80;
+	--color-red: #ff2828;
+	--color-shadowBlack: #0000004d;
 }
 
 .App {

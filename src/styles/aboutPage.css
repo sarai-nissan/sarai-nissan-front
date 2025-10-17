@@ -7,14 +7,14 @@
 
 .aboutPageMainText {
 	font-size: clamp(28px, 8vw, 68px);
-	color: #000;
+	color: var(--color-black);
 	margin-bottom: 4rem;
 	text-transform: uppercase;
 }
 
 .aboutPageRegularText {
 	font-size: clamp(14px, 2vw, 15px);
-	color: #000;
+	color: var(--color-black);
 	text-transform: uppercase;
 	margin-bottom: 2rem;
 }

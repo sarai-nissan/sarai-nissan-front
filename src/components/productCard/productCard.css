@@ -20,11 +20,11 @@
 	align-items: center;
 	flex-direction: column;
 	z-index: 10;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.283);
+	box-shadow: 0 4px 8px var(--color-shadowBlack);
 }
 
 .productCardSoldText {
-	color: white;
+	color: var(--color-white);
 	font-size: clamp(14px, 4vw, 16px);
 	font-weight: 400;
 }
@@ -45,6 +45,6 @@
 }
 
 .productCardText {
-	color: #000;
+	color: var(--color-black);
 	font-size: clamp(16px, 4vw, 18px);
 }

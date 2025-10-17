@@ -4,13 +4,13 @@
 }
 
 .adminLinesTextExtraLightText {
-	color: white;
+	color: var(--color-white);
 	font-size: 1rem;
 	font-weight: 200;
 }
 
 .adminLinesTextMediumText {
-	color: #fff;
+	color: var(--color-white);
 	font-size: 1rem;
 	font-weight: 500;
 }

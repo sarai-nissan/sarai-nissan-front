@@ -30,7 +30,7 @@
 	max-width: min-content;
 	margin-left: auto;
 	margin-right: clamp(-10px, 3vw, -20px);
-	color: #000;
+	color: var(--color-black);
 }
 
 .homeName {
@@ -47,7 +47,7 @@
 .homeSubscribeContainer {
 	justify-content: center;
 	align-items: center;
-	background-color: #000;
+	background-color: var(--color-black);
 	padding: clamp(20px, 4vw, 50px) clamp(16px, 3vw, 70px);
 	margin-right: auto;
 	margin-left: clamp(0px, 3vw, 70px);
@@ -60,7 +60,7 @@
 	max-width: 720px;
 	font-size: clamp(16px, 2vw, 40px);
 	margin-bottom: clamp(16px, 2vw, 50px);
-	color: #fff;
+	color: var(--color-white);
 }
 
 .homeSubscribeFormContainer {
@@ -73,24 +73,24 @@
 	font-size: clamp(14px, 2vw, 20px);
 	padding: clamp(10px, 2vw, 14px);
 	width: 100%;
-	background-color: #fff;
+	background-color: var(--color-white);
 }
 
 .homeSubscribeButton {
 	font-size: clamp(14px, 2vw, 20px);
 	padding: clamp(12px, 2vw, 14px) clamp(12px, 3vw, 20px);
-	background-color: #fff;
-	color: #000;
-	outline: 1px solid #fff;
+	background-color: var(--color-white);
+	color: var(--color-black);
+	outline: 1px solid var(--color-white);
 	border: none;
 	cursor: pointer;
 	transition: background-color 5.3s, color 5.3s;
 }
 
 .homeSubscribeButton:hover {
-	background-color: #000;
-	color: #fff;
-	outline: 1px solid #fff;
+	background-color: var(--color-black);
+	color: var(--color-white);
+	outline: 1px solid var(--color-white);
 }
 
 .homeShopLink {
@@ -101,7 +101,7 @@
 	margin-top: clamp(60px, 9vw, 150px);
 	text-align: center;
 	cursor: pointer;
-	color: #000;
+	color: var(--color-black);
 	max-width: max-content;
 	align-self: center;
 	margin-left: auto;
@@ -110,7 +110,7 @@
 }
 
 .homeShopLink:hover {
-	color: #555;
+	color: var(--color-midGray);
 	cursor: pointer;
 }
 
@@ -138,12 +138,12 @@
 	text-transform: uppercase;
 	font-style: italic;
 	font-size: clamp(28px, 8vw, 96px);
-	color: #000;
+	color: var(--color-black);
 	transition: color 0.3s;
 }
 
 .homeLink:hover {
-	color: #555;
+	color: var(--color-midGray);
 	cursor: pointer;
 }
 

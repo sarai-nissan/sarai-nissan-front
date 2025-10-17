@@ -1,5 +1,5 @@
 .adminContainer {
-	background-color: #191919;
+	background-color: var(--color-superDarkGray);
 	min-height: 100vh;
 	min-width: 100vw;
 	padding: 3rem 0;
@@ -16,7 +16,7 @@
 
 .adminOrder {
 	box-sizing: border-box;
-	border: 1px solid #fff;
+	border: 1px solid var(--color-white);
 	padding: 1rem;
 	margin-bottom: 3rem;
 	width: 100%;
@@ -37,20 +37,21 @@
 }
 
 .adminLightText {
-	color: #fff;
+	color: var(--color-white);
 	font-size: 1rem;
 	font-weight: 300;
 	margin-bottom: 0.5rem;
 }
 
 .adminMediumText {
-	color: #fff;
+	color: var(--color-white);
 	font-size: 1rem;
 	font-weight: 500;
+	margin-bottom: 8px;
 }
 
 .adminQuantityText {
-	color: #fff;
+	color: var(--color-white);
 	font-size: 1rem;
 	font-weight: 200;
 	padding: 0 0.5rem;
@@ -60,9 +61,9 @@
 	padding: 0.5rem;
 	flex: auto;
 	min-height: 140px;
-	border: 1px solid #fff;
-	background-color: #252525;
-	color: #fff;
+	border: 1px solid var(--color-white);
+	background-color: var(--color-darkGray);
+	color: var(--color-white);
 	font-family: "Montserrat", sans-serif;
 	font-size: 0.9rem;
 }
@@ -70,7 +71,7 @@
 .adminTextarea:active,
 .adminTextarea:focus {
 	outline: none;
-	background-color: #323232;
+	background-color: var(--color-darkGray);
 }
 
 .adminRowContainer {

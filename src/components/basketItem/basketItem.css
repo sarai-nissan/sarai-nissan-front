@@ -29,7 +29,7 @@
 
 .basketItemText {
 	font-size: clamp(16px, 1.5vw, 18px);
-	color: #000;
+	color: var(--color-black);
 	font-weight: 400;
 }
 
@@ -59,7 +59,7 @@
 	justify-content: center;
 	display: flex;
 	border: none;
-	color: #000;
+	color: var(--color-black);
 }
 
 .basketItemPriceContainer {
