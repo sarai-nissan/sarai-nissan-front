@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import AdminLineText from "../components/adminLineText/AdminLineText";
-import Button from "../components/button/Button";
+import ButtonAdmin from "../components/buttonAdmin/ButtonAdmin";
 import Input from "../components/input/Input";
 import { internationalDeliveryType, usDeliveryType } from "../constants";
 import type { Order } from "../types/AdminPage";
@@ -100,7 +100,7 @@ const AdminPage: React.FC = () => {
 						inputStyle={styles.pinInputStyle}
 						autoFocus={false}
 					/>
-					<Button
+					<ButtonAdmin
 						text="Submit"
 						onClick={pinSubmitHandler}
 						styles={styles.pinButtonStyle}
@@ -175,7 +175,7 @@ const AdminPage: React.FC = () => {
 
 						<div className="adminColumnContainer">
 							<div className="adminRowContainer">
-								<Button
+								<ButtonAdmin
 									text={
 										savingOrders[order.documentId || ""]
 											? "Loading..."

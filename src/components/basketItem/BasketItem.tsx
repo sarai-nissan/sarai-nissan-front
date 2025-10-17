@@ -1,4 +1,3 @@
-import React from "react";
 import { useBasket } from "../../contexts/BasketContext";
 import Cross from "../../assets/icons/Cross";
 import type { BasketElement } from "../../types/BasketContext";

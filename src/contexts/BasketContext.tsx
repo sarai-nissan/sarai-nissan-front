@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { ProductType } from "../types/Product";
 import type { BasketContextType, BasketElement } from "../types/BasketContext";
 

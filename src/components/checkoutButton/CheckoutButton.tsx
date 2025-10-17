@@ -1,9 +1,9 @@
-import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { usDeliveryType, taxesPercent } from "../../constants";
-import { ORDER_STORAGE_KEY, useOrder } from "../../contexts/OrderContext";
 import { useBasket } from "../../contexts/BasketContext";
-import "./checkoutButton.css";
+import { ORDER_STORAGE_KEY, useOrder } from "../../contexts/OrderContext";
+import Button from "../button/Button";
+import { usDeliveryType, taxesPercent } from "../../constants";
+import type { CSSProperties } from "react";
 
 interface CheckoutButtonProps {
 	email?: string;
@@ -80,14 +80,22 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 	};
 
 	return (
-		<button
+		<Button
+			text="Pay Now"
 			onClick={checkoutHandler}
-			className="checkoutButton"
 			disabled={disabled}
-		>
-			Pay Now
-		</button>
+			styles={styles.button}
+		/>
 	);
 };
 
 export default CheckoutButton;
+
+const styles: { [key: string]: CSSProperties } = {
+	button: {
+		maxWidth: 200,
+		width: "100%",
+		marginTop: 16,
+		alignSelf: "center",
+	},
+};

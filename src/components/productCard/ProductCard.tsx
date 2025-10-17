@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { slugify } from "../../utils";
 import type { ProductType } from "../../types/Product";

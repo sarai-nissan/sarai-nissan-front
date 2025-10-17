@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Photo } from "../../types/Product";
 import "./productImages.css";
 

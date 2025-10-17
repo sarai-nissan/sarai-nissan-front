@@ -1,32 +1,32 @@
-import "./button.css";
+import "./buttonAdmin.css";
 
 type Props = {
 	text: string;
 	onClick?: () => void;
-	disabled?: boolean;
 	styles?: React.CSSProperties;
+	disabled?: boolean;
 	textStyle?: React.CSSProperties;
 };
 
-const Button: React.FC<Props> = ({
+const ButtonAdmin: React.FC<Props> = ({
 	text,
 	onClick,
-	disabled,
 	styles,
+	disabled,
 	textStyle,
 }) => {
 	return (
 		<button
-			className="buttonContainer"
+			className="buttonAdminContainer"
+			onClick={onClick}
 			style={styles}
 			disabled={disabled}
-			onClick={onClick}
 		>
-			<p className="buttonText" style={textStyle}>
+			<p className="buttonAdminText" style={textStyle}>
 				{text}
 			</p>
 		</button>
 	);
 };
 
-export default Button;
+export default ButtonAdmin;

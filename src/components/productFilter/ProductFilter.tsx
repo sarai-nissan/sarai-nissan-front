@@ -1,4 +1,3 @@
-import React from "react";
 import { useFilter } from "../../contexts/FilterContext";
 import { categories } from "../../constants";
 import type { CategoryType } from "../../types/FilterContextTypes";

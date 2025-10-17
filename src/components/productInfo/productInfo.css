@@ -83,26 +83,8 @@
 	border: 1px solid var(--color-lightGray);
 }
 
-.productInfoAddToCartButton {
-	font-size: clamp(16px, 2vw, 18px);
-	color: var(--color-white);
-	font-weight: 400;
-	background-color: var(--color-black);
-	border: none;
-	padding: 15px 24px;
-	text-transform: uppercase;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
+.productInfoAddToCartButtonContainer {
 	margin-bottom: clamp(40px, 2vw, 50px);
-}
-
-.productInfoAddToCartButton:hover {
-	background-color: var(--color-darkGray);
-}
-
-.productInfoAddToCartButton:disabled {
-	background-color: var(--color-lightGray);
-	cursor: not-allowed;
 }
 
 .productInfoDescription {

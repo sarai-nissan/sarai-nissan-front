@@ -1,0 +1,21 @@
+.buttonAdminContainer {
+	padding: 0.7rem 1rem;
+	cursor: pointer;
+	border: 1px solid var(--color-black);
+	background-color: transparent;
+	transition: opacity 0.3s ease;
+}
+
+.buttonAdminContainer:hover {
+	opacity: 0.7;
+}
+
+.buttonAdminContainer:disabled {
+	opacity: 0.2;
+	cursor: not-allowed;
+}
+
+.buttonAdminText {
+	font-size: 1rem;
+	color: var(--color-black);
+}

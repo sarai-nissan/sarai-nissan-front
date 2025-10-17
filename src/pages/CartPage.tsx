@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useBasket } from "../contexts/BasketContext";
 import BasketItem from "../components/basketItem/BasketItem";

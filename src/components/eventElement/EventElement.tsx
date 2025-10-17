@@ -1,3 +1,4 @@
+import Button from "../button/Button";
 import { addToGoogleCalendar, formatDateToMonthName } from "../../utils";
 import type { EventType } from "../../types/Event";
 import "./eventElement.css";
@@ -70,7 +71,7 @@ const EventElement: React.FC<EventType> = (props) => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<button className="eventElementButton">{buttonText}</button>
+							<Button text={buttonText} />
 						</a>
 					)}
 				</div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useBasket } from "../../contexts/BasketContext";
 import logoImg from "../../assets/images/logo.png";

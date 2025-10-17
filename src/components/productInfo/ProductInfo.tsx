@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useBasket } from "../../contexts/BasketContext";
+import Button from "../button/Button";
 import type { ProductDropdown, ProductType } from "../../types/Product";
 import "./productInfo.css";
 
@@ -97,13 +98,13 @@ const ProductInfo: React.FC<Props> = ({
 				</p>
 			</div>
 
-			<button
-				className="productInfoAddToCartButton"
-				disabled={disabledButton}
-				onClick={handleAddToBasket}
-			>
-				Add to Cart
-			</button>
+			<div className="productInfoAddToCartButtonContainer">
+				<Button
+					text="Add to Cart"
+					onClick={handleAddToBasket}
+					disabled={disabledButton}
+				/>
+			</div>
 
 			{description && <p className="productInfoDescription">{description}</p>}
 

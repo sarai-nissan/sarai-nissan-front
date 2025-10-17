@@ -1,4 +1,3 @@
-import React from "react";
 import { useProductStore } from "../store/productStore";
 import { useFilter } from "../contexts/FilterContext";
 import ProductFilter from "../components/productFilter/ProductFilter";
