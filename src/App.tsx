@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useProductStore } from "./store/productStore";
+import { useEventStore } from "./store/eventStore";
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
 import { FilterProvider } from "./contexts/FilterContext";
@@ -13,6 +14,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import EventPage from "./pages/EventPage";
 import AdminPage from "./pages/AdminPage";
 import "./styles/App.css";
 
@@ -32,6 +34,7 @@ const AppRoutes: React.FC = () => {
 				<Route path="/confirmation" element={<ConfirmationPage />} />
 				<Route path="/about" element={<AboutPage />} />
 				<Route path="/contact" element={<ContactPage />} />
+				<Route path="/event" element={<EventPage />} />
 				<Route path="/admin" element={<AdminPage />} />
 			</Routes>
 		</div>
@@ -40,10 +43,12 @@ const AppRoutes: React.FC = () => {
 
 function App() {
 	const { fetchProducts } = useProductStore();
+	const { fetchEvents } = useEventStore();
 
 	useEffect(() => {
 		fetchProducts();
-	}, [fetchProducts]);
+		fetchEvents();
+	}, [fetchProducts, fetchEvents]);
 
 	return (
 		<BrowserRouter>

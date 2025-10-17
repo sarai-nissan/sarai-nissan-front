@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import image from "../assets/images/homeImg.png";
 import "../styles/homePage.css";
 
-const LINKS = ["About", "Contact", "Events"];
+const LINKS = ["About", "Contact", "Event"];
 
 const HomePage: React.FC = () => {
 	return (
