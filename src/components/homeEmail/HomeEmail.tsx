@@ -7,11 +7,12 @@ import "./homeEmail.css";
 const HomeEmail: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [isValidEmail, setIsValidEmail] = useState(false);
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	const handleSubmit = async () => {
 		sendEmail(email);
 		setEmail("");
-		console.log("send");
+		setIsSubmitted(true);
 	};
 
 	useEffect(() => {
@@ -22,6 +23,15 @@ const HomeEmail: React.FC = () => {
 		}
 	}, [email]);
 
+	useEffect(() => {
+		if (isSubmitted) {
+			const timer = setTimeout(() => {
+				setIsSubmitted(false);
+			}, 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [isSubmitted]);
+
 	return (
 		<div className="homeEmailContainer">
 			<div className="homeEmailSubscribeContainer">
@@ -29,21 +39,30 @@ const HomeEmail: React.FC = () => {
 					Subscribe to our email newsletter to stay up to date with the latest
 					news.
 				</p>
-				<div className="homeEmailSubscribeFormContainer">
-					<input
-						type="text"
-						placeholder="Enter your email"
-						className="homeEmailSubscribeInput"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<button
-						className="homeEmailSubscribeButton"
-						disabled={!isValidEmail}
-						onClick={handleSubmit}
-					>
-						Subscribe
-					</button>
+
+				<div>
+					{!isSubmitted ? (
+						<div className="homeEmailSubscribeFormInnerContainer">
+							<input
+								type="text"
+								placeholder="Enter your email"
+								className="homeEmailSubscribeInput"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<button
+								className="homeEmailSubscribeButton"
+								disabled={!isValidEmail}
+								onClick={handleSubmit}
+							>
+								Subscribe
+							</button>
+						</div>
+					) : (
+						<p className="homeEmailSubmittedText">
+							Thank you for subscribing to our newsletter!
+						</p>
+					)}
 				</div>
 			</div>
 

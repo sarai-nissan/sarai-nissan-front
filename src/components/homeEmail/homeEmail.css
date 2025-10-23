@@ -23,7 +23,8 @@
 	color: var(--color-white);
 }
 
-.homeEmailSubscribeFormContainer {
+.homeEmailSubscribeFormInnerContainer {
+	height: clamp(40px, 5vw, 60px);
 	display: flex;
 	gap: clamp(16px, 3vw, 50px);
 	align-items: center;
@@ -31,14 +32,19 @@
 
 .homeEmailSubscribeInput {
 	font-size: clamp(14px, 2vw, 20px);
-	padding: clamp(10px, 2vw, 14px);
+	padding-left: clamp(10px, 2vw, 14px);
+	padding-right: clamp(10px, 2vw, 14px);
+	height: 100%;
 	width: 100%;
 	background-color: var(--color-white);
 }
 
 .homeEmailSubscribeButton {
 	font-size: clamp(14px, 2vw, 20px);
-	padding: clamp(12px, 2vw, 14px) clamp(12px, 3vw, 20px);
+	padding-left: clamp(12px, 3vw, 20px);
+	padding-right: clamp(12px, 3vw, 20px);
+	height: 100%;
+
 	background-color: var(--color-white);
 	color: var(--color-black);
 	outline: 1px solid var(--color-white);
@@ -58,6 +64,18 @@
 	color: var(--color-midGray);
 	cursor: not-allowed;
 	outline: none;
+}
+
+.homeEmailSubmittedText {
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	height: clamp(40px, 5vw, 60px);
+	text-align: center;
+	width: 100%;
+	font-size: clamp(14px, 2vw, 24px);
+	color: var(--color-white);
+	margin-top: clamp(10px, 2vw, 26px);
 }
 
 .homeEmailShopLink {
