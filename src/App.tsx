@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { useProductStore } from "./store/productStore";
 import { useEventStore } from "./store/eventStore";
 import { OrderProvider } from "./contexts/OrderContext";
@@ -55,6 +56,7 @@ function App() {
 			<BasketProvider>
 				<OrderProvider>
 					<FilterProvider>
+						<Analytics />
 						<AppRoutes />
 					</FilterProvider>
 				</OrderProvider>
