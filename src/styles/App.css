@@ -42,6 +42,35 @@ textarea {
 	background: none;
 }
 
+@font-face {
+	font-family: "Ambroise-Std";
+	src: url("/src/assets/fonts/Ambroise-Std-Light.otf") format("opentype");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Calluna";
+	src: url("/src/assets/fonts/Calluna-Regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Unicase";
+	src: url("/src/assets/fonts/CormorantUnicase-Medium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Unicase";
+	src: url("/src/assets/fonts/CormorantUnicase-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
 :root {
 	--color-black: #000;
 	--color-superDarkGray: #1e1e1e;
@@ -52,6 +81,10 @@ textarea {
 	--color-halfTransparentWhite: #ffffff80;
 	--color-red: #ff2828;
 	--color-shadowBlack: #0000004d;
+
+	--font-title: "Ambroise-Std", serif;
+	--font-text: "Calluna", sans-serif;
+	--font-special: "Cormorant Unicase", serif;
 }
 
 .App {

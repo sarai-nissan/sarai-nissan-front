@@ -25,6 +25,7 @@
 
 .productCardSoldText {
 	color: var(--color-white);
+	font-family: var(--font-special);
 	font-size: clamp(14px, 4vw, 16px);
 	font-weight: 400;
 }
@@ -46,5 +47,7 @@
 
 .productCardText {
 	color: var(--color-black);
+	font-family: var(--font-special);
+	text-transform: uppercase;
 	font-size: clamp(16px, 4vw, 18px);
 }

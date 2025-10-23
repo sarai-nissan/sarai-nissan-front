@@ -59,9 +59,9 @@
 }
 
 .homeLink {
-	font-family: "Luxurious Roman", serif;
+	font-family: var(--font-special);
+	font-weight: 500;
 	text-transform: uppercase;
-	font-style: italic;
 	font-size: clamp(28px, 8vw, 96px);
 	color: var(--color-black);
 	transition: color 0.3s;

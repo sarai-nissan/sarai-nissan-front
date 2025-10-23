@@ -6,6 +6,9 @@
 .productInfoName {
 	font-size: clamp(22px, 2vw, 24px);
 	color: var(--color-black);
+	font-family: var(--font-title);
+	letter-spacing: 1px;
+	text-transform: uppercase;
 	font-weight: 500;
 	margin-bottom: 20px;
 }
@@ -20,12 +23,14 @@
 .productInfoPrice {
 	font-size: 20px;
 	color: var(--color-black);
+	font-family: var(--font-text);
 	font-weight: 400;
 }
 
 .productInfoSoldOut {
 	font-size: 20px;
 	color: var(--color-red);
+	font-family: var(--font-text);
 	font-weight: 600;
 }
 
@@ -41,6 +46,7 @@
 	padding: 12px;
 	border: 1px solid var(--color-lightGray);
 	font-size: 16px;
+	font-family: var(--font-text);
 	color: var(--color-black);
 	font-weight: 400;
 	margin-left: 10px;
@@ -56,6 +62,7 @@
 .productInfoQuantity {
 	font-size: clamp(16px, 2vw, 18px);
 	color: var(--color-black);
+	font-family: var(--font-text);
 	font-weight: 400;
 	margin-right: 10px;
 	min-width: max-content;
@@ -71,11 +78,13 @@
 	display: flex;
 	border: none;
 	color: var(--color-black);
+	font-family: var(--font-text);
 }
 
 .productInfoQuantityNumber {
 	font-size: clamp(16px, 2vw, 18px);
 	color: var(--color-black);
+	font-family: var(--font-text);
 	font-weight: 400;
 	padding: 13px;
 	width: 66px;
@@ -90,6 +99,7 @@
 .productInfoDescription {
 	font-size: clamp(16px, 2vw, 18px);
 	color: var(--color-black);
+	font-family: var(--font-text);
 	font-weight: 400;
 	margin-bottom: 60px;
 }
@@ -97,12 +107,15 @@
 .productInfoTextReg {
 	font-size: clamp(14px, 2vw, 16px);
 	color: var(--color-black);
+	font-family: var(--font-text);
 	font-weight: 400;
 	margin-bottom: clamp(50px, 2vw, 60px);
 }
 
 .productInfoFact {
 	list-style: inside;
+	font-family: var(--font-text);
+	color: var(--color-black);
 	margin-bottom: 2px;
 	margin-left: 10px;
 }
@@ -110,5 +123,6 @@
 .productInfoTextMed {
 	font-size: clamp(14px, 2vw, 16px);
 	color: var(--color-black);
-	font-weight: 700;
+	font-family: var(--font-text);
+	font-weight: 800;
 }

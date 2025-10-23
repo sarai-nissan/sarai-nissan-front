@@ -20,6 +20,7 @@
 .navLink {
 	text-decoration: none;
 	color: var(--color-black);
+	font-family: var(--font-special);
 	font-weight: 500;
 	font-size: 16px;
 	transition: color 0.3s;
@@ -28,10 +29,6 @@
 
 .navLink:hover {
 	color: var(--color-midGray);
-}
-
-.navLink.active {
-	text-decoration: underline;
 }
 
 .headerSocialLinksContainer {

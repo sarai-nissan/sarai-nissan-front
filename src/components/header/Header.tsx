@@ -36,7 +36,11 @@ const Header: React.FC = () => {
 					>
 						<Inst className="headerSocialIcons" />
 					</Link>
-					<Link to="/" target="_blank" rel="noopener noreferrer">
+					<Link
+						to="https://www.tiktok.com/@svrvinissvn"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<Tiktok className="headerSocialIcons" />
 					</Link>
 				</div>

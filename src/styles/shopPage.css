@@ -7,6 +7,9 @@
 
 .shopTitle {
 	text-align: center;
+	font-size: clamp(16px, 2.5vw, 24px);
+	font-family: var(--font-special);
+	color: var(--color-black);
 	margin-top: 45px;
 	margin-bottom: 80px;
 }

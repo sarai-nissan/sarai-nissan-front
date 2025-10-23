@@ -8,10 +8,12 @@
 }
 
 .productPageNotFound {
-	font-size: 24px;
+	text-align: center;
+	font-size: clamp(16px, 2.5vw, 24px);
+	font-family: var(--font-special);
 	color: var(--color-black);
-	font-weight: 400;
-	margin-top: 60px;
+	margin-top: 45px;
+	margin-bottom: 80px;
 }
 
 @media (max-width: 1170px) {

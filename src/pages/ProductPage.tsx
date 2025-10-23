@@ -14,7 +14,7 @@ const ProductPage: React.FC = () => {
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	if (!product) {
-		return <h2 className="productPageNotFound">Product not found</h2>;
+		return <div className="productPageNotFound">Product not found</div>;
 	}
 
 	return (

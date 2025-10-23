@@ -6,7 +6,8 @@
 }
 
 .aboutPageMainText {
-	font-size: clamp(28px, 8vw, 68px);
+	font-size: clamp(28px, 8vw, 48px);
+	font-family: var(--font-title);
 	color: var(--color-black);
 	margin-bottom: 4rem;
 	text-transform: uppercase;
@@ -15,6 +16,7 @@
 .aboutPageRegularText {
 	font-size: clamp(14px, 2vw, 15px);
 	color: var(--color-black);
+	font-family: var(--font-text);
 	text-transform: uppercase;
 	margin-bottom: 2rem;
 }

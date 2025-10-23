@@ -6,8 +6,9 @@
 }
 
 .cartPageEmptyText {
-	font-size: clamp(16px, 2vw, 18px);
 	text-align: center;
+	font-size: clamp(16px, 2.5vw, 24px);
+	font-family: var(--font-special);
 	color: var(--color-black);
 }
 
@@ -31,6 +32,7 @@
 .cartPageTotalText {
 	color: var(--color-black);
 	font-size: clamp(18px, 1.5vw, 20px);
+	font-family: var(--font-text);
 	font-weight: 400;
 }
 
@@ -39,6 +41,7 @@
 	width: 100%;
 	font-size: clamp(16px, 2vw, 18px);
 	color: var(--color-white);
+	font-family: var(--font-special);
 	font-weight: 400;
 	background-color: var(--color-black);
 	border: none;
