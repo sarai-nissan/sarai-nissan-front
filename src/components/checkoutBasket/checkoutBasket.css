@@ -1,0 +1,43 @@
+.checkoutItemContainer {
+	min-width: 400px;
+	width: 400px;
+	height: fit-content;
+	gap: 20px;
+	padding: 10px;
+	border: 1px solid var(--color-black);
+}
+
+.checkoutItemInnerContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.checkoutItemImage {
+	width: 100px;
+	height: 100px;
+	margin-right: 20px;
+}
+
+.checkoutItemTextContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.checkoutItemText {
+	font-size: 16px;
+	font-family: var(--font-text);
+}
+
+@media (max-width: 880px) {
+	.checkoutItemContainer {
+		min-width: 355px;
+		max-width: 600px;
+		width: 100%;
+		height: fit-content;
+		gap: 20px;
+		padding: 10px;
+		border: 1px solid var(--color-black);
+	}
+}
