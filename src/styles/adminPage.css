@@ -1,27 +1,55 @@
 .adminContainer {
 	background-color: var(--color-superDarkGray);
 	min-height: 100vh;
-	min-width: 100vw;
-	padding: 3rem 0;
+	min-width: calc(100vw + 10px);
+	width: 100%;
+	padding: 2rem 0;
 	display: flex;
-	justify-content: center;
-	margin-left: calc(-50vw + 50%);
+	flex-direction: column;
+	align-items: center;
 	font-family: "Montserrat", sans-serif;
+	overflow-x: hidden;
+}
+
+.adminHeader {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 2rem;
+	padding: 0 1rem;
+}
+
+.adminExitButton {
+	padding: 4px 8px;
+	font-size: 14px;
+	cursor: pointer;
+	border: 1px solid var(--color-white);
+	background-color: var(--color-superDarkGray);
+	color: var(--color-white);
+	transition: all 0.2s ease;
+}
+
+.adminExitButton:hover {
+	background-color: var(--color-darkGray);
 }
 
 .adminContainerInner {
 	width: 100%;
 	max-width: 1200px;
+	padding: 0 1rem;
+	box-sizing: border-box;
 }
 
 .adminOrder {
-	box-sizing: border-box;
 	border: 1px solid var(--color-white);
 	padding: 1rem;
 	margin-bottom: 3rem;
 	width: 100%;
-	justify-content: space-between;
 	display: flex;
+	justify-content: space-between;
+	gap: 2rem;
+	box-sizing: border-box;
+	flex-wrap: wrap;
 }
 
 .adminOrderContainer {
@@ -32,8 +60,9 @@
 .adminColumnContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 0.3rem;
-	width: 100%;
+	gap: 0.5rem;
+	flex: 1;
+	min-width: 260px;
 }
 
 .adminLightText {
@@ -59,55 +88,43 @@
 
 .adminTextarea {
 	padding: 0.5rem;
-	flex: auto;
 	min-height: 140px;
 	border: 1px solid var(--color-white);
 	background-color: var(--color-darkGray);
 	color: var(--color-white);
 	font-family: "Montserrat", sans-serif;
 	font-size: 0.9rem;
+	transition: all 0.2s ease;
+	resize: vertical;
 }
 
-.adminTextarea:active,
 .adminTextarea:focus {
 	outline: none;
 	background-color: var(--color-darkGray);
+	border-color: var(--color-lightGray);
+	box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
 .adminRowContainer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
-
-@media (max-width: 1250px) {
-	.adminContainerInner {
-		padding: 0 1rem;
-	}
-}
-
-@media (max-width: 940px) {
-	.adminColumnContainer {
-		margin-right: 1rem;
-	}
-	.adminColumnContainer:nth-child(3) {
-		margin-right: 0;
-	}
+	margin-bottom: 0.5rem;
 }
 
 @media (max-width: 866px) {
 	.adminOrder {
 		flex-direction: column;
-		gap: 2rem;
-		align-items: center;
-	}
-	.adminColumnContainer {
-		margin-right: 0;
+		align-items: stretch;
 	}
 }
 
-@media (max-width: 340px) {
+@media (max-width: 480px) {
 	.adminContainerInner {
 		padding: 0;
+	}
+	.adminExitButton {
+		font-size: 12px;
+		padding: 3px 6px;
 	}
 }

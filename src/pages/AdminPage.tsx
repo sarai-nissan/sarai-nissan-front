@@ -15,17 +15,26 @@ const AdminPage: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [orders, setOrders] = useState<Order[]>([]);
-	const [changedOrders, setChangedOrders] = useState<{
-		[key: string]: { note?: string; orderStatus?: string };
-	}>({});
-	const [savingOrders, setSavingOrders] = useState<{ [key: string]: boolean }>(
-		{}
-	);
+	const [changedOrders, setChangedOrders] = useState<
+		Record<string, { note?: string; orderStatus?: string }>
+	>({});
+	const [savingOrders, setSavingOrders] = useState<Record<string, boolean>>({});
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		fetch(`${apiUrl}/api/orders?populate=*`)
-			.then((res) => res.json())
-			.then((data) => {
+		const loggedIn = localStorage.getItem("isLogged");
+		if (loggedIn === "true") setAuthorized(true);
+
+		const controller = new AbortController();
+
+		const loadOrders = async () => {
+			try {
+				const res = await fetch(`${apiUrl}/api/orders?populate=*`, {
+					signal: controller.signal,
+				});
+				if (!res.ok) throw new Error("Failed to fetch orders");
+
+				const data = await res.json();
 				if (data.data) {
 					const sortedOrders = data.data.sort(
 						(a: Order, b: Order) =>
@@ -34,13 +43,41 @@ const AdminPage: React.FC = () => {
 					);
 					setOrders(sortedOrders);
 				}
-			})
-			.finally(() => setLoading(false));
+			} catch (err: any) {
+				if (err.name !== "AbortError") {
+					console.error(err);
+					setError("Error loading orders");
+				}
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		loadOrders();
+		return () => controller.abort();
 	}, []);
 
-	const pinSubmitHandler = () => {
-		if (password === password) {
-			setAuthorized(true);
+	const loginHandler = async () => {
+		try {
+			const res = await fetch(`${apiUrl}/api/check-pin`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ pin: password }),
+			});
+
+			const result = await res.json();
+
+			if (result.success) {
+				setAuthorized(true);
+				localStorage.setItem("isLogged", "true");
+				setPassword("");
+			} else {
+				alert("Wrong PIN");
+				setPassword("");
+			}
+		} catch (error) {
+			console.error(error);
+			alert("Server error");
 		}
 	};
 
@@ -52,40 +89,45 @@ const AdminPage: React.FC = () => {
 	};
 
 	const buttonPressHandler = async (order: Order) => {
-		const changes = changedOrders[order.documentId || ""];
+		const orderId = order.documentId || "";
+		const changes = changedOrders[orderId];
 		if (!changes) return;
 
-		setSavingOrders((prev) => ({ ...prev, [order.documentId || ""]: true }));
+		setSavingOrders((prev) => ({ ...prev, [orderId]: true }));
 		try {
-			const response = await fetch(`${apiUrl}/api/orders/${order.documentId}`, {
+			const response = await fetch(`${apiUrl}/api/orders/${orderId}`, {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ data: changes }),
 			});
-			if (response.ok) {
-				const updatedOrder = await response.json();
-				setOrders((prev) =>
-					prev.map((o) =>
-						o.documentId === order.documentId
-							? { ...o, ...updatedOrder.data }
-							: o
-					)
-				);
-				setChangedOrders((prev) => {
-					const { [order.documentId || ""]: _, ...rest } = prev;
-					return rest;
-				});
-			} else {
-				console.error("Error while saving:", await response.json());
-			}
+
+			if (!response.ok) throw new Error("Error while saving changes");
+
+			const updatedOrder = await response.json();
+			setOrders((prev) =>
+				prev.map((o) =>
+					o.documentId === orderId ? { ...o, ...updatedOrder.data } : o
+				)
+			);
+
+			setChangedOrders((prev) => {
+				const { [orderId]: _, ...rest } = prev;
+				return rest;
+			});
 		} catch (error) {
-			console.error("Error while saving changes:", error);
+			console.error("Error while saving:", error);
+			alert("Failed to save changes");
 		} finally {
 			setSavingOrders((prev) => {
-				const { [order.documentId || ""]: _, ...rest } = prev;
+				const { [orderId]: _, ...rest } = prev;
 				return rest;
 			});
 		}
+	};
+
+	const logoutHandler = () => {
+		setAuthorized(false);
+		localStorage.removeItem("isLogged");
 	};
 
 	if (!authorized)
@@ -98,11 +140,11 @@ const AdminPage: React.FC = () => {
 						onChange={(e) => setPassword(e.target.value)}
 						inputContainerStyle={styles.pinInputContainer}
 						inputStyle={styles.pinInputStyle}
-						autoFocus={false}
+						autoFocus
 					/>
 					<ButtonAdmin
 						text="Submit"
-						onClick={pinSubmitHandler}
+						onClick={loginHandler}
 						styles={styles.pinButtonStyle}
 						textStyle={styles.pinButtonTextStyle}
 					/>
@@ -117,6 +159,13 @@ const AdminPage: React.FC = () => {
 			</div>
 		);
 
+	if (error)
+		return (
+			<div className="adminContainer">
+				<p className="adminLightText">{error}</p>
+			</div>
+		);
+
 	if (orders.length === 0)
 		return (
 			<div className="adminContainer">
@@ -126,6 +175,12 @@ const AdminPage: React.FC = () => {
 
 	return (
 		<div className="adminContainer">
+			<div className="adminHeader">
+				<button className="adminExitButton" onClick={logoutHandler}>
+					exit
+				</button>
+			</div>
+
 			<div className="adminContainerInner">
 				{orders.map((order) => (
 					<div key={order.id} className="adminOrder">
@@ -133,13 +188,11 @@ const AdminPage: React.FC = () => {
 							<p className="adminLightText">Products:</p>
 							<div className="adminOrderContainer">
 								{order.basket.map((item) => (
-									<div key={item.id}>
-										<p className="adminMediumText">
-											{item.product.name} x {item.quantity} pcs{" - "}
-											{item.selectedPrice}{" "}
-											{item.selectedOption && `(${item.selectedOption})`}
-										</p>
-									</div>
+									<p key={item.id} className="adminMediumText">
+										{item.product.name} × {item.quantity} pcs —{" "}
+										{item.selectedPrice}{" "}
+										{item.selectedOption && `(${item.selectedOption})`}
+									</p>
 								))}
 							</div>
 							<AdminLineText
@@ -153,23 +206,19 @@ const AdminPage: React.FC = () => {
 
 						<div className="adminColumnContainer">
 							<p className="adminLightText">Shipping Info:</p>
-
 							<AdminLineText text="email" info={order.email} />
 							<AdminLineText text="phone" info={order.phone} />
-
 							<AdminLineText
-								text="Name"
+								text="name"
 								info={`${order.firstName} ${order.lastName}`}
 							/>
 							<AdminLineText text="address 1" info={order.address1} />
 							{order.address2 && (
 								<AdminLineText text="address 2" info={order.address2} />
 							)}
-
 							<AdminLineText text="city" info={order.city} />
 							<AdminLineText text="state" info={order.state} />
 							<AdminLineText text="postal code" info={order.postalCode} />
-
 							<AdminLineText text="country" info={order.country} />
 						</div>
 
@@ -178,7 +227,7 @@ const AdminPage: React.FC = () => {
 								<ButtonAdmin
 									text={
 										savingOrders[order.documentId || ""]
-											? "Loading..."
+											? "Saving..."
 											: "Save changes"
 									}
 									styles={styles.saveButtonStyles}
@@ -197,7 +246,6 @@ const AdminPage: React.FC = () => {
 								onChange={(e) =>
 									changeNoteHandler(order.documentId || "", e.target.value)
 								}
-								autoFocus={false}
 							/>
 						</div>
 					</div>
