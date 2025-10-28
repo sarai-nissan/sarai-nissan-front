@@ -71,6 +71,26 @@
 	gap: clamp(20px, 2.5vw, 40px);
 }
 
+.soldOutLabel {
+	font-size: clamp(14px, 1.2vw, 16px);
+	color: var(--color-red);
+	font-weight: 600;
+	font-family: var(--font-text);
+	margin-bottom: 4px;
+	text-transform: uppercase;
+}
+
+.soldOutPrice {
+	text-decoration: line-through;
+	color: var(--color-red);
+}
+
+.basketItemPriceBlock {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
 .basketItemRemoveButton {
 	width: clamp(14px, 1.5vw, 20px);
 	height: clamp(14px, 1.5vw, 20px);

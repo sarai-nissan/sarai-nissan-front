@@ -5,5 +5,6 @@ export interface ProductStoreType {
 	isLoading: boolean;
 	error: string | null;
 	fetchProducts: (force?: boolean) => Promise<void>;
+	checkProductUpdates: () => Promise<void>;
 	clearProducts: () => void;
 }

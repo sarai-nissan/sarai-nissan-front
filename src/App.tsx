@@ -43,13 +43,15 @@ const AppRoutes: React.FC = () => {
 };
 
 function App() {
-	const { fetchProducts } = useProductStore();
+	const { fetchProducts, checkProductUpdates } = useProductStore();
 	const { fetchEvents } = useEventStore();
 
 	useEffect(() => {
 		fetchProducts();
+		checkProductUpdates();
 		fetchEvents();
-	}, [fetchProducts, fetchEvents]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<BrowserRouter>

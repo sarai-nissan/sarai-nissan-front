@@ -5,6 +5,7 @@ type Props = {
 	onClick?: () => void;
 	disabled?: boolean;
 	styles?: React.CSSProperties;
+	buttonClassName?: string;
 	textStyle?: React.CSSProperties;
 };
 
@@ -13,11 +14,12 @@ const Button: React.FC<Props> = ({
 	onClick,
 	disabled,
 	styles,
+	buttonClassName,
 	textStyle,
 }) => {
 	return (
 		<button
-			className="buttonContainer"
+			className={`buttonContainer ${buttonClassName}`}
 			style={styles}
 			disabled={disabled}
 			onClick={onClick}

@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBasket } from "../contexts/BasketContext";
 import BasketItem from "../components/basketItem/BasketItem";
+import Button from "../components/button/Button";
 import "../styles/cartPage.css";
 
 const CartPage: React.FC = () => {
 	const { basket } = useBasket();
+	const navigation = useNavigate();
+	const soldItems = basket.filter((item) => item.product.sold);
 
 	const subtotalAmount = basket.reduce((acc, item) => {
 		const itemPrice = Number(item.selectedPrice.replace("$", ""));
@@ -29,9 +32,12 @@ const CartPage: React.FC = () => {
 					<p className="cartPageTotalText">Subtotal: </p>
 					<p className="cartPageTotalText">${subtotalAmount.toFixed(2)}</p>
 				</div>
-				<Link to="/checkout" className="cartPageCheckoutButton">
-					Checkout
-				</Link>
+				<Button
+					text="Checkout"
+					onClick={() => navigation("/checkout")}
+					disabled={soldItems.length > 0}
+					buttonClassName="cartPageCheckoutButton"
+				/>
 			</div>
 		</div>
 	);

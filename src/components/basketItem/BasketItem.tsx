@@ -9,10 +9,16 @@ type Props = {
 
 const BasketItem: React.FC<Props> = ({ product }) => {
 	const { removeFromBasket, updateQuantity } = useBasket();
+	const isSold = product.product.sold;
+	const totalPrice =
+		Number(product.selectedPrice.replace("$", "")) * product.quantity;
 
-	const increaseHandler = () =>
+	const increaseHandler = () => {
+		if (isSold) return;
 		updateQuantity(product.id, product.quantity + 1);
+	};
 	const decreaseHandler = () => {
+		if (isSold) return;
 		if (product.quantity > 1) {
 			updateQuantity(product.id, product.quantity - 1);
 		}
@@ -47,13 +53,15 @@ const BasketItem: React.FC<Props> = ({ product }) => {
 					</div>
 
 					<div className="basketItemPriceContainer">
-						<p className="basketItemText">
-							Price: $
-							{Number(product.selectedPrice.replace("$", "")) *
-								product.quantity}
-						</p>
+						<div className="basketItemPriceBlock">
+							{isSold && <p className="soldOutLabel">Sold Out</p>}
+							<p className={`basketItemText ${isSold ? "soldOutPrice" : ""}`}>
+								Price: ${totalPrice}
+							</p>
+						</div>
+
 						<button onClick={removeHandler} className="basketItemRemoveButton">
-							{<Cross />}
+							<Cross />
 						</button>
 					</div>
 				</div>
