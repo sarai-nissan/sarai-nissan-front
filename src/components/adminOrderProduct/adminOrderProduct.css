@@ -20,15 +20,26 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center;
 	width: 100%;
+	gap: 8px;
+	display: flex;
 }
 
 .adminOrderProductInfoDetails {
-	font-size: 1rem;
-	gap: 8px;
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
+}
+
+.adminOrderProductInfoPrice {
+	min-width: 50px;
+	height: max-content;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 	width: max-content;
+	justify-content: center;
 }
 
 .adminOrderProductRegularText {
@@ -41,4 +52,8 @@
 	font-size: 1rem;
 	font-weight: 300;
 	color: var(--color-black);
+}
+
+.adminOrderProductEndText {
+	text-align: end;
 }

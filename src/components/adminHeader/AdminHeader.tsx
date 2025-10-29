@@ -1,23 +1,76 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./adminHeader.css";
 
-type Props = {
-	title: string;
+type MenuItem = {
+	label: string;
+	action: () => void;
 };
 
-const AdminHeader: React.FC<Props> = ({ title }) => {
-	const navigation = useNavigate();
+type Props = {
+	title: string;
+	showBackButton?: boolean;
+	menuItems?: MenuItem[];
+};
 
-	const backHandler = () => navigation(-1);
+const AdminHeader: React.FC<Props> = ({
+	title,
+	menuItems = [],
+	showBackButton = true,
+}) => {
+	const navigate = useNavigate();
+	const [menuOpen, setMenuOpen] = useState(false);
+
+	const backHandler = () => navigate(-1);
+
+	const handleMenuClick = (action: () => void) => {
+		action();
+		setMenuOpen(false);
+	};
 
 	return (
 		<div className="adminHeaderContainer">
-			<div className="adminHeaderBackContainer" onClick={backHandler}>
-				<div className="adminHeaderBackLine" />
-				<div className="adminHeaderBackLine" />
+			<div
+				className="adminHeaderBackContainer"
+				onClick={showBackButton ? backHandler : undefined}
+			>
+				{showBackButton && (
+					<>
+						<div className="adminHeaderBackLine" />
+						<div className="adminHeaderBackLine" />
+					</>
+				)}
 			</div>
+
 			<p>{title}</p>
-			<div className="adminHeaderEmpty" />
+
+			{menuItems.length > 0 ? (
+				<div className="adminHeaderMenuContainer">
+					<div
+						className="adminHeaderMenuDots"
+						onClick={() => setMenuOpen((prev) => !prev)}
+					>
+						<span />
+						<span />
+						<span />
+					</div>
+
+					{menuOpen && (
+						<div className="adminHeaderMenu">
+							{menuItems.map((item, index) => (
+								<button
+									key={index}
+									onClick={() => handleMenuClick(item.action)}
+								>
+									{item.label}
+								</button>
+							))}
+						</div>
+					)}
+				</div>
+			) : (
+				<div className="adminHeaderEmpty" />
+			)}
 		</div>
 	);
 };

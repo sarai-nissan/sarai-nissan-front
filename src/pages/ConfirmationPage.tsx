@@ -47,7 +47,7 @@ const ConfirmationPage: React.FC = () => {
 					postalCode: savedOrder.form.postalCode,
 					country: savedOrder.form.country,
 					basket: basketItemsJson,
-					note: "",
+					archived: false,
 				};
 				fetch(`${apiUrl}/api/orders`, {
 					method: "POST",

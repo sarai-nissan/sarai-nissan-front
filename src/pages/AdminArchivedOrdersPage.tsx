@@ -5,11 +5,12 @@ import AdminOrderItem from "../components/adminOrderItem/AdminOrderItem";
 import type { Order } from "../types/AdminPage";
 import "../styles/adminArchivedOrdersPage.css";
 
+const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
+
 const AdminArchivedOrdersPage = () => {
 	const location = useLocation();
-	const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
 	const [orders, setOrders] = useState<Order[]>(location.state?.orders || []);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(!location.state?.orders);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -20,35 +21,42 @@ const AdminArchivedOrdersPage = () => {
 
 		const controller = new AbortController();
 
-		const loadOrders = async () => {
+		const loadArchivedOrders = async () => {
 			try {
+				setLoading(true);
+				setError(null);
+
 				const res = await fetch(`${apiUrl}/api/orders?populate=*`, {
 					signal: controller.signal,
 				});
-				if (!res.ok) throw new Error("Failed to fetch orders");
+				if (!res.ok) throw new Error(`Failed to fetch orders (${res.status})`);
 
 				const data = await res.json();
-				if (data.data) {
-					const sortedOrders = data.data.sort(
-						(a: Order, b: Order) =>
-							new Date(b.createdAt || "").getTime() -
-							new Date(a.createdAt || "").getTime()
-					);
-					setOrders(sortedOrders);
-				}
+
+				if (!data?.data) throw new Error("No data received");
+
+				const archivedOnly = data.data.filter((order: Order) => order.archived);
+
+				const sortedOrders = archivedOnly.sort(
+					(a: Order, b: Order) =>
+						new Date(b.createdAt || "").getTime() -
+						new Date(a.createdAt || "").getTime()
+				);
+
+				setOrders(sortedOrders);
 			} catch (err: any) {
-				if (err.name !== "AbortError") {
-					console.error(err);
-					setError("Error loading orders");
-				}
+				if (err.name === "AbortError") return;
+				console.error("❌ Fetch error:", err);
+				setError(err.message || "Error loading archived orders");
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		loadOrders();
+		loadArchivedOrders();
+
 		return () => controller.abort();
-	}, [apiUrl, orders]);
+	}, [apiUrl]);
 
 	if (loading)
 		return (
@@ -73,7 +81,7 @@ const AdminArchivedOrdersPage = () => {
 			{orders.length > 0 ? (
 				orders.map((order) => <AdminOrderItem key={order.id} order={order} />)
 			) : (
-				<p className="adminArchivedLightText"> No archived orders</p>
+				<p className="adminArchivedLightText">No archived orders</p>
 			)}
 		</div>
 	);

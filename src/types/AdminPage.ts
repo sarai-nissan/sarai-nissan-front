@@ -6,5 +6,5 @@ export type Order = {
 	documentId?: string;
 	basket: BasketElement[];
 	createdAt?: string;
-	note: string;
+	archived: boolean;
 } & OrderForm;

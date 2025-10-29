@@ -28,9 +28,13 @@ const AdminOrderProduct: React.FC<Props> = ({ item }) => {
 						{item.selectedOption && item.selectedOption}
 					</p>
 				</div>
-				<div className="adminOrderProductInfoDetails">
-					<p className="adminOrderProductRegularText">{item.quantity} pcs</p>
-					<p className="adminOrderProductLightText">{item.selectedPrice}</p>
+				<div className="adminOrderProductInfoPrice">
+					<p className="adminOrderProductRegularText adminOrderProductEndText">
+						{item.quantity} pcs
+					</p>
+					<p className="adminOrderProductLightText adminOrderProductEndText">
+						{item.selectedPrice}
+					</p>
 				</div>
 			</div>
 		</div>

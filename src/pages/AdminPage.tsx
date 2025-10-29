@@ -1,5 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
+import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminPageLink from "../components/adminPageLink/AdminPageLink";
 import ButtonAdmin from "../components/buttonAdmin/ButtonAdmin";
 import Input from "../components/input/Input";
@@ -81,12 +82,14 @@ const AdminPage: React.FC = () => {
 		localStorage.removeItem("isLogged");
 	};
 
-	const orderNavigateHandler = () =>
-		navigation("/admin/orders", { state: { orders } });
+	const activeOrders = orders.filter((order) => !order.archived);
+	const archivedOrders = orders.filter((order) => order.archived);
 
-	// here
+	const orderNavigateHandler = () =>
+		navigation("/admin/orders", { state: { orders: activeOrders } });
+
 	const archivedOrderNavigateHandler = () =>
-		navigation("/admin/archived", { state: { orders } });
+		navigation("/admin/archived", { state: { orders: archivedOrders } });
 
 	if (!authorized)
 		return (
@@ -127,13 +130,25 @@ const AdminPage: React.FC = () => {
 	return (
 		<div className="adminContainer">
 			<div className="adminContainerInner">
-				<button className="adminExitButton" onClick={logoutHandler}>
-					Exit
-				</button>
+				<AdminHeader
+					title="Order Details"
+					showBackButton={false}
+					menuItems={[
+						{
+							label: "Exit",
+							action: () => {
+								logoutHandler();
+							},
+						},
+					]}
+				/>
 
-				<AdminPageLink text="Orders" onPress={orderNavigateHandler} />
 				<AdminPageLink
-					text="Archived Orders"
+					text={`Orders (${activeOrders.length})`}
+					onPress={orderNavigateHandler}
+				/>
+				<AdminPageLink
+					text={`Archived Orders (${archivedOrders.length})`}
 					onPress={archivedOrderNavigateHandler}
 				/>
 			</div>

@@ -28,6 +28,37 @@ const AdminOrderPage = () => {
 	const [loading, setLoading] = useState(!location.state?.order);
 	const [error, setError] = useState<string | null>(null);
 
+	const handleArchiveToggle = async (archived: boolean) => {
+		if (!order) return;
+
+		const orderDocId = order.documentId || order.id;
+
+		try {
+			const response = await fetch(`${apiUrl}/api/orders/${orderDocId}`, {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ data: { archived } }),
+			});
+
+			if (!response.ok) throw new Error("Failed to update order");
+
+			const updatedOrder = await response.json();
+
+			setOrder((prev) =>
+				prev ? { ...prev, archived: updatedOrder.data.archived } : prev
+			);
+
+			alert(
+				archived
+					? "✅ Order moved to archive"
+					: "♻️ Order returned to active list"
+			);
+		} catch (err) {
+			console.error("Error while updating archive status:", err);
+			alert("Failed to update order");
+		}
+	};
+
 	useEffect(() => {
 		if (order) return;
 
@@ -54,7 +85,6 @@ const AdminOrderPage = () => {
 				}
 
 				const data = await res.json();
-
 				if (!data?.data) throw new Error("No order data received");
 
 				setOrder(data.data);
@@ -100,7 +130,23 @@ const AdminOrderPage = () => {
 
 	return (
 		<div className="adminOrderContainer">
-			<AdminHeader title="Order Details" />
+			<AdminHeader
+				title="Order Details"
+				menuItems={[
+					{
+						label: "Copy Email",
+						action: () => navigator.clipboard.writeText(order.email),
+					},
+					{
+						label: "Copy Phone",
+						action: () => navigator.clipboard.writeText(order.phone),
+					},
+					{
+						label: order.archived ? "Return to Orders" : "Move to Archive",
+						action: () => handleArchiveToggle(!order.archived),
+					},
+				]}
+			/>
 
 			<div className="adminOrderContent">
 				{order.basket?.map((item, index) => (
