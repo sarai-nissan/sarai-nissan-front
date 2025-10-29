@@ -1,0 +1,66 @@
+.adminOrderItemContainer {
+	padding: 1rem 6px;
+	padding-bottom: 30px;
+	max-width: 500px;
+	width: 100%;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid var(--color-lightGray);
+}
+
+.adminOrderItemHorizontalContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 40px;
+}
+
+.adminOrderItemIdText {
+	color: var(--color-black);
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+.adminOrderItemNameText {
+	color: var(--color-darkGray);
+	font-size: 0.9rem;
+	font-weight: 400;
+}
+
+.adminOrderItemDateText {
+	color: var(--color-darkGray);
+	font-size: 0.9rem;
+	font-weight: 300;
+}
+
+.adminOrderItemCityText {
+	color: var(--color-darkGray);
+	font-size: 0.9rem;
+	font-weight: 300;
+}
+
+.adminOrderItemProductImage {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.adminOrderItemProductImagesContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.adminOrderItemTotalText {
+	color: var(--color-green);
+	font-size: 1.2rem;
+	font-weight: 400;
+}
+
+.adminOrderItemGap {
+	margin-top: 20px;
+}

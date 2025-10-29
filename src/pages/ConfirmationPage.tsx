@@ -28,6 +28,7 @@ const ConfirmationPage: React.FC = () => {
 							id: item.product.id,
 							name: item.product.name,
 							price: item.product.price,
+							photo: item.product.photo[0].url,
 						},
 						selectedPrice: item.selectedPrice,
 						selectedOption: item.selectedOption || null,

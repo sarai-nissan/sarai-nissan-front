@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
+
 import { useProductStore } from "./store/productStore";
 import { useEventStore } from "./store/eventStore";
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
 import { FilterProvider } from "./contexts/FilterContext";
-import Header from "./components/header/Header";
+
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import ProductPage from "./pages/ProductPage";
@@ -17,11 +18,20 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import EventPage from "./pages/EventPage";
 import AdminPage from "./pages/AdminPage";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
+import AdminOrderPage from "./pages/AdminOrderPage";
+import AdminArchivedOrdersPage from "./pages/AdminArchivedOrdersPage";
+
+import Header from "./components/header/Header";
 import "./styles/App.css";
 
 const AppRoutes: React.FC = () => {
 	const location = useLocation();
-	const hideHeader = location.pathname === "/admin";
+	const hideHeader =
+		location.pathname === "/admin" ||
+		location.pathname === "/admin/orders" ||
+		location.pathname === "/admin/archived" ||
+		location.pathname.startsWith("/admin/orders/");
 
 	return (
 		<div className="App">
@@ -37,6 +47,9 @@ const AppRoutes: React.FC = () => {
 				<Route path="/contact" element={<ContactPage />} />
 				<Route path="/event" element={<EventPage />} />
 				<Route path="/admin" element={<AdminPage />} />
+				<Route path="/admin/orders" element={<AdminOrdersPage />} />
+				<Route path="/admin/orders/:orderId" element={<AdminOrderPage />} />
+				<Route path="/admin/archived" element={<AdminArchivedOrdersPage />} />
 			</Routes>
 		</div>
 	);

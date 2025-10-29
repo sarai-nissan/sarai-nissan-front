@@ -11,7 +11,7 @@ export interface BasketElement {
 export interface BasketContextType {
 	basket: BasketElement[];
 	addToBasket: (
-		product: ProductType,
+		product: ProductType[],
 		quantity: number,
 		selectedPrice: string,
 		selectedOption?: string

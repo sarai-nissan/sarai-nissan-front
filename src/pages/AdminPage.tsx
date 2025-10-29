@@ -1,25 +1,20 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import AdminLineText from "../components/adminLineText/AdminLineText";
+import { useNavigate } from "react-router-dom";
+import AdminPageLink from "../components/adminPageLink/AdminPageLink";
 import ButtonAdmin from "../components/buttonAdmin/ButtonAdmin";
 import Input from "../components/input/Input";
-import { internationalDeliveryType, usDeliveryType } from "../constants";
 import type { Order } from "../types/AdminPage";
 import "../styles/adminPage.css";
 
 const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
 
 const AdminPage: React.FC = () => {
-	const deliveryMethods = [...usDeliveryType, ...internationalDeliveryType];
-
+	const navigation = useNavigate();
 	const [authorized, setAuthorized] = useState(false);
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(true);
-	const [orders, setOrders] = useState<Order[]>([]);
-	const [changedOrders, setChangedOrders] = useState<
-		Record<string, { note?: string; orderStatus?: string }>
-	>({});
-	const [savingOrders, setSavingOrders] = useState<Record<string, boolean>>({});
 	const [error, setError] = useState<string | null>(null);
+	const [orders, setOrders] = useState<Order[]>([]);
 
 	useEffect(() => {
 		const loggedIn = localStorage.getItem("isLogged");
@@ -81,59 +76,22 @@ const AdminPage: React.FC = () => {
 		}
 	};
 
-	const changeNoteHandler = (orderId: string, note: string) => {
-		setChangedOrders((prev) => ({
-			...prev,
-			[orderId]: { ...prev[orderId], note },
-		}));
-	};
-
-	const buttonPressHandler = async (order: Order) => {
-		const orderId = order.documentId || "";
-		const changes = changedOrders[orderId];
-		if (!changes) return;
-
-		setSavingOrders((prev) => ({ ...prev, [orderId]: true }));
-		try {
-			const response = await fetch(`${apiUrl}/api/orders/${orderId}`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ data: changes }),
-			});
-
-			if (!response.ok) throw new Error("Error while saving changes");
-
-			const updatedOrder = await response.json();
-			setOrders((prev) =>
-				prev.map((o) =>
-					o.documentId === orderId ? { ...o, ...updatedOrder.data } : o
-				)
-			);
-
-			setChangedOrders((prev) => {
-				const { [orderId]: _, ...rest } = prev;
-				return rest;
-			});
-		} catch (error) {
-			console.error("Error while saving:", error);
-			alert("Failed to save changes");
-		} finally {
-			setSavingOrders((prev) => {
-				const { [orderId]: _, ...rest } = prev;
-				return rest;
-			});
-		}
-	};
-
 	const logoutHandler = () => {
 		setAuthorized(false);
 		localStorage.removeItem("isLogged");
 	};
 
+	const orderNavigateHandler = () =>
+		navigation("/admin/orders", { state: { orders } });
+
+	// here
+	const archivedOrderNavigateHandler = () =>
+		navigation("/admin/archived", { state: { orders } });
+
 	if (!authorized)
 		return (
 			<div className="adminContainer">
-				<div className="adminContainerInner" style={styles.adminContainerInner}>
+				<div className="adminLoginContainer">
 					<p className="adminLightText">Enter admin password:</p>
 					<Input
 						value={password}
@@ -166,90 +124,18 @@ const AdminPage: React.FC = () => {
 			</div>
 		);
 
-	if (orders.length === 0)
-		return (
-			<div className="adminContainer">
-				<p className="adminLightText">No orders found</p>
-			</div>
-		);
-
 	return (
 		<div className="adminContainer">
-			<div className="adminHeader">
-				<button className="adminExitButton" onClick={logoutHandler}>
-					exit
-				</button>
-			</div>
-
 			<div className="adminContainerInner">
-				{orders.map((order) => (
-					<div key={order.id} className="adminOrder">
-						<div className="adminColumnContainer">
-							<p className="adminLightText">Products:</p>
-							<div className="adminOrderContainer">
-								{order.basket.map((item) => (
-									<p key={item.id} className="adminMediumText">
-										{item.product.name} × {item.quantity} pcs —{" "}
-										{item.selectedPrice}{" "}
-										{item.selectedOption && `(${item.selectedOption})`}
-									</p>
-								))}
-							</div>
-							<AdminLineText
-								text="delivery method"
-								info={
-									deliveryMethods.find((d) => d.id === order.delivery)?.label ||
-									order.delivery
-								}
-							/>
-						</div>
+				<button className="adminExitButton" onClick={logoutHandler}>
+					Exit
+				</button>
 
-						<div className="adminColumnContainer">
-							<p className="adminLightText">Shipping Info:</p>
-							<AdminLineText text="email" info={order.email} />
-							<AdminLineText text="phone" info={order.phone} />
-							<AdminLineText
-								text="name"
-								info={`${order.firstName} ${order.lastName}`}
-							/>
-							<AdminLineText text="address 1" info={order.address1} />
-							{order.address2 && (
-								<AdminLineText text="address 2" info={order.address2} />
-							)}
-							<AdminLineText text="city" info={order.city} />
-							<AdminLineText text="state" info={order.state} />
-							<AdminLineText text="postal code" info={order.postalCode} />
-							<AdminLineText text="country" info={order.country} />
-						</div>
-
-						<div className="adminColumnContainer">
-							<div className="adminRowContainer">
-								<ButtonAdmin
-									text={
-										savingOrders[order.documentId || ""]
-											? "Saving..."
-											: "Save changes"
-									}
-									styles={styles.saveButtonStyles}
-									textStyle={styles.saveButtonTextStyle}
-									disabled={
-										!changedOrders[order.documentId || ""] ||
-										savingOrders[order.documentId || ""]
-									}
-									onClick={() => buttonPressHandler(order)}
-								/>
-							</div>
-							<textarea
-								className="adminTextarea"
-								placeholder="Add a note..."
-								defaultValue={order.note || ""}
-								onChange={(e) =>
-									changeNoteHandler(order.documentId || "", e.target.value)
-								}
-							/>
-						</div>
-					</div>
-				))}
+				<AdminPageLink text="Orders" onPress={orderNavigateHandler} />
+				<AdminPageLink
+					text="Archived Orders"
+					onPress={archivedOrderNavigateHandler}
+				/>
 			</div>
 		</div>
 	);
@@ -258,34 +144,25 @@ const AdminPage: React.FC = () => {
 export default AdminPage;
 
 const styles: { [key: string]: CSSProperties } = {
-	adminContainerInner: {
-		alignItems: "center",
-		display: "flex",
-		flexDirection: "column",
-	},
 	pinInputContainer: {
 		display: "flex",
 		flexDirection: "column",
 		width: "180px",
 		alignSelf: "center",
-		marginTop: "0.5rem",
+		marginTop: "1rem",
 	},
 	pinInputStyle: {
 		backgroundColor: "transparent",
-		border: "1px solid #fff",
-		color: "#fff",
+		border: "1px solid #000",
+		borderRadius: "50px",
+		color: "#000",
 		textAlign: "center",
 	},
 	pinButtonStyle: {
-		border: "1px solid #fff",
+		border: "1px solid #000",
 		marginTop: "1rem",
+		borderRadius: "50px",
 		width: "180px",
 	},
-	pinButtonTextStyle: { color: "#fff" },
-	saveButtonStyles: {
-		border: "1px solid #fff",
-		padding: "8px",
-		width: "100px",
-	},
-	saveButtonTextStyle: { color: "#fff", fontSize: "0.8rem" },
+	pinButtonTextStyle: { color: "#000" },
 };
