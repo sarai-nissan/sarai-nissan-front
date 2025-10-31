@@ -9,12 +9,6 @@ const HomeEmail: React.FC = () => {
 	const [isValidEmail, setIsValidEmail] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const handleSubmit = async () => {
-		sendEmail(email);
-		setEmail("");
-		setIsSubmitted(true);
-	};
-
 	useEffect(() => {
 		if (validateEmail(email)) {
 			setIsValidEmail(true);
@@ -31,6 +25,12 @@ const HomeEmail: React.FC = () => {
 			return () => clearTimeout(timer);
 		}
 	}, [isSubmitted]);
+
+	const handleSubmit = async () => {
+		sendEmail(email);
+		setEmail("");
+		setIsSubmitted(true);
+	};
 
 	return (
 		<div className="homeEmailContainer">
