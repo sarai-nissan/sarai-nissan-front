@@ -1,0 +1,45 @@
+.adminEventsPageContainer {
+	background-color: var(--color-white);
+	min-height: 100vh;
+	min-width: calc(100vw + 10px);
+	width: 100%;
+	padding: 2rem 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Montserrat", sans-serif;
+	overflow-x: hidden;
+	gap: 20px;
+}
+
+.test1 {
+	padding: 1rem 6px;
+	padding-bottom: 30px;
+	max-width: 500px;
+	width: 100%;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid var(--color-lightGray);
+}
+
+.adminEventLineTextContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 8px;
+	gap: 20px;
+}
+
+.adminEventsRegularText {
+	font-size: 1rem;
+	font-weight: 400;
+	color: var(--color-black);
+}
+
+.adminEventsLightText {
+	font-size: 1rem;
+	font-weight: 300;
+	color: var(--color-black);
+}

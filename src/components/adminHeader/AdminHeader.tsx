@@ -45,11 +45,11 @@ const AdminHeader: React.FC<Props> = ({
 			<p>{title}</p>
 
 			{menuItems.length > 0 ? (
-				<div className="adminHeaderMenuContainer">
-					<div
-						className="adminHeaderMenuDots"
-						onClick={() => setMenuOpen((prev) => !prev)}
-					>
+				<div
+					className="adminHeaderMenuContainer"
+					onClick={() => setMenuOpen((prev) => !prev)}
+				>
+					<div className="adminHeaderMenuDots">
 						<span />
 						<span />
 						<span />

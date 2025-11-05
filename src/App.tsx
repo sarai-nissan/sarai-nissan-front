@@ -7,6 +7,7 @@ import { useEventStore } from "./store/eventStore";
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
 import { FilterProvider } from "./contexts/FilterContext";
+import { OrdersProvider } from "./contexts/OrdersContext";
 
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
@@ -21,6 +22,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminOrderPage from "./pages/AdminOrderPage";
 import AdminArchivedOrdersPage from "./pages/AdminArchivedOrdersPage";
+import AdminEventsPage from "./pages/AdminEventsPage";
 
 import Header from "./components/header/Header";
 import "./styles/App.css";
@@ -31,7 +33,8 @@ const AppRoutes: React.FC = () => {
 		location.pathname === "/admin" ||
 		location.pathname === "/admin/orders" ||
 		location.pathname === "/admin/archived" ||
-		location.pathname.startsWith("/admin/orders/");
+		location.pathname.startsWith("/admin/orders/") ||
+		location.pathname === "/admin/events";
 
 	return (
 		<div className="App">
@@ -50,6 +53,7 @@ const AppRoutes: React.FC = () => {
 				<Route path="/admin/orders" element={<AdminOrdersPage />} />
 				<Route path="/admin/orders/:orderId" element={<AdminOrderPage />} />
 				<Route path="/admin/archived" element={<AdminArchivedOrdersPage />} />
+				<Route path="/admin/events" element={<AdminEventsPage />} />
 			</Routes>
 		</div>
 	);
@@ -71,8 +75,10 @@ function App() {
 			<BasketProvider>
 				<OrderProvider>
 					<FilterProvider>
-						<Analytics />
-						<AppRoutes />
+						<OrdersProvider>
+							<Analytics />
+							<AppRoutes />
+						</OrdersProvider>
 					</FilterProvider>
 				</OrderProvider>
 			</BasketProvider>

@@ -5,6 +5,7 @@ import AdminOrderProduct from "../components/adminOrderProduct/AdminOrderProduct
 import { internationalDeliveryType, usDeliveryType } from "../constants";
 import type { Order } from "../types/AdminPage";
 import "../styles/adminOrderPage.css";
+// import { sendInvoiceEmail } from "../api";
 
 const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
 
@@ -46,6 +47,12 @@ const AdminOrderPage = () => {
 
 			setOrder((prev) =>
 				prev ? { ...prev, archived: updatedOrder.data.archived } : prev
+			);
+
+			window.dispatchEvent(
+				new CustomEvent("orderUpdated", {
+					detail: { id: orderDocId, archived },
+				})
 			);
 
 			alert(
@@ -100,6 +107,42 @@ const AdminOrderPage = () => {
 		loadOrder();
 		return () => controller.abort();
 	}, [apiUrl, orderId]);
+
+	// const [invoiceNumber, setInvoiceNumber] = useState("");
+	// const [sending, setSending] = useState(false);
+
+	// const handleSendInvoice = async () => {
+	// 	if (!order?.email) {
+	// 		alert("Order email not found");
+	// 		return;
+	// 	}
+	// 	if (!invoiceNumber.trim()) {
+	// 		alert("Please enter a tracking number");
+	// 		return;
+	// 	}
+
+	// 	setSending(true);
+	// 	try {
+	// 		const response = await fetch(`${apiUrl}/api/send-invoice`, {
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			body: JSON.stringify({
+	// 				email: order.email,
+	// 				invoiceNumber,
+	// 			}),
+	// 		});
+
+	// 		if (!response.ok) throw new Error("Failed to send email");
+
+	// 		alert("✅ Email sent successfully!");
+	// 		setInvoiceNumber("");
+	// 	} catch (err) {
+	// 		console.error(err);
+	// 		alert("❌ Failed to send email");
+	// 	} finally {
+	// 		setSending(false);
+	// 	}
+	// };
 
 	if (loading) {
 		return (
@@ -182,6 +225,44 @@ const AdminOrderPage = () => {
 				<LineText label="postal code" value={order.postalCode} />
 				<LineText label="country" value={order.country} />
 			</div>
+
+			{/* <div
+				style={{
+					marginTop: "40px",
+					padding: "16px",
+					borderTop: "1px solid #ddd",
+					display: "flex",
+					alignItems: "center",
+					gap: "10px",
+				}}
+			>
+				<input
+					type="text"
+					placeholder="Введите номер накладной"
+					value={invoiceNumber}
+					onChange={(e) => setInvoiceNumber(e.target.value)}
+					style={{
+						flex: "0 0 200px",
+						padding: "8px",
+						border: "1px solid #ccc",
+						borderRadius: "8px",
+					}}
+				/>
+				<button
+					onClick={handleSendInvoice}
+					disabled={sending}
+					style={{
+						padding: "8px 16px",
+						borderRadius: "8px",
+						background: sending ? "#aaa" : "#007bff",
+						color: "#fff",
+						border: "none",
+						cursor: sending ? "default" : "pointer",
+					}}
+				>
+					{sending ? "Отправка..." : "Отправить накладную"}
+				</button>
+			</div> */}
 		</div>
 	);
 };

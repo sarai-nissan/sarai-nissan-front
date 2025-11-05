@@ -1,62 +1,11 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useOrders } from "../contexts/OrdersContext";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminOrderItem from "../components/adminOrderItem/AdminOrderItem";
-import type { Order } from "../types/AdminPage";
 import "../styles/adminArchivedOrdersPage.css";
 
-const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
-
 const AdminArchivedOrdersPage = () => {
-	const location = useLocation();
-	const [orders, setOrders] = useState<Order[]>(location.state?.orders || []);
-	const [loading, setLoading] = useState(!location.state?.orders);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (orders.length > 0) {
-			setLoading(false);
-			return;
-		}
-
-		const controller = new AbortController();
-
-		const loadArchivedOrders = async () => {
-			try {
-				setLoading(true);
-				setError(null);
-
-				const res = await fetch(`${apiUrl}/api/orders?populate=*`, {
-					signal: controller.signal,
-				});
-				if (!res.ok) throw new Error(`Failed to fetch orders (${res.status})`);
-
-				const data = await res.json();
-
-				if (!data?.data) throw new Error("No data received");
-
-				const archivedOnly = data.data.filter((order: Order) => order.archived);
-
-				const sortedOrders = archivedOnly.sort(
-					(a: Order, b: Order) =>
-						new Date(b.createdAt || "").getTime() -
-						new Date(a.createdAt || "").getTime()
-				);
-
-				setOrders(sortedOrders);
-			} catch (err: any) {
-				if (err.name === "AbortError") return;
-				console.error("❌ Fetch error:", err);
-				setError(err.message || "Error loading archived orders");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		loadArchivedOrders();
-
-		return () => controller.abort();
-	}, [apiUrl]);
+	const { orders, loading, error } = useOrders();
+	const archivedOrders = orders.filter((order) => order.archived);
 
 	if (loading)
 		return (
@@ -77,9 +26,10 @@ const AdminArchivedOrdersPage = () => {
 	return (
 		<div className="adminArchivedContainer">
 			<AdminHeader title="Archived Orders" />
-
-			{orders.length > 0 ? (
-				orders.map((order) => <AdminOrderItem key={order.id} order={order} />)
+			{archivedOrders.length > 0 ? (
+				archivedOrders.map((order) => (
+					<AdminOrderItem key={order.id} order={order} />
+				))
 			) : (
 				<p className="adminArchivedLightText">No archived orders</p>
 			)}
