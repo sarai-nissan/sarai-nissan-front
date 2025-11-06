@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEventStore } from "../../../store/eventStore";
-import { createEvent, updateEventById } from "../../../api";
+import { createEvent, deleteEventById, updateEventById } from "../../../api";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminInput from "../components/adminInput/AdminInput";
 import ButtonAdmin from "../components/buttonAdmin/ButtonAdmin";
@@ -9,10 +9,12 @@ import "./adminEvent.css";
 
 const AdminEvent: React.FC = () => {
 	const { id: documentId } = useParams();
+	const navigation = useNavigate();
 	const { fetchEvents, events } = useEventStore();
 	const isNew = window.location.pathname.endsWith("/new");
 	const event = events.find((e) => e.documentId === documentId);
 	const [message, setMessage] = useState<string | null>(null);
+	const [isDeleting, setIsDeleting] = useState(false);
 
 	const [eventForm, setEventForm] = useState({
 		date: event?.date || "",
@@ -47,6 +49,27 @@ const AdminEvent: React.FC = () => {
 		}
 	};
 
+	const deleteEventHandler = async () => {
+		if (!documentId) return;
+		const confirmDelete = window.confirm(
+			"Are you sure you want to delete this event? This action cannot be undone."
+		);
+		if (!confirmDelete) return;
+
+		try {
+			setIsDeleting(true);
+			await deleteEventById(documentId);
+			setMessage("🗑️ Event deleted successfully!");
+			await fetchEvents(true);
+			setTimeout(() => navigation("/admin/events"), 1000);
+		} catch (err) {
+			console.error(err);
+			setMessage("❌ Failed to delete event.");
+		} finally {
+			setIsDeleting(false);
+		}
+	};
+
 	if (!isNew && !event && documentId !== "new")
 		return (
 			<div className="adminEventContainer">
@@ -57,7 +80,19 @@ const AdminEvent: React.FC = () => {
 
 	return (
 		<div className="adminEventContainer">
-			<AdminHeader title={isNew ? "Create New Event" : "Event Details"} />
+			<AdminHeader
+				title={isNew ? "Create New Event" : "Event Details"}
+				menuItems={
+					!isNew
+						? [
+								{
+									label: isDeleting ? "Deleting..." : "Delete Event",
+									action: deleteEventHandler,
+								},
+						  ]
+						: undefined
+				}
+			/>
 
 			<div className="adminEventInner">
 				<AdminInput
