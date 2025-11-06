@@ -1,0 +1,25 @@
+.shopProductFilterContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 40px;
+	gap: clamp(0px, 5vw, 40px);
+}
+
+.shopProductFilterItem {
+	padding: clamp(8px, 1vw, 10px);
+	cursor: pointer;
+	color: var(--color-midGray);
+	font-size: 16px;
+	text-decoration: none;
+	transition: color 0.3s;
+	font-family: var(--font-text);
+}
+
+.shopProductFilterItem:hover {
+	color: var(--color-black);
+}
+
+.shopProductFilterItem.active {
+	color: var(--color-black);
+}

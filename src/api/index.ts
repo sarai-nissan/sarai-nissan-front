@@ -1,3 +1,6 @@
+import { apiUrl } from "../constants";
+
+// add contact to omnisend list
 export const sendEmail = async (email: string) => {
 	try {
 		await fetch("https://api.omnisend.com/v3/contacts", {
@@ -22,6 +25,318 @@ export const sendEmail = async (email: string) => {
 		});
 	} catch (error) {
 		console.error("Error sending email:", error);
+	}
+};
+
+export const getAllProducts = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/products?populate=*`);
+		if (!res.ok) throw new Error(`Failed to fetch products (${res.status})`);
+
+		const data = await res.json();
+		if (!data?.data) throw new Error("No product data received");
+
+		return (data.data || []).map((item: any) => ({
+			id: item.id ?? item.data?.id,
+			documentId: item.documentId ?? item.data?.documentId,
+			...(item.attributes || item),
+			sold: item.attributes?.sold ?? item.sold ?? false,
+			price: item.attributes?.price ?? item.price ?? "",
+			updatedAt:
+				item.attributes?.updatedAt ??
+				item.updatedAt ??
+				new Date().toISOString(),
+		}));
+	} catch (err) {
+		console.error("❌ Error loading products:", err);
+		throw err;
+	}
+};
+
+export const getProductById = async (productId: string | number) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/products/${productId}?populate=*`);
+		if (!res.ok) throw new Error(`Failed to fetch product (${res.status})`);
+
+		const data = await res.json();
+
+		const latest =
+			data?.data?.attributes ||
+			(data?.data && typeof data.data === "object" ? data.data : null);
+
+		if (!latest) throw new Error("No product data received");
+
+		return {
+			...latest,
+			id: data.data.id ?? latest.id,
+			documentId: data.data.documentId ?? latest.documentId,
+			sold: latest.sold ?? data.data.sold ?? false,
+		};
+	} catch (err) {
+		console.error("❌ Error fetching product:", err);
+		throw err;
+	}
+};
+
+export const checkProductsUpdates = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/products?populate=*`);
+		if (!res.ok)
+			throw new Error(`Failed to check product updates (${res.status})`);
+
+		const data = await res.json();
+		if (!data?.data) throw new Error("No product data received");
+
+		return (data.data || []).map((item: any) => ({
+			id: item.id ?? item.data?.id,
+			documentId: item.documentId ?? item.data?.documentId,
+			...(item.attributes || item),
+			sold: item.attributes?.sold ?? item.sold ?? false,
+			price: item.attributes?.price ?? item.price ?? "",
+			updatedAt:
+				item.attributes?.updatedAt ??
+				item.updatedAt ??
+				new Date().toISOString(),
+		}));
+	} catch (err) {
+		console.error("❌ Error checking product updates:", err);
+		throw err;
+	}
+};
+
+export const createCheckoutSession = async ({
+	basketItems,
+	email,
+	shippingCost,
+	taxAmount,
+}: {
+	basketItems: {
+		name: string;
+		price: number;
+		quantity: number;
+		option?: string;
+	}[];
+	email?: string;
+	shippingCost?: number;
+	taxAmount?: number;
+}) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/checkout`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				basketItems,
+				email,
+				shippingCost,
+				taxAmount,
+			}),
+		});
+
+		if (!res.ok)
+			throw new Error(`Failed to create checkout session (${res.status})`);
+
+		const data = await res.json();
+		return data;
+	} catch (err) {
+		console.error("❌ Error creating checkout session:", err);
+		throw err;
+	}
+};
+
+// save order to strapi backend
+export const createOrder = async (orderPayload: any) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ data: orderPayload }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to create order (${res.status})`);
+		const data = await res.json();
+
+		console.log("✅ Order created:", data);
+
+		if (orderPayload.email) {
+			await sendEmail(orderPayload.email);
+		}
+
+		return data;
+	} catch (err) {
+		console.error("❌ Error creating order:", err);
+		throw err;
+	}
+};
+
+export const checkAdminPin = async (pin: string) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/check-pin`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ pin }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to check PIN (${res.status})`);
+
+		const result = await res.json();
+		return result;
+	} catch (err) {
+		console.error("❌ Error verifying admin PIN:", err);
+		throw err;
+	}
+};
+
+export const getAllOrders = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders?populate=*`);
+		if (!res.ok) throw new Error(`Failed to fetch orders (${res.status})`);
+
+		const data = await res.json();
+		if (!data?.data) throw new Error("No order data received");
+
+		return data.data.sort(
+			(a: any, b: any) =>
+				new Date(b.createdAt || "").getTime() -
+				new Date(a.createdAt || "").getTime()
+		);
+	} catch (err) {
+		console.error("❌ Error loading all orders:", err);
+		throw err;
+	}
+};
+
+export const getOrderById = async (orderId: string, signal?: AbortSignal) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders/${orderId}?populate=*`, {
+			signal,
+		});
+		if (!res.ok) {
+			if (res.status === 404) throw new Error("Order not found");
+			throw new Error(`Failed to fetch order (${res.status})`);
+		}
+
+		const data = await res.json();
+		if (!data?.data) throw new Error("No order data received");
+		return data.data;
+	} catch (err) {
+		console.error("❌ Error loading order:", err);
+		throw err;
+	}
+};
+
+export const setOrderArchived = async (
+	id: number | string,
+	archived: boolean
+) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders/${id}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ data: { archived } }),
+		});
+
+		if (!res.ok)
+			throw new Error(
+				`Failed to ${archived ? "archive" : "unarchive"} order (${res.status})`
+			);
+
+		const data = await res.json();
+		return data.data;
+	} catch (err) {
+		console.error(
+			`❌ Error ${archived ? "archiving" : "unarchiving"} order:`,
+			err
+		);
+		throw err;
+	}
+};
+
+export const updateOrderArchived = async (
+	orderId: string | number,
+	archived: boolean
+) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders/${orderId}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ data: { archived } }),
+		});
+		if (!res.ok) throw new Error(`Failed to update order (${res.status})`);
+		const data = await res.json();
+		return data.data;
+	} catch (err) {
+		console.error("❌ Error updating order archive state:", err);
+		throw err;
+	}
+};
+
+export const getAllEvents = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/events?populate=*`);
+		if (!res.ok) throw new Error(`Failed to fetch events (${res.status})`);
+
+		const data = await res.json();
+		if (!data?.data) throw new Error("No event data received");
+
+		return data.data.sort(
+			(a: any, b: any) =>
+				new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		);
+	} catch (err) {
+		console.error("❌ Error loading events:", err);
+		throw err;
+	}
+};
+
+export const createEvent = async (newEventData: any) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/events`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ data: newEventData }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to create event (${res.status})`);
+
+		const data = await res.json();
+		return data.data;
+	} catch (err) {
+		console.error("❌ Error creating event:", err);
+		throw err;
+	}
+};
+
+export const updateEventById = async (documentId: string, updatedData: any) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/events/${documentId}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ data: updatedData }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to update event (${res.status})`);
+		const data = await res.json();
+		return data.data;
+	} catch (err) {
+		console.error("❌ Error updating event:", err);
+		throw err;
+	}
+};
+
+export const deleteEventById = async (documentId: string) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/events/${documentId}`, {
+			method: "DELETE",
+		});
+		if (!res.ok) throw new Error(`Failed to delete event (${res.status})`);
+		return true;
+	} catch (err) {
+		console.error("❌ Error deleting event:", err);
+		throw err;
 	}
 };
 

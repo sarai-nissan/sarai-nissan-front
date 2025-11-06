@@ -1,5 +1,7 @@
 import type { CategoryType } from "../types/FilterContextTypes";
 
+export const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
+
 export const categories: CategoryType[] = [
 	"All",
 	"Prints",

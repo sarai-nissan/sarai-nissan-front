@@ -5,9 +5,8 @@ import {
 	useState,
 	type ReactNode,
 } from "react";
+import { getAllOrders, setOrderArchived } from "../api";
 import type { Order } from "../types/AdminPage";
-
-const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
 
 type OrdersContextType = {
 	orders: Order[];
@@ -32,23 +31,13 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	// Загрузка всех заказов
 	const loadOrders = async () => {
 		try {
 			setLoading(true);
 			setError(null);
-			const res = await fetch(`${apiUrl}/api/orders?populate=*`);
-			if (!res.ok) throw new Error("Failed to fetch orders");
-			const data = await res.json();
 
-			if (data.data) {
-				const sortedOrders = data.data.sort(
-					(a: Order, b: Order) =>
-						new Date(b.createdAt || "").getTime() -
-						new Date(a.createdAt || "").getTime()
-				);
-				setOrders(sortedOrders);
-			}
+			const sortedOrders = await getAllOrders();
+			setOrders(sortedOrders);
 		} catch (err: any) {
 			console.error(err);
 			setError(err.message || "Error loading orders");
@@ -89,11 +78,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 				)
 			);
 
-			await fetch(`${apiUrl}/api/orders/${id}`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ data: { archived: true } }),
-			});
+			await setOrderArchived(id, true);
 		} catch (err) {
 			console.error("Failed to archive order:", err);
 		}
@@ -107,11 +92,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 				)
 			);
 
-			await fetch(`${apiUrl}/api/orders/${id}`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ data: { archived: false } }),
-			});
+			await setOrderArchived(id, false);
 		} catch (err) {
 			console.error("Failed to unarchive order:", err);
 		}

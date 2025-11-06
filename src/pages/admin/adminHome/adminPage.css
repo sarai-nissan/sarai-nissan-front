@@ -1,0 +1,49 @@
+.adminContainer {
+	background-color: var(--color-white);
+	min-height: 100vh;
+	min-width: calc(100vw + 10px);
+	width: 100%;
+	padding: 2rem 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Montserrat", sans-serif;
+	overflow-x: hidden;
+}
+
+.adminLoginContainer {
+	padding: 3rem 0;
+	padding-bottom: 30px;
+	max-width: 500px;
+	width: 100%;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.adminContainerInner {
+	max-width: 500px;
+	width: 100%;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.adminExitButton {
+	padding: 8px 14px;
+	font-size: 14px;
+	cursor: pointer;
+	align-self: flex-end;
+	border-radius: 10px;
+	margin-bottom: 40px;
+	border: 1px solid var(--color-white);
+	background-color: var(--color-superDarkGray);
+	color: var(--color-white);
+	transition: all 0.2s ease;
+}
+
+.adminExitButton:hover {
+	background-color: var(--color-darkGray);
+}

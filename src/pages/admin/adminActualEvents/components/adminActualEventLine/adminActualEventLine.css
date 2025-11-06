@@ -1,0 +1,14 @@
+.adminActualEventLineContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 8px;
+	gap: 20px;
+}
+
+.adminActualEventText {
+	font-size: 1rem;
+	font-weight: 400;
+	color: var(--color-black);
+}

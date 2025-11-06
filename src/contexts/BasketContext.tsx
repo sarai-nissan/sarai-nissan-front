@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ProductType } from "../types/Product";
+import { getProductById } from "../api";
 import type { BasketContextType, BasketElement } from "../types/BasketContext";
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
 const BASKET_STORAGE_KEY = "sarai_basket";
-const API_URL = import.meta.env.VITE_STRAPI_API_URL;
 
 export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
@@ -28,37 +28,9 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 				const updatedBasket = await Promise.all(
 					basket.map(async (item) => {
 						try {
-							const response = await fetch(
-								`${API_URL}/api/products/${item.product.documentId}?populate=*`
+							const latestProduct: ProductType = await getProductById(
+								item.product.documentId
 							);
-
-							if (!response.ok) {
-								console.warn("❌ Product not found:", item.product.documentId);
-								return item;
-							}
-
-							const data = await response.json();
-
-							const latest =
-								data?.data?.attributes ||
-								(data?.data && typeof data.data === "object"
-									? data.data
-									: null);
-
-							if (!latest) {
-								console.warn(
-									"⚠️ No product data for:",
-									item.product.documentId
-								);
-								return item;
-							}
-
-							const latestProduct: ProductType = {
-								...latest,
-								id: data.data.id ?? item.product.id,
-								documentId: data.data.documentId ?? item.product.documentId,
-								sold: latest.sold ?? data.data.sold ?? false,
-							};
 
 							let updatedItem = { ...item, product: latestProduct };
 
@@ -88,7 +60,7 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 		};
 
 		checkProductsUpdates();
-	}, [API_URL]);
+	}, []);
 
 	const addToBasket = (
 		product: ProductType,
