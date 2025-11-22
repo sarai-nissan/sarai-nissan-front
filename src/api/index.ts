@@ -104,6 +104,26 @@ export const checkProductsUpdates = async () => {
 	}
 };
 
+export const updateProductById = async (id: string | number, data: any) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/products/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ data }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to update product (${res.status})`);
+
+		const result = await res.json();
+		return result;
+	} catch (err) {
+		console.error("❌ Error updating product:", err);
+		throw err;
+	}
+};
+
 export const createCheckoutSession = async ({
 	basketItems,
 	email,

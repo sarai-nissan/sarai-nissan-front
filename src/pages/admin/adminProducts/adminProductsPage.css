@@ -1,0 +1,21 @@
+.adminProductContainer {
+	background-color: var(--color-white);
+	min-height: 100vh;
+	min-width: calc(100vw + 10px);
+	width: 100%;
+	padding: 2rem 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Montserrat", sans-serif;
+	overflow-x: hidden;
+	gap: 10px;
+}
+
+.adminProductContent {
+	width: 100%;
+	max-width: 500px;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+}

@@ -19,6 +19,8 @@ import AboutPage from "./pages/about/AboutPage";
 import ContactPage from "./pages/contact/ContactPage";
 import EventPage from "./pages/Event/EventPage";
 import AdminPage from "./pages/admin/adminHome/AdminPage";
+import AdminProductsPage from "./pages/admin/adminProducts/AdminProductsPage";
+import AdminSelectedProductPage from "./pages/admin/adminSelectedProductPage/AdminSelectedProductPage";
 import AdminActualOrdersPage from "./pages/admin/adminActualOrders/AdminActualOrdersPage";
 import AdminOrderPage from "./pages/admin/adminOrder/AdminOrderPage";
 import AdminArchivedOrdersPage from "./pages/admin/adminArchivedOrders/AdminArchivedOrdersPage";
@@ -34,9 +36,11 @@ const AppRoutes: React.FC = () => {
 		location.pathname === "/admin" ||
 		location.pathname === "/admin/orders" ||
 		location.pathname === "/admin/archived" ||
-		location.pathname.startsWith("/admin/orders/") ||
 		location.pathname === "/admin/events" ||
-		location.pathname.startsWith("/admin/events/");
+		location.pathname === "/admin/products" ||
+		location.pathname.startsWith("/admin/orders/") ||
+		location.pathname.startsWith("/admin/events/") ||
+		location.pathname.startsWith("/admin/products/");
 
 	return (
 		<div className="App">
@@ -52,6 +56,11 @@ const AppRoutes: React.FC = () => {
 				<Route path="/contact" element={<ContactPage />} />
 				<Route path="/event" element={<EventPage />} />
 				<Route path="/admin" element={<AdminPage />} />
+				<Route path="/admin/products" element={<AdminProductsPage />} />
+				<Route
+					path="/admin/products/:documentId"
+					element={<AdminSelectedProductPage />}
+				/>
 				<Route path="/admin/orders" element={<AdminActualOrdersPage />} />
 				<Route path="/admin/orders/:orderId" element={<AdminOrderPage />} />
 				<Route path="/admin/archived" element={<AdminArchivedOrdersPage />} />

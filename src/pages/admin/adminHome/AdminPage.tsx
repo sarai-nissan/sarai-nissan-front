@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../../contexts/OrdersContext";
 import { useEventStore } from "../../../store/eventStore";
+import { useProductStore } from "../../../store/productStore";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminInput from "../components/adminInput/AdminInput";
 import AdminLightText from "../components/adminLightText/AdminLightText";
@@ -15,6 +16,7 @@ const AdminPage: React.FC = () => {
 	const navigation = useNavigate();
 	const [authorized, setAuthorized] = useState(false);
 	const [password, setPassword] = useState("");
+	const { products } = useProductStore();
 	const { events } = useEventStore();
 	const { orders, loading, error: ordersError } = useOrders();
 
@@ -85,6 +87,7 @@ const AdminPage: React.FC = () => {
 	const activeOrders = orders.filter((order: Order) => !order.archived);
 	const archivedOrders = orders.filter((order: Order) => order.archived);
 
+	const productNavigateHandler = () => navigation("/admin/products");
 	const orderNavigateHandler = () => navigation("/admin/orders");
 	const archivedOrderNavigateHandler = () => navigation("/admin/archived");
 	const eventsNavigateHandler = () => navigation("/admin/events");
@@ -98,6 +101,10 @@ const AdminPage: React.FC = () => {
 					menuItems={[{ label: "Exit", action: logoutHandler }]}
 				/>
 
+				<AdminLink
+					text={`Products (${products.length})`}
+					onPress={productNavigateHandler}
+				/>
 				<AdminLink
 					text={`Orders (${activeOrders.length})`}
 					onPress={orderNavigateHandler}
