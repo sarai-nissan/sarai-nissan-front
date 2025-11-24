@@ -1,4 +1,5 @@
 import { apiUrl } from "../constants";
+import type { ShippingOption } from "../types/useSettingsStoreTypes";
 
 // add contact to omnisend list
 export const sendEmail = async (email: string) => {
@@ -357,6 +358,105 @@ export const deleteEventById = async (documentId: string) => {
 	} catch (err) {
 		console.error("❌ Error deleting event:", err);
 		throw err;
+	}
+};
+
+export const getTaxPercent = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/taxes`);
+		if (!res.ok) throw new Error("Failed to fetch tax");
+
+		const json = await res.json();
+
+		if (!json.data || json.data.length === 0) return null;
+
+		const item = json.data[0];
+
+		const result = {
+			id: item.id,
+			documentId: item.documentId,
+			taxPercent: Number(item.taxPercent),
+			createdAt: item.createdAt,
+			updatedAt: item.updatedAt,
+			publishedAt: item.publishedAt,
+		};
+
+		return result;
+	} catch (err) {
+		console.error("❌ getTaxPercent error:", err);
+		return null;
+	}
+};
+
+export const getShippingOptions = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/shipping-options`);
+		if (!res.ok)
+			throw new Error(`Failed to fetch shipping options (${res.status})`);
+
+		const json = await res.json();
+
+		const result = json.data.map((item: ShippingOption) => ({
+			id: item.id,
+			documentId: item.documentId,
+			uid: item.uid,
+			label: item.label,
+			price: item.price,
+			type: item.type,
+			createdAt: item.createdAt,
+			updatedAt: item.updatedAt,
+			publishedAt: item.publishedAt,
+		}));
+
+		return result;
+	} catch (err) {
+		console.error("❌ Error loading shipping options:", err);
+		return [];
+	}
+};
+
+export const updateShippingOption = async (documentId: string, data: any) => {
+	try {
+		const url = `${apiUrl}/api/shipping-options/${documentId}`;
+
+		const res = await fetch(url, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ data }),
+		});
+
+		if (!res.ok) {
+			throw new Error(`Failed to update shipping option (${res.status})`);
+		}
+
+		return await res.json();
+	} catch (err) {
+		console.error("❌ updateShippingOption error:", err);
+		throw err;
+	}
+};
+
+export const updateTaxPercent = async (
+	documentId: string,
+	data: { taxPercent: number }
+) => {
+	try {
+		const url = `${apiUrl}/api/taxes/${documentId}`;
+
+		const res = await fetch(url, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ data }),
+		});
+
+		if (!res.ok) {
+			throw new Error(`Failed to update tax (${res.status})`);
+		}
+
+		return await res.json();
+	} catch (error) {
+		console.error("❌ updateTaxPercent error:", error);
+		throw error;
 	}
 };
 

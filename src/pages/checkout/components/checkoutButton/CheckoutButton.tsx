@@ -1,9 +1,14 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { useBasket } from "../../../../contexts/BasketContext";
+import { useSettingsStore } from "../../../../store/useSettingsStore";
 import { ORDER_STORAGE_KEY, useOrder } from "../../../../contexts/OrderContext";
 import Button from "../../../../components/button/Button";
 import { createCheckoutSession } from "../../../../api";
-import { usDeliveryType, taxesPercent } from "../../../../constants";
+import {
+	taxesPercent,
+	usDeliveryType,
+	internationalDeliveryType,
+} from "../../../../constants";
 import "./checkoutButton.css";
 
 interface CheckoutButtonProps {
@@ -17,16 +22,28 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 	const { order, setOrder, initOrderFromBasket } = useOrder();
 	const { basket } = useBasket();
 
-	const shippingPrice = usDeliveryType.find(
-		(d) => d.id === order?.form.delivery
-	)?.price;
+	const { taxPercent, usDelivery, internationalDelivery } = useSettingsStore();
+
+	const fallbackUS = usDelivery.length > 0 ? usDelivery : usDeliveryType;
+	const fallbackInternational =
+		internationalDelivery.length > 0
+			? internationalDelivery
+			: internationalDeliveryType;
+
+	const deliveryList =
+		order?.form.country === "" || order?.form.country === "US"
+			? fallbackUS
+			: fallbackInternational;
+
+	const shippingPrice =
+		deliveryList.find((d) => d.id === order?.form.delivery)?.price ?? 0;
 
 	const subtotalAmount = basket.reduce((acc, item) => {
 		const itemPrice = Number(item.selectedPrice.replace("$", ""));
 		return acc + itemPrice * item.quantity;
 	}, 0);
 
-	const taxesPrice = subtotalAmount * taxesPercent;
+	const taxesPrice = subtotalAmount * (taxPercent?.taxPercent ?? taxesPercent);
 
 	const checkoutHandler = async () => {
 		try {
@@ -53,8 +70,8 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 					option: item.selectedOption || "",
 				})),
 				email,
-				shippingCost: shippingPrice ? shippingPrice * 100 : 0,
-				taxAmount: taxesPrice ? Math.round(taxesPrice * 100) : 0,
+				shippingCost: shippingPrice * 100,
+				taxAmount: Math.round(taxesPrice * 100),
 			});
 
 			if (!data.id) {

@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { useProductStore } from "./store/productStore";
 import { useEventStore } from "./store/eventStore";
+import { useSettingsStore } from "./store/useSettingsStore";
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
 import { FilterProvider } from "./contexts/FilterContext";
@@ -26,6 +27,7 @@ import AdminOrderPage from "./pages/admin/adminOrder/AdminOrderPage";
 import AdminArchivedOrdersPage from "./pages/admin/adminArchivedOrders/AdminArchivedOrdersPage";
 import AdminActualEventsPage from "./pages/admin/adminActualEvents/AdminActualEventsPage";
 import AdminEvent from "./pages/admin/adminEvent/AdminEvent";
+import AdminDeliverySettingsPage from "./pages/admin/adminDeliverySettings/AdminDeliverySettingsPage";
 
 import Header from "./components/header/Header";
 import "./styles/App.css";
@@ -38,6 +40,7 @@ const AppRoutes: React.FC = () => {
 		location.pathname === "/admin/archived" ||
 		location.pathname === "/admin/events" ||
 		location.pathname === "/admin/products" ||
+		location.pathname === "/admin/delivery-settings" ||
 		location.pathname.startsWith("/admin/orders/") ||
 		location.pathname.startsWith("/admin/events/") ||
 		location.pathname.startsWith("/admin/products/");
@@ -67,6 +70,10 @@ const AppRoutes: React.FC = () => {
 				<Route path="/admin/events" element={<AdminActualEventsPage />} />
 				<Route path="/admin/events/new" element={<AdminEvent />} />
 				<Route path="/admin/events/:id" element={<AdminEvent />} />
+				<Route
+					path="/admin/delivery-settings"
+					element={<AdminDeliverySettingsPage />}
+				/>
 			</Routes>
 		</div>
 	);
@@ -75,11 +82,13 @@ const AppRoutes: React.FC = () => {
 function App() {
 	const { fetchProducts, checkProductUpdates } = useProductStore();
 	const { fetchEvents } = useEventStore();
+	const { fetchSettings } = useSettingsStore();
 
 	useEffect(() => {
 		fetchProducts();
 		checkProductUpdates();
 		fetchEvents();
+		fetchSettings();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

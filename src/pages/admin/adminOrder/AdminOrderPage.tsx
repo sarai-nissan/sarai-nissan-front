@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useSettingsStore } from "../../../store/useSettingsStore";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminOrderProduct from "../../../components/adminOrderProduct/AdminOrderProduct";
 import AdminLightText from "../components/adminLightText/AdminLightText";
@@ -16,7 +17,17 @@ import "./adminOrderPage.css";
 const AdminOrderPage = () => {
 	const location = useLocation();
 	const { orderId } = useParams();
-	const deliveryMethods = [...usDeliveryType, ...internationalDeliveryType];
+
+	const { usDelivery, internationalDelivery } = useSettingsStore();
+
+	const fallbackUS = usDelivery.length > 0 ? usDelivery : usDeliveryType;
+	const fallbackInternational =
+		internationalDelivery.length > 0
+			? internationalDelivery
+			: internationalDeliveryType;
+
+	const deliveryMethods = [...fallbackUS, ...fallbackInternational];
+
 	const [order, setOrder] = useState<Order | null>(
 		location.state?.order ?? null
 	);
@@ -33,6 +44,7 @@ const AdminOrderPage = () => {
 				orderDocId as string | number,
 				archived
 			);
+
 			setOrder((prev) =>
 				prev ? { ...prev, archived: updated.archived } : prev
 			);
@@ -148,6 +160,10 @@ const AdminOrderPage = () => {
 		);
 	}
 
+	const deliveryLabel =
+		deliveryMethods.find((d) => d.id === order.delivery)?.label ||
+		order.delivery;
+
 	return (
 		<div className="adminOrderContainer">
 			<AdminHeader
@@ -174,13 +190,7 @@ const AdminOrderPage = () => {
 				))}
 
 				<div className="adminOrderMargins">
-					<AdminOrderLineText
-						label="Delivery type"
-						value={
-							deliveryMethods.find((d) => d.id === order.delivery)?.label ||
-							order.delivery
-						}
-					/>
+					<AdminOrderLineText label="Delivery type" value={deliveryLabel} />
 				</div>
 
 				<p className="adminOrderRegularText adminOrderShippingText">

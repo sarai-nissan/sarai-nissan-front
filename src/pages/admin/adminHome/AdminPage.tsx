@@ -91,6 +91,8 @@ const AdminPage: React.FC = () => {
 	const orderNavigateHandler = () => navigation("/admin/orders");
 	const archivedOrderNavigateHandler = () => navigation("/admin/archived");
 	const eventsNavigateHandler = () => navigation("/admin/events");
+	const deliverySettingsNavigateHandler = () =>
+		navigation("/admin/delivery-settings");
 
 	return (
 		<div className="adminContainer">
@@ -116,6 +118,10 @@ const AdminPage: React.FC = () => {
 				<AdminLink
 					text={`Events (${events.length})`}
 					onPress={eventsNavigateHandler}
+				/>
+				<AdminLink
+					text="Delivery and Taxes Settings"
+					onPress={deliverySettingsNavigateHandler}
 				/>
 			</div>
 		</div>

@@ -10,6 +10,7 @@ import {
 	shippedCountries,
 	usDeliveryType,
 } from "../../../../constants";
+import { useSettingsStore } from "../../../../store/useSettingsStore";
 import type {
 	DeliveryId,
 	OrderData,
@@ -34,10 +35,20 @@ const defaultForm: OrderForm = {
 const CheckoutForm: React.FC = () => {
 	const { basket } = useBasket();
 	const { order, setOrder } = useOrder();
-	const [clickCounter, setClickCounter] = useState<number>(0);
+
+	const { usDelivery, internationalDelivery } = useSettingsStore();
+
+	const fallbackUS = usDelivery.length > 0 ? usDelivery : usDeliveryType;
+	const fallbackInternational =
+		internationalDelivery.length > 0
+			? internationalDelivery
+			: internationalDeliveryType;
+
+	const [clickCounter, setClickCounter] = useState(0);
 
 	const [form, setForm] = useState<OrderForm>(() => {
 		let savedForm: Partial<OrderForm> | null = null;
+
 		try {
 			const saved = localStorage.getItem(ORDER_STORAGE_KEY);
 			if (saved) savedForm = JSON.parse(saved)?.form ?? null;
@@ -56,21 +67,23 @@ const CheckoutForm: React.FC = () => {
 
 	const delivery =
 		form.country === "" || form.country === "US"
-			? usDeliveryType
-			: internationalDeliveryType;
+			? fallbackUS
+			: fallbackInternational;
 
 	useEffect(() => {
 		const availableDelivery =
-			form.country === "US" || form.country === ""
-				? usDeliveryType
-				: internationalDeliveryType;
+			form.country === "" || form.country === "US"
+				? fallbackUS
+				: fallbackInternational;
 
 		if (!availableDelivery.some((opt) => opt.id === form.delivery)) {
-			const fallbackDelivery: DeliveryId = availableDelivery[0].id;
+			const fallbackDelivery = availableDelivery[0].id as DeliveryId;
+
 			const updatedForm: OrderForm = {
 				...form,
 				delivery: fallbackDelivery,
 			};
+
 			setForm(updatedForm);
 
 			const newOrder: OrderData = {
@@ -83,7 +96,7 @@ const CheckoutForm: React.FC = () => {
 				localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(newOrder));
 			} catch {}
 		}
-	}, [form.country]);
+	}, [form.country, fallbackUS, fallbackInternational]);
 
 	useEffect(() => {
 		if (order?.form) {
@@ -100,6 +113,7 @@ const CheckoutForm: React.FC = () => {
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target;
+
 		const updatedForm: OrderForm = {
 			...form,
 			[name]: name === "delivery" ? (value as DeliveryId) : value,
@@ -107,7 +121,7 @@ const CheckoutForm: React.FC = () => {
 
 		setForm(updatedForm);
 
-		const newOrder = { form: updatedForm, basketItems: basket };
+		const newOrder: OrderData = { form: updatedForm, basketItems: basket };
 		setOrder(newOrder);
 
 		try {
@@ -117,13 +131,13 @@ const CheckoutForm: React.FC = () => {
 
 	const clickHandler = () => {
 		setClickCounter((prev) => prev + 1);
+
 		if (clickCounter === 1) {
 			setClickCounter(0);
 			clearForm();
 		}
-		setTimeout(() => {
-			setClickCounter(0);
-		}, 3000);
+
+		setTimeout(() => setClickCounter(0), 3000);
 	};
 
 	const clearForm = () => {
@@ -170,6 +184,7 @@ const CheckoutForm: React.FC = () => {
 			</div>
 
 			<p className="checkoutFormDeliveryTitle">Shipping Information</p>
+
 			<div className="checkoutFormDoubleContainer">
 				<Input
 					label="First Name"
