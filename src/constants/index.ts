@@ -36,7 +36,7 @@ export const internationalDeliveryType = [
 	},
 ] as const;
 
-export const shippedCountries = ["US", "CA"];
+export const shippedCountries = ["US", "CA", "FR"] as const;
 
 export const countryNames: Record<string, string> = {
 	US: "United States",
