@@ -19,7 +19,7 @@ export const usDeliveryType = [
 	{
 		id: "express",
 		label: "USPS Express Shipping",
-		price: 32,
+		price: 55,
 	},
 ] as const;
 
@@ -32,7 +32,7 @@ export const internationalDeliveryType = [
 	{
 		id: "sipping",
 		label: "USPS Express Shipping International",
-		price: 92,
+		price: 100,
 	},
 ] as const;
 
