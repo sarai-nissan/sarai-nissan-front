@@ -41,4 +41,5 @@ export const shippedCountries = ["US", "CA"];
 export const countryNames: Record<string, string> = {
 	US: "United States",
 	CA: "Canada",
+	FR: "France",
 };
