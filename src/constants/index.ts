@@ -12,12 +12,12 @@ export const taxesPercent = 0.097;
 
 export const usDeliveryType = [
 	{
-		id: "ground",
+		uid: "ground",
 		label: "USPS Ground Advantage",
 		price: 12,
 	},
 	{
-		id: "express",
+		uid: "express",
 		label: "USPS Express Shipping",
 		price: 55,
 	},
@@ -25,12 +25,12 @@ export const usDeliveryType = [
 
 export const internationalDeliveryType = [
 	{
-		id: "basic",
+		uid: "basic",
 		label: "USPS International Basic",
 		price: 39,
 	},
 	{
-		id: "sipping",
+		uid: "shipping",
 		label: "USPS Express Shipping International",
 		price: 100,
 	},

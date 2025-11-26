@@ -4,7 +4,7 @@ import type { BasketElement } from "./BasketContext";
 export type DeliveryId = (
 	| typeof usDeliveryType
 	| typeof internationalDeliveryType
-)[number]["id"];
+)[number]["uid"];
 
 export interface OrderForm {
 	email: string;

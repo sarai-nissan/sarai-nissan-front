@@ -76,8 +76,8 @@ const CheckoutForm: React.FC = () => {
 				? fallbackUS
 				: fallbackInternational;
 
-		if (!availableDelivery.some((opt) => opt.id === form.delivery)) {
-			const fallbackDelivery = availableDelivery[0].id as DeliveryId;
+		if (!availableDelivery.some((opt) => opt.uid === form.delivery)) {
+			const fallbackDelivery = availableDelivery[0].uid as DeliveryId;
 
 			const updatedForm: OrderForm = {
 				...form,
@@ -166,17 +166,17 @@ const CheckoutForm: React.FC = () => {
 			<p className="checkoutFormDeliveryTitle">Delivery Options</p>
 			<div className="checkoutFormDeliveryOptionsContainer">
 				{delivery.map((option) => (
-					<div key={option.id} className="checkoutFormDeliveryOption">
+					<div key={option.uid} className="checkoutFormDeliveryOption">
 						<input
 							type="radio"
-							id={option.id}
+							id={option.uid}
 							name="delivery"
-							value={option.id}
-							checked={form.delivery === option.id}
+							value={option.uid}
+							checked={form.delivery === option.uid}
 							onChange={changeHandler}
 							className="checkoutFormRadioInput"
 						/>
-						<label htmlFor={option.id} className="checkoutFormDeliveryLabel">
+						<label htmlFor={option.uid} className="checkoutFormDeliveryLabel">
 							{option.label} – ${option.price}
 						</label>
 					</div>

@@ -36,7 +36,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 			: fallbackInternational;
 
 	const shippingPrice =
-		deliveryList.find((d) => d.id === order?.form.delivery)?.price ?? 0;
+		deliveryList.find((d) => d.uid === order?.form.delivery)?.price ?? 0;
 
 	const subtotalAmount = basket.reduce((acc, item) => {
 		const itemPrice = Number(item.selectedPrice.replace("$", ""));
