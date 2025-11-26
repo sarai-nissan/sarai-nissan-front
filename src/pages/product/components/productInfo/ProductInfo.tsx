@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBasket } from "../../../../contexts/BasketContext";
 import Button from "../../../../components/button/Button";
 import type { ProductDropdown, ProductType } from "../../../../types/Product";
@@ -30,6 +30,7 @@ const ProductInfo: React.FC<Props> = ({
 	} = product;
 
 	const { addToBasket } = useBasket();
+	const [buttonText, setButtonText] = useState("Add to Cart");
 	const [quantity, setQuantity] = useState(1);
 	const priceLabel = price.includes("from") ? price : `$${price}`;
 	const [selectedPrice, setSelectedPrice] = useState(priceLabel);
@@ -50,8 +51,17 @@ const ProductInfo: React.FC<Props> = ({
 			setSelectedPrice(priceLabel);
 		}
 	};
-	const handleAddToBasket = () =>
+	const handleAddToBasket = () => {
 		addToBasket(product, quantity, selectedPrice, selectedOption);
+		setButtonText("Added!");
+	};
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setButtonText("Add to Cart");
+		}, 2000);
+		return () => clearTimeout(timer);
+	}, [handleAddToBasket]);
 
 	return (
 		<div className="productInfoContainer">
@@ -100,9 +110,10 @@ const ProductInfo: React.FC<Props> = ({
 
 			<div className="productInfoAddToCartButtonContainer">
 				<Button
-					text="Add to Cart"
+					text={buttonText}
 					onClick={handleAddToBasket}
 					disabled={disabledButton}
+					buttonClassName="productInfoAddToCartButton"
 				/>
 			</div>
 

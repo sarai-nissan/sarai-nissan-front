@@ -15,51 +15,46 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 	});
 
 	useEffect(() => {
-		if (basket.length > 0) {
+		const timeout = setTimeout(() => {
 			localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket));
-		}
+		}, 1000);
+		return () => clearTimeout(timeout);
 	}, [basket]);
 
 	useEffect(() => {
-		const checkProductsUpdates = async () => {
+		const sync = async () => {
 			if (basket.length === 0) return;
 
 			try {
-				const updatedBasket = await Promise.all(
+				const updated = await Promise.all(
 					basket.map(async (item) => {
 						try {
-							const latestProduct: ProductType = await getProductById(
-								item.product.documentId
-							);
+							const latest = await getProductById(item.product.documentId);
 
-							let updatedItem = { ...item, product: latestProduct };
+							const updatedItem = {
+								...item,
+								product: { ...latest },
+							};
 
-							if (latestProduct.price !== item.product.price) {
-								updatedItem.selectedPrice = latestProduct.price;
+							if (latest.price !== item.product.price) {
+								updatedItem.selectedPrice = latest.price;
 							}
 
-							updatedItem.product.sold = latestProduct.sold;
-
 							return updatedItem;
-						} catch (error) {
-							console.warn(
-								"⚠️ Failed to fetch product:",
-								item.product.documentId,
-								error
-							);
+						} catch (err) {
+							console.warn("Failed to update", item.product.documentId, err);
 							return item;
 						}
 					})
 				);
 
-				setBasket(updatedBasket);
-				localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(updatedBasket));
-			} catch (error) {
-				console.error("Failed to sync basket:", error);
+				setBasket(updated);
+			} catch (err) {
+				console.error("Failed to sync basket:", err);
 			}
 		};
 
-		checkProductsUpdates();
+		sync();
 	}, []);
 
 	const addToBasket = (

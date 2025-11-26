@@ -96,6 +96,11 @@
 	margin-bottom: clamp(40px, 2vw, 50px);
 }
 
+.productInfoAddToCartButton {
+	max-width: clamp(154px, 30vw, 168px);
+	width: 100%;
+}
+
 .productInfoDescription {
 	font-size: clamp(16px, 2vw, 18px);
 	color: var(--color-black);
