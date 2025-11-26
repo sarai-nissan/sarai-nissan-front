@@ -161,7 +161,7 @@ const AdminOrderPage = () => {
 	}
 
 	const deliveryLabel =
-		deliveryMethods.find((d) => d.id === order.delivery)?.label ||
+		deliveryMethods.find((d) => d.uid === order.delivery)?.label ||
 		order.delivery;
 
 	return (
