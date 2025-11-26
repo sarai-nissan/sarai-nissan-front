@@ -178,10 +178,6 @@ export const createOrder = async (orderPayload: any) => {
 
 		console.log("✅ Order created:", data);
 
-		if (orderPayload.email) {
-			await sendEmail(orderPayload.email);
-		}
-
 		return data;
 	} catch (err) {
 		console.error("❌ Error creating order:", err);
