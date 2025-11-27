@@ -17,6 +17,8 @@ const ShopPage: React.FC = () => {
 					)
 			  );
 
+	if (!products) return <div className="shopPageTitle">No products</div>;
+
 	if (isLoading) return <div className="shopPageTitle">Loading...</div>;
 	if (error) return <div className="shopPageTitle">Error: {error}</div>;
 
