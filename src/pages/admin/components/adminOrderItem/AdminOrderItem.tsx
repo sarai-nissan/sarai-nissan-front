@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useProductStore } from "../../../../store/useProductStore";
 import { formatDate } from "../../../../utils";
 import type { Order } from "../../../../types/AdminPage";
 import "./adminOrderItem.css";
@@ -8,13 +9,21 @@ type Props = {
 };
 
 const AdminOrderItem: React.FC<Props> = ({ order }) => {
+	const { products } = useProductStore();
 	const navigate = useNavigate();
-	const getProductImage = (product: any): string => {
-		if (!product?.photo) return "/images/placeholder.webp";
-		if (Array.isArray(product.photo)) {
-			return product.photo[0]?.url || "/images/placeholder.webp";
+
+	const getProductImage = (productFromOrder: any): string => {
+		if (!productFromOrder?.documentId) return "/images/placeholder.webp";
+
+		const found = products.find(
+			(p) => p.documentId === productFromOrder.documentId
+		);
+
+		if (found?.photo?.[0]?.url) {
+			return found.photo[0].url;
 		}
-		return product.photo;
+
+		return "/images/placeholder.webp";
 	};
 
 	const navigationHandler = () =>
@@ -32,9 +41,9 @@ const AdminOrderItem: React.FC<Props> = ({ order }) => {
 
 			<div className="adminOrderItemHorizontalContainer">
 				<p className="adminOrderItemDateText">
-					{/* @ts-ignore  */}
+					{/* @ts-ignore */}
 					{formatDate(order.createdAt as string, "monthName")?.slice(0, 3)}{" "}
-					{formatDate(order.createdAt as string, "day")} -{" "}
+					{formatDate(order.createdAt as string, "day")} –{" "}
 					{order.basket.reduce((acc, item) => acc + item.quantity, 0)} items
 				</p>
 
