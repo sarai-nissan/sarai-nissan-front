@@ -12,13 +12,12 @@ import {
 import "./checkoutButton.css";
 
 interface CheckoutButtonProps {
-	email?: string;
 	disabled?: boolean;
 }
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
+const CheckoutButton: React.FC<CheckoutButtonProps> = ({ disabled }) => {
 	const { order, setOrder, initOrderFromBasket } = useOrder();
 	const { basket } = useBasket();
 
@@ -62,17 +61,33 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ email, disabled }) => {
 				return;
 			}
 
-			const data = await createCheckoutSession({
+			const payload = {
 				basketItems: basket.map((item) => ({
 					name: item.product.name,
 					price: Number(item.selectedPrice.replace("$", "")) * 100,
 					quantity: item.quantity,
 					option: item.selectedOption || "",
 				})),
-				email,
+
+				form: {
+					email: orderToSave.form.email,
+					phone: orderToSave.form.phone,
+					firstName: orderToSave.form.firstName,
+					lastName: orderToSave.form.lastName,
+					delivery: orderToSave.form.delivery,
+					address1: orderToSave.form.address1,
+					address2: orderToSave.form.address2,
+					city: orderToSave.form.city,
+					state: orderToSave.form.state,
+					postalCode: orderToSave.form.postalCode,
+					country: orderToSave.form.country,
+				},
+
 				shippingCost: shippingPrice * 100,
 				taxAmount: Math.round(taxesPrice * 100),
-			});
+			};
+
+			const data = await createCheckoutSession(payload);
 
 			if (!data.id) {
 				console.error("Failed to create Stripe session:", data);

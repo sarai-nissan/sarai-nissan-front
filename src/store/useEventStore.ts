@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { getAllEvents, updateEventById } from "../api";
-import type { EventStoreType } from "../types/EventStore";
+import type { EventStoreType } from "../types/useEventStore";
 
 export const useEventStore = create<EventStoreType>()(
 	persist(

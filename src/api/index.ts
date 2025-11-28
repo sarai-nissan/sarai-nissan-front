@@ -1,4 +1,5 @@
 import { apiUrl } from "../constants";
+import type { OrderForm } from "../types/OrderContext";
 import type { ShippingOption } from "../types/useSettingsStoreTypes";
 
 // add contact to omnisend list
@@ -127,7 +128,7 @@ export const updateProductById = async (id: string | number, data: any) => {
 
 export const createCheckoutSession = async ({
 	basketItems,
-	email,
+	form,
 	shippingCost,
 	taxAmount,
 }: {
@@ -137,7 +138,7 @@ export const createCheckoutSession = async ({
 		quantity: number;
 		option?: string;
 	}[];
-	email?: string;
+	form: OrderForm;
 	shippingCost?: number;
 	taxAmount?: number;
 }) => {
@@ -147,7 +148,7 @@ export const createCheckoutSession = async ({
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				basketItems,
-				email,
+				form,
 				shippingCost,
 				taxAmount,
 			}),
@@ -156,8 +157,7 @@ export const createCheckoutSession = async ({
 		if (!res.ok)
 			throw new Error(`Failed to create checkout session (${res.status})`);
 
-		const data = await res.json();
-		return data;
+		return await res.json();
 	} catch (err) {
 		console.error("❌ Error creating checkout session:", err);
 		throw err;

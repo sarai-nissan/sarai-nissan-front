@@ -251,7 +251,6 @@ const CheckoutForm: React.FC = () => {
 			</p>
 
 			<CheckoutButton
-				email={form.email}
 				disabled={
 					!form.email ||
 					!form.phone ||

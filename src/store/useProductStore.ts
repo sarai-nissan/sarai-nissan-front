@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { getAllProducts, checkProductsUpdates } from "../api";
-import type { ProductStoreType } from "../types/ProductStore";
+import type { ProductStoreType } from "../types/useProductStore";
 import type { ProductType } from "../types/Product";
 
 export const useProductStore = create<ProductStoreType>()(
