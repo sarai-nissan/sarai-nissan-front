@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useProductStore } from "../../store/productStore";
+import { useProductStore } from "../../store/useProductStore";
 import ProductImages from "./components/productImages/ProductImages";
 import ProductInfo from "./components/productInfo/ProductInfo";
 import { slugify } from "../../utils";

@@ -1,8 +1,8 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../../contexts/OrdersContext";
-import { useEventStore } from "../../../store/eventStore";
-import { useProductStore } from "../../../store/productStore";
+import { useEventStore } from "../../../store/useEventStore";
+import { useProductStore } from "../../../store/useProductStore";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminInput from "../components/adminInput/AdminInput";
 import AdminLightText from "../components/adminLightText/AdminLightText";

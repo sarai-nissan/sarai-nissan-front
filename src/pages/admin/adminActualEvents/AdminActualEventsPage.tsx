@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEventStore } from "../../../store/eventStore";
+import { useEventStore } from "../../../store/useEventStore";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminLightText from "../components/adminLightText/AdminLightText";
 import AdminActualEventLink from "./components/adminActualEventLink/AdminActualEventLink";

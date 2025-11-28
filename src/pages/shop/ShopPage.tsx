@@ -1,5 +1,5 @@
 import { useFilter } from "../../contexts/FilterContext";
-import { useProductStore } from "../../store/productStore";
+import { useProductStore } from "../../store/useProductStore";
 import ShopProductFilter from "./components/shopProductFilter/ShopProductFilter";
 import ShopProductCard from "./components/shopProductCard/ShopProductCard";
 import "./shopPage.css";
@@ -17,10 +17,9 @@ const ShopPage: React.FC = () => {
 					)
 			  );
 
-	if (!products) return <div className="shopPageTitle">No products</div>;
-
 	if (isLoading) return <div className="shopPageTitle">Loading...</div>;
 	if (error) return <div className="shopPageTitle">Error: {error}</div>;
+	if (!products) return <div className="shopPageTitle">No products</div>;
 
 	return (
 		<div className="shopPageContainer">

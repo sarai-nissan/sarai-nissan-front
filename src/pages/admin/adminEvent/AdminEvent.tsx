@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEventStore } from "../../../store/eventStore";
+import { useEventStore } from "../../../store/useEventStore";
 import { createEvent, deleteEventById, updateEventById } from "../../../api";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminInput from "../components/adminInput/AdminInput";

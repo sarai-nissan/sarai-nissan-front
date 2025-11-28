@@ -1,5 +1,5 @@
 import EventElement from "./components/eventElement/EventElement";
-import { useEventStore } from "../../store/eventStore";
+import { useEventStore } from "../../store/useEventStore";
 import "./eventPage.css";
 
 const EventPage: React.FC = () => {
