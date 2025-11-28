@@ -17,6 +17,18 @@ interface CheckoutButtonProps {
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
+const safeParsePrice = (value: any) => {
+	if (!value) return 0;
+	if (typeof value === "number") return value;
+
+	if (typeof value === "string") {
+		const num = Number(value.replace("$", "").trim());
+		return isNaN(num) ? 0 : num;
+	}
+
+	return 0;
+};
+
 const CheckoutButton: React.FC<CheckoutButtonProps> = ({ disabled }) => {
 	const { order, setOrder, initOrderFromBasket } = useOrder();
 	const { basket } = useBasket();
@@ -37,23 +49,19 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ disabled }) => {
 	const shippingPrice =
 		deliveryList.find((d) => d.uid === order?.form.delivery)?.price ?? 0;
 
-	const subtotalAmount = basket.reduce((acc, item) => {
-		const itemPrice = Number(item.selectedPrice.replace("$", ""));
-		return acc + itemPrice * item.quantity;
+	const subtotal = basket.reduce((acc, item) => {
+		const price = safeParsePrice(item.selectedPrice || item.product.price);
+		return acc + price * item.quantity;
 	}, 0);
 
-	const taxesPrice = subtotalAmount * (taxPercent?.taxPercent ?? taxesPercent);
+	const taxesPrice = subtotal * (taxPercent?.taxPercent ?? taxesPercent);
 
 	const checkoutHandler = async () => {
 		try {
 			const orderToSave = order ?? initOrderFromBasket(basket);
 			setOrder(orderToSave);
 
-			try {
-				localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderToSave));
-			} catch (e) {
-				console.warn("Failed to local-save order before redirect", e);
-			}
+			localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderToSave));
 
 			const stripe = await stripePromise;
 			if (!stripe) {
@@ -61,45 +69,35 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ disabled }) => {
 				return;
 			}
 
-			const payload = {
-				basketItems: basket.map((item) => ({
+			const basketToSend = basket.map((item) => ({
+				id: item.id,
+				quantity: item.quantity,
+				selectedPrice: item.selectedPrice,
+				selectedOption: item.selectedOption || "",
+				product: {
+					id: item.product.id,
+					documentId: item.product.documentId,
 					name: item.product.name,
-					price: Number(item.selectedPrice.replace("$", "")) * 100,
-					quantity: item.quantity,
-					option: item.selectedOption || "",
-				})),
-
-				form: {
-					email: orderToSave.form.email,
-					phone: orderToSave.form.phone,
-					firstName: orderToSave.form.firstName,
-					lastName: orderToSave.form.lastName,
-					delivery: orderToSave.form.delivery,
-					address1: orderToSave.form.address1,
-					address2: orderToSave.form.address2,
-					city: orderToSave.form.city,
-					state: orderToSave.form.state,
-					postalCode: orderToSave.form.postalCode,
-					country: orderToSave.form.country,
+					price: item.product.price,
 				},
+			}));
 
+			const data = await createCheckoutSession({
+				basketItems: basketToSend,
+				form: orderToSave.form,
 				shippingCost: shippingPrice * 100,
 				taxAmount: Math.round(taxesPrice * 100),
-			};
-
-			const data = await createCheckoutSession(payload);
+			});
 
 			if (!data.id) {
-				console.error("Failed to create Stripe session:", data);
+				console.error("No session id returned:", data);
 				return;
 			}
 
 			const { error } = await stripe.redirectToCheckout({ sessionId: data.id });
-			if (error) {
-				console.error("Stripe checkout error:", error.message);
-			}
-		} catch (err) {
-			console.error("Checkout error:", err);
+			if (error) console.error("Stripe redirect error:", error.message);
+		} catch (error) {
+			console.error("Checkout error:", error);
 		}
 	};
 

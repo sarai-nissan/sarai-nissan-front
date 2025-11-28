@@ -133,10 +133,16 @@ export const createCheckoutSession = async ({
 	taxAmount,
 }: {
 	basketItems: {
-		name: string;
-		price: number;
+		id: string;
 		quantity: number;
-		option?: string;
+		selectedPrice: string;
+		selectedOption?: string;
+		product: {
+			id: number;
+			documentId: string;
+			name: string;
+			price: string;
+		};
 	}[];
 	form: OrderForm;
 	shippingCost?: number;
@@ -154,10 +160,14 @@ export const createCheckoutSession = async ({
 			}),
 		});
 
-		if (!res.ok)
+		if (!res.ok) {
+			const text = await res.text();
+			console.error("❌ Backend error:", text);
 			throw new Error(`Failed to create checkout session (${res.status})`);
+		}
 
-		return await res.json();
+		const data = await res.json();
+		return data;
 	} catch (err) {
 		console.error("❌ Error creating checkout session:", err);
 		throw err;
