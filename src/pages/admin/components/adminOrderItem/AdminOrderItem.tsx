@@ -65,8 +65,11 @@ const AdminOrderItem: React.FC<Props> = ({ order }) => {
 				<p className="adminOrderItemTotalText">
 					$
 					{order.basket
-						.map((item) => Number(item.selectedPrice.replace("$", "")))
-						.reduce((sum, price) => sum + price, 0)
+						.map((item) => {
+							const price = Number(item.selectedPrice.replace("$", ""));
+							return price * item.quantity;
+						})
+						.reduce((sum, subtotal) => sum + subtotal, 0)
 						.toFixed(2)}
 				</p>
 			</div>
