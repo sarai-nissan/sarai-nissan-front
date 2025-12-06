@@ -9,6 +9,7 @@ type Props = {
 	inputContainerStyle?: React.CSSProperties;
 	inputStyle?: React.CSSProperties;
 	autoFocus?: boolean;
+	placeholder?: string;
 };
 
 const AdminInput: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const AdminInput: React.FC<Props> = ({
 	inputContainerStyle,
 	inputStyle,
 	autoFocus,
+	placeholder,
 }) => {
 	return (
 		<div className="adminInputContainer" style={inputContainerStyle}>
@@ -32,6 +34,7 @@ const AdminInput: React.FC<Props> = ({
 				className="adminInputField"
 				style={inputStyle}
 				autoFocus={autoFocus}
+				placeholder={placeholder}
 			/>
 		</div>
 	);

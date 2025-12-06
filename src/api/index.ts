@@ -195,24 +195,6 @@ export const createOrder = async (orderPayload: any) => {
 	}
 };
 
-export const checkAdminPin = async (pin: string) => {
-	try {
-		const res = await fetch(`${apiUrl}/api/check-pin`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ pin }),
-		});
-
-		if (!res.ok) throw new Error(`Failed to check PIN (${res.status})`);
-
-		const result = await res.json();
-		return result;
-	} catch (err) {
-		console.error("❌ Error verifying admin PIN:", err);
-		throw err;
-	}
-};
-
 export const getAllOrders = async () => {
 	try {
 		const res = await fetch(`${apiUrl}/api/orders?populate=*`);
@@ -247,6 +229,31 @@ export const getOrderById = async (orderId: string, signal?: AbortSignal) => {
 		return data.data;
 	} catch (err) {
 		console.error("❌ Error loading order:", err);
+		throw err;
+	}
+};
+
+export const updateOrderTrackingNumber = async (
+	documentId: string | number,
+	trackingNumber: string
+) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/orders/${documentId}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				data: { trackingNumber },
+			}),
+		});
+
+		if (!res.ok) {
+			throw new Error(`Failed to update order (${res.status})`);
+		}
+
+		const data = await res.json();
+		return data.data;
+	} catch (err) {
+		console.error("❌ Error updating tracking number:", err);
 		throw err;
 	}
 };
@@ -367,33 +374,6 @@ export const deleteEventById = async (documentId: string) => {
 	}
 };
 
-export const getTaxPercent = async () => {
-	try {
-		const res = await fetch(`${apiUrl}/api/taxes`);
-		if (!res.ok) throw new Error("Failed to fetch tax");
-
-		const json = await res.json();
-
-		if (!json.data || json.data.length === 0) return null;
-
-		const item = json.data[0];
-
-		const result = {
-			id: item.id,
-			documentId: item.documentId,
-			taxPercent: Number(item.taxPercent),
-			createdAt: item.createdAt,
-			updatedAt: item.updatedAt,
-			publishedAt: item.publishedAt,
-		};
-
-		return result;
-	} catch (err) {
-		console.error("❌ getTaxPercent error:", err);
-		return null;
-	}
-};
-
 export const getShippingOptions = async () => {
 	try {
 		const res = await fetch(`${apiUrl}/api/shipping-options`);
@@ -442,6 +422,33 @@ export const updateShippingOption = async (documentId: string, data: any) => {
 	}
 };
 
+export const getTaxPercent = async () => {
+	try {
+		const res = await fetch(`${apiUrl}/api/taxes`);
+		if (!res.ok) throw new Error("Failed to fetch tax");
+
+		const json = await res.json();
+
+		if (!json.data || json.data.length === 0) return null;
+
+		const item = json.data[0];
+
+		const result = {
+			id: item.id,
+			documentId: item.documentId,
+			taxPercent: Number(item.taxPercent),
+			createdAt: item.createdAt,
+			updatedAt: item.updatedAt,
+			publishedAt: item.publishedAt,
+		};
+
+		return result;
+	} catch (err) {
+		console.error("❌ getTaxPercent error:", err);
+		return null;
+	}
+};
+
 export const updateTaxPercent = async (
 	documentId: string,
 	data: { taxPercent: number }
@@ -466,40 +473,43 @@ export const updateTaxPercent = async (
 	}
 };
 
-// export const sendInvoiceEmail = async (
-// 	email: string,
-// 	invoiceNumber: string
-// ) => {
-// 	try {
-// 		const response = await fetch("https://api.omnisend.com/v3/emails", {
-// 			method: "POST",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 				"X-API-KEY": import.meta.env.VITE_OMNISEND_API_KEY,
-// 			},
-// 			body: JSON.stringify({
-// 				from: {
-// 					email: "sarainissanhelp@gmail.com",
-// 					name: "Sarai Nissan Shop",
-// 				},
-// 				to: [{ email }],
-// 				subject: "Your order has been shipped!",
-// 				htmlContent: `<p>Thank you for your order!</p><p>Your tracking number: <b>${invoiceNumber}</b></p>`,
-// 				textContent: `Thank you for your order! Your tracking number: ${invoiceNumber}`,
-// 			}),
-// 		});
+export const sendTrackingEmail = async (
+	trackingNumber: string,
+	email: string
+) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/send-tracking`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ trackingNumber, email }),
+		});
 
-// 		if (!response.ok) {
-// 			const errorText = await response.text();
-// 			console.error("❌ Omnisend error:", response.status, errorText);
-// 			ctx.status = 500;
-// 			ctx.body = { error: "Omnisend request failed", details: errorText };
-// 			return;
-// 		}
+		if (!res.ok) {
+			throw new Error(`Failed to send tracking email (${res.status})`);
+		}
 
-// 		console.log("Invoice email sent successfully");
-// 	} catch (err) {
-// 		console.error("Error sending invoice email:", err);
-// 		throw err;
-// 	}
-// };
+		const data = await res.json();
+		return data;
+	} catch (err) {
+		console.error("❌ Error sending tracking email:", err);
+		throw err;
+	}
+};
+
+export const checkAdminPin = async (pin: string) => {
+	try {
+		const res = await fetch(`${apiUrl}/api/check-pin`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ pin }),
+		});
+
+		if (!res.ok) throw new Error(`Failed to check PIN (${res.status})`);
+
+		const result = await res.json();
+		return result;
+	} catch (err) {
+		console.error("❌ Error verifying admin PIN:", err);
+		throw err;
+	}
+};

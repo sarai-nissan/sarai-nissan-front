@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSettingsStore } from "../../../store/useSettingsStore";
+import AdminInput from "../components/adminInput/AdminInput";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminOrderProduct from "../../../components/adminOrderProduct/AdminOrderProduct";
 import AdminLightText from "../components/adminLightText/AdminLightText";
@@ -10,7 +11,12 @@ import {
 	internationalDeliveryType,
 	usDeliveryType,
 } from "../../../constants";
-import { getOrderById, updateOrderArchived } from "../../../api";
+import {
+	getOrderById,
+	sendTrackingEmail,
+	updateOrderArchived,
+	updateOrderTrackingNumber,
+} from "../../../api";
 import type { Order } from "../../../types/AdminPage";
 import "./adminOrderPage.css";
 
@@ -19,13 +25,11 @@ const AdminOrderPage = () => {
 	const { orderId } = useParams();
 
 	const { usDelivery, internationalDelivery } = useSettingsStore();
-
 	const fallbackUS = usDelivery.length > 0 ? usDelivery : usDeliveryType;
 	const fallbackInternational =
 		internationalDelivery.length > 0
 			? internationalDelivery
 			: internationalDeliveryType;
-
 	const deliveryMethods = [...fallbackUS, ...fallbackInternational];
 
 	const [order, setOrder] = useState<Order | null>(
@@ -34,11 +38,13 @@ const AdminOrderPage = () => {
 	const [loading, setLoading] = useState(!location.state?.order);
 	const [error, setError] = useState<string | null>(null);
 
+	const [invoiceNumber, setInvoiceNumber] = useState("");
+	const [sending, setSending] = useState(false);
+
 	const handleArchiveToggle = async (archived: boolean) => {
 		if (!order) return;
 
 		const orderDocId = order.documentId || order.id;
-
 		try {
 			const updated = await updateOrderArchived(
 				orderDocId as string | number,
@@ -63,6 +69,31 @@ const AdminOrderPage = () => {
 		} catch (err) {
 			console.error("Error while updating archive status:", err);
 			alert("Failed to update order");
+		}
+	};
+
+	const handleSendInvoice = async () => {
+		try {
+			setSending(true);
+			await sendTrackingEmail(invoiceNumber, order!.email);
+			await updateOrderTrackingNumber(
+				order!.documentId as string,
+				invoiceNumber
+			);
+			const updated = await getOrderById(order!.documentId as string);
+			setOrder(updated);
+
+			alert("✅ Email sent successfully!");
+			setInvoiceNumber("");
+		} catch (err) {
+			console.error(err);
+			alert(
+				`❌ Failed to send email: ${
+					err instanceof Error ? err.message : String(err)
+				}`
+			);
+		} finally {
+			setSending(false);
 		}
 	};
 
@@ -97,41 +128,9 @@ const AdminOrderPage = () => {
 		return () => controller.abort();
 	}, [apiUrl, orderId]);
 
-	// const [invoiceNumber, setInvoiceNumber] = useState("");
-	// const [sending, setSending] = useState(false);
-
-	// const handleSendInvoice = async () => {
-	// 	if (!order?.email) {
-	// 		alert("Order email not found");
-	// 		return;
-	// 	}
-	// 	if (!invoiceNumber.trim()) {
-	// 		alert("Please enter a tracking number");
-	// 		return;
-	// 	}
-
-	// 	setSending(true);
-	// 	try {
-	// 		const response = await fetch(`${apiUrl}/api/send-invoice`, {
-	// 			method: "POST",
-	// 			headers: { "Content-Type": "application/json" },
-	// 			body: JSON.stringify({
-	// 				email: order.email,
-	// 				invoiceNumber,
-	// 			}),
-	// 		});
-
-	// 		if (!response.ok) throw new Error("Failed to send email");
-
-	// 		alert("✅ Email sent successfully!");
-	// 		setInvoiceNumber("");
-	// 	} catch (err) {
-	// 		console.error(err);
-	// 		alert("❌ Failed to send email");
-	// 	} finally {
-	// 		setSending(false);
-	// 	}
-	// };
+	useEffect(() => {
+		getOrderById(orderId as string).then((data) => setOrder(data));
+	}, [orderId]);
 
 	if (loading) {
 		return (
@@ -189,8 +188,33 @@ const AdminOrderPage = () => {
 					<AdminOrderProduct key={item.id + index} item={item} />
 				))}
 
-				<div className="adminOrderMargins">
-					<AdminOrderLineText label="Delivery type" value={deliveryLabel} />
+				<div>
+					<div className="adminOrderMargins">
+						<AdminOrderLineText label="Delivery type" value={deliveryLabel} />
+					</div>
+					{order!.trackingNumber ? (
+						<AdminOrderLineText
+							label="Tracking Number"
+							value={order.trackingNumber}
+						/>
+					) : (
+						<div className="adminOrderEmailContainer">
+							<AdminInput
+								value={invoiceNumber}
+								onChange={(e) => setInvoiceNumber(e.target.value)}
+								type="text"
+								placeholder="Add tracking number"
+								inputContainerStyle={{ marginTop: 0 }}
+							/>
+							<button
+								onClick={handleSendInvoice}
+								disabled={sending}
+								className={`adminOrderEmailButton${sending ? " disabled" : ""}`}
+							>
+								{sending ? "Sending..." : "Send Invoice"}
+							</button>
+						</div>
+					)}
 				</div>
 
 				<p className="adminOrderRegularText adminOrderShippingText">
@@ -212,44 +236,6 @@ const AdminOrderPage = () => {
 				<AdminOrderLineText label="postal code" value={order.postalCode} />
 				<AdminOrderLineText label="country" value={order.country} />
 			</div>
-
-			{/* <div
-				style={{
-					marginTop: "40px",
-					padding: "16px",
-					borderTop: "1px solid #ddd",
-					display: "flex",
-					alignItems: "center",
-					gap: "10px",
-				}}
-			>
-				<input
-					type="text"
-					placeholder="Введите номер накладной"
-					value={invoiceNumber}
-					onChange={(e) => setInvoiceNumber(e.target.value)}
-					style={{
-						flex: "0 0 200px",
-						padding: "8px",
-						border: "1px solid #ccc",
-						borderRadius: "8px",
-					}}
-				/>
-				<button
-					onClick={handleSendInvoice}
-					disabled={sending}
-					style={{
-						padding: "8px 16px",
-						borderRadius: "8px",
-						background: sending ? "#aaa" : "#007bff",
-						color: "#fff",
-						border: "none",
-						cursor: sending ? "default" : "pointer",
-					}}
-				>
-					{sending ? "Отправка..." : "Отправить накладную"}
-				</button>
-			</div> */}
 		</div>
 	);
 };

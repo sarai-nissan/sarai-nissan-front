@@ -7,4 +7,5 @@ export type Order = {
 	basket: BasketElement[];
 	createdAt?: string;
 	archived: boolean;
+	trackingNumber?: string;
 } & OrderForm;

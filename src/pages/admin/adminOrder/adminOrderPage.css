@@ -25,7 +25,27 @@
 
 .adminOrderMargins {
 	margin-top: 32px;
-	margin-bottom: 32px;
+}
+
+.adminOrderEmailContainer {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.adminOrderEmailButton {
+	background-color: var(--color-black);
+	color: var(--color-white);
+	font-size: 14px;
+	border: none;
+	cursor: pointer;
+	min-width: 120px;
+	height: 40px;
+}
+
+.adminOrderEmailButton:disabled {
+	background-color: var(--color-lightGray);
+	cursor: default;
 }
 
 .adminOrderRegularText {
