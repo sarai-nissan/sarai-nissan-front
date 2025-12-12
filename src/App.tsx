@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { useProductStore } from "./store/useProductStore";
 import { useEventStore } from "./store/useEventStore";
 import { useSettingsStore } from "./store/useSettingsStore";
+
 import { OrderProvider } from "./contexts/OrderContext";
 import { BasketProvider } from "./contexts/BasketContext";
 import { FilterProvider } from "./contexts/FilterContext";
@@ -19,6 +20,7 @@ import ConfirmationPage from "./pages/confirmation/ConfirmationPage";
 import AboutPage from "./pages/about/AboutPage";
 import ContactPage from "./pages/contact/ContactPage";
 import EventPage from "./pages/Event/EventPage";
+
 import AdminPage from "./pages/admin/adminHome/AdminPage";
 import AdminProductsPage from "./pages/admin/adminProducts/AdminProductsPage";
 import AdminSelectedProductPage from "./pages/admin/adminSelectedProductPage/AdminSelectedProductPage";
@@ -30,24 +32,20 @@ import AdminEvent from "./pages/admin/adminEvent/AdminEvent";
 import AdminDeliverySettingsPage from "./pages/admin/adminDeliverySettings/AdminDeliverySettingsPage";
 
 import Header from "./components/header/Header";
+import AdminGuard from "./pages/admin/components/AdminGuard";
+
 import "./styles/App.css";
 
 const AppRoutes: React.FC = () => {
 	const location = useLocation();
+
 	const hideHeader =
-		location.pathname === "/admin" ||
-		location.pathname === "/admin/orders" ||
-		location.pathname === "/admin/archived" ||
-		location.pathname === "/admin/events" ||
-		location.pathname === "/admin/products" ||
-		location.pathname === "/admin/delivery-settings" ||
-		location.pathname.startsWith("/admin/orders/") ||
-		location.pathname.startsWith("/admin/events/") ||
-		location.pathname.startsWith("/admin/products/");
+		location.pathname === "/admin" || location.pathname.startsWith("/admin/");
 
 	return (
 		<div className="App">
 			{!hideHeader && <Header />}
+
 			<Routes>
 				<Route path="/" element={<HomePage />} />
 				<Route path="/shop" element={<ShopPage />} />
@@ -58,22 +56,26 @@ const AppRoutes: React.FC = () => {
 				<Route path="/about" element={<AboutPage />} />
 				<Route path="/contact" element={<ContactPage />} />
 				<Route path="/event" element={<EventPage />} />
+
 				<Route path="/admin" element={<AdminPage />} />
-				<Route path="/admin/products" element={<AdminProductsPage />} />
-				<Route
-					path="/admin/products/:documentId"
-					element={<AdminSelectedProductPage />}
-				/>
-				<Route path="/admin/orders" element={<AdminActualOrdersPage />} />
-				<Route path="/admin/orders/:orderId" element={<AdminOrderPage />} />
-				<Route path="/admin/archived" element={<AdminArchivedOrdersPage />} />
-				<Route path="/admin/events" element={<AdminActualEventsPage />} />
-				<Route path="/admin/events/new" element={<AdminEvent />} />
-				<Route path="/admin/events/:id" element={<AdminEvent />} />
-				<Route
-					path="/admin/delivery-settings"
-					element={<AdminDeliverySettingsPage />}
-				/>
+
+				<Route element={<AdminGuard />}>
+					<Route path="/admin/products" element={<AdminProductsPage />} />
+					<Route
+						path="/admin/products/:documentId"
+						element={<AdminSelectedProductPage />}
+					/>
+					<Route path="/admin/orders" element={<AdminActualOrdersPage />} />
+					<Route path="/admin/orders/:orderId" element={<AdminOrderPage />} />
+					<Route path="/admin/archived" element={<AdminArchivedOrdersPage />} />
+					<Route path="/admin/events" element={<AdminActualEventsPage />} />
+					<Route path="/admin/events/new" element={<AdminEvent />} />
+					<Route path="/admin/events/:id" element={<AdminEvent />} />
+					<Route
+						path="/admin/delivery-settings"
+						element={<AdminDeliverySettingsPage />}
+					/>
+				</Route>
 			</Routes>
 		</div>
 	);

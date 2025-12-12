@@ -30,8 +30,8 @@ const AdminPage: React.FC = () => {
 			const result = await checkAdminPin(password);
 
 			if (result.success) {
-				setAuthorized(true);
 				localStorage.setItem("isLogged", "true");
+				setAuthorized(true);
 				setPassword("");
 			} else {
 				alert("Wrong PIN");
@@ -64,7 +64,6 @@ const AdminPage: React.FC = () => {
 						text="Submit"
 						onClick={loginHandler}
 						styles={styles.pinButtonStyle}
-						textStyle={styles.pinButtonTextStyle}
 					/>
 				</div>
 			</div>
@@ -84,8 +83,8 @@ const AdminPage: React.FC = () => {
 			</div>
 		);
 
-	const activeOrders = orders.filter((order: Order) => !order.archived);
-	const archivedOrders = orders.filter((order: Order) => order.archived);
+	const activeOrders = orders.filter((o: Order) => !o.archived);
+	const archivedOrders = orders.filter((o: Order) => o.archived);
 
 	const productNavigateHandler = () => navigation("/admin/products");
 	const orderNavigateHandler = () => navigation("/admin/orders");
@@ -98,7 +97,7 @@ const AdminPage: React.FC = () => {
 		<div className="adminContainer">
 			<div className="adminContainerInner">
 				<AdminHeader
-					title="Order Details"
+					title="Admin"
 					showBackButton={false}
 					menuItems={[{ label: "Exit", action: logoutHandler }]}
 				/>

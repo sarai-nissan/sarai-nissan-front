@@ -75,11 +75,15 @@ const AdminOrderPage = () => {
 	const handleSendInvoice = async () => {
 		try {
 			setSending(true);
-			await sendTrackingEmail(invoiceNumber, order!.email);
+
+			const cleanInvoiceNumber = invoiceNumber.replace(/\s+/g, "");
+
+			await sendTrackingEmail(cleanInvoiceNumber, order!.email);
 			await updateOrderTrackingNumber(
 				order!.documentId as string,
-				invoiceNumber
+				cleanInvoiceNumber
 			);
+
 			const updated = await getOrderById(order!.documentId as string);
 			setOrder(updated);
 
